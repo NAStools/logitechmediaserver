@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<extension>
+	<id>6D96B9BB-832E-4E4A-8C00-0742AF7A117A</id>
+	<name>SLIMTRIS</name>
+	<module>Slim::Plugin::SlimTris::Plugin</module>
+	<version>1.0</version>
+	<playerMenu>GAMES</playerMenu>
+	<description>SLIMTRIS_DESC</description>
+	<creator>Logitech</creator>
+	<defaultState>disabled</defaultState>
+	<homepageURL>http://www.mysqueezebox.com/support</homepageURL>
+	<type>2</type>
+<!-- type=extension -->
+	<targetApplication>
+		<id>Logitech Media Server</id>
+		<minVersion>7.0a</minVersion>
+		<maxVersion>*</maxVersion>
+	</targetApplication>
+</extension>

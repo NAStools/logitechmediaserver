@@ -1,0 +1,128 @@
+[%- IF ajaxRequest -%]
+	<pre>
+	[% PROCESS ajaxHome.txt %]
+	</pre>
+[%- ELSE -%]
+[% FILTER null %]
+[% pagetitle = stringHOME; noSpacer = 1; noHomeLink = 1 %]
+
+[% IF warn %]
+	[% bodyscript = 'onload="doLoad(1);"' %]
+[% END %]
+
+[% pageHeaderMenu = BLOCK %]
+
+	<div class="statusarea">
+		<div id="scanWarning" [% IF NOT warn %]style="display:none"[% END %]><b>[% "NOTE" | string %]</b> [% "HOME_SCAN_WARNING" | string %]</div>
+
+		<div id="libraryInfo" [% IF warn OR NOT (album_count OR artistcount OR song_count) %]style="display:none"[% END %]>
+			[%- "LIBRARY_CONTAINS" | string %]&nbsp;<span id="albumcount">[% album_count %]</span>&nbsp;[% "WITH" | string -%]
+			<span id="songcount">[%- song_count %]</span>&nbsp;[% stringBY %]&nbsp;<span id="artistcount">[% artist_count %]</span>.
+		</div>
+
+		<div id="newVersion">
+			[% IF newVersion %]<br><br>[% newVersion %][% END %]
+		</div>
+	</div>
+
+[% END %]
+
+[% pageHeaderScripts = BLOCK %]
+	<script TYPE="text/javascript">[% PROCESS html/vars.js %]</script>
+	<script type="text/javascript" src="[% webroot %]html/prototype.js?r=[% revision %]" ></script>
+	<script TYPE="text/javascript" src="[% webroot %]html/global.js?r=[% revision %]"></script>
+	<script TYPE="text/javascript" src="[% webroot %]html/common.js?r=[% revision %]"></script>
+	<script TYPE="text/javascript" src="[% webroot %]html/home.js?r=[% revision %]" ></script>
+[% END %]
+
+[% END -%]
+[% PROCESS pageheader.html %]
+
+			<div id="progressName" style="display:inline">[% IF progress.name %][% progress.name _ "_PROGRESS" | string %][% END %]</div><br>
+			<a href="[% webroot %]progress.html?type=importer"><span id="progressBar" >[% progress.bar %]</span></a>
+
+<div class="homeMenuSection">
+	<div>[% "BROWSE_MUSIC" | string | upper %]</div>
+	<ul>
+	[%- FOREACH item = additionalLinkOrder.browse %]
+		[%- IF additionalLinks.browse.exists(item) %]	
+		<li><a href="[% additionalLinks.browse.$item | html %]player=[% playerURI %]">[% item | getstring | html %]</a></li>
+		[% IF item == 'SEARCH' && additionalLinks.search.ADVANCEDSEARCH %]
+		<li><a href="[% additionalLinks.search.ADVANCEDSEARCH | html %]player=[% playerURI %]">[% "ADVANCEDSEARCH" | getstring | html %]</a></li>
+		[% END %]
+		[%- END %]
+	[%- END %]
+	[%- FOREACH link = additionalLinks.browse; IF !additionalLinkOrder.browse.grep(link.key).size %]
+		<li><a href="[% link.value | html %]player=[% playerURI %]">[% link.key | getstring | html %]</a></li>
+	[%- END; END %]
+	</ul>
+</div>
+
+<div class="homeMenuSection">
+	<div>[% "RADIO" | string | upper %]</div>
+	<ul>
+	[%- FOREACH item = additionalLinkOrder.radios %]
+		<li><a href="[% additionalLinks.radios.$item | html %]player=[% playerURI %]">[% item | getstring | html %]</a></li>
+	[%- END %]
+	[%- FOREACH link = additionalLinks.radios; IF !additionalLinkOrder.radios.grep(link.key).size %]
+		<li><a href="[% link.value | html %]player=[% playerURI %]">[% link.key | getstring | html %]</a></li>
+	[%- END; END %]
+		<li><a href="tunein.html?player=[% playerURI %]">[% "RADIO_TUNEIN" | string | html %]</a></li>
+	</ul>	
+</div>
+
+[% IF additionalLinks.my_apps %]
+<div class="homeMenuSection">
+	<div>[% "PLUGIN_MY_APPS_MODULE_NAME" | string | upper %]</div>
+	<ul>
+	[%- FOREACH item = additionalLinkOrder.my_apps %]
+		<li><a href="[% additionalLinks.my_apps.$item | html %]player=[% playerURI %]" [% IF additionalLinks.my_apps.$item.match('^http:') %]target="mysb"[% END %]>[% item | getstring | html %]</a></li>
+	[%- END %]
+	[%- FOREACH link = additionalLinks.apps; IF !additionalLinkOrder.my_apps.grep(link.key).size %]
+		<li><a href="[% link.value | html %]player=[% playerURI %]">[% link.key | getstring | html %]</a></li>
+	[%- END; END %]
+	</ul>
+</div>
+[%- END %]
+
+[% IF not nosetup %]
+<div class="homeMenuSection">
+	<div>[% "SETTINGS" | string | upper %]</div>
+	<ul>
+	[%- IF not noserver %]
+		<li><a href="[% webroot %]settings/server/basic.html?player=[% playerURI %]">[% "SERVER_SETTINGS" | string %]</a></li>
+	[%- END %]
+
+	[%- USE Clients; players = Clients.get("name"); FOREACH client = players.reverse; %]
+		<li><a href="[% webroot %]settings/player/basic.html?player=[% playerURI %]&amp;playerid=[% client.id | uri %]">[% "PLAYER_SETTINGS" | string %][% IF client.name %] [% "FOR" | string %] [% client.name %][% END %]</a></li>
+	[%- END %]
+
+	[%- FOREACH key = additionalLinks.settings.keys %]
+		<li><a href="[% additionalLinks.settings.$key | html %]player=[% playerURI %]">[% key | getstring | html %]</a></li>
+	[%- END %]
+	</ul>
+</div>
+[% END %]
+
+[% IF additionalLinks.plugins %]
+<div class="homeMenuSection">
+	<div>[% "PLUGINS" | string | upper %]</div>
+	<ul>
+		[%- FOREACH link = additionalLinks.plugins %]
+			[% NEXT IF link.key == 'ALARM' && (!player || nosetup) %]
+			<li><a href="[% link.value | html %]player=[% playerURI %][% IF link.key == 'ALARM'%]&playerid=[% playerURI %][% END %]">[% link.key | getstring | html %]</a></li>
+		[%- END %]
+	</ul>
+</div>
+[% END %]
+
+<div class="homeMenuSection">
+	<div>[% "HELP" | string | upper %]</div>
+	<ul>
+	[%- FOREACH link = additionalLinks.help %]
+		<li><a href="[% link.value | html %][% IF NOT link.value.match('^http') %]player=[% playerURI %][% END %]" [% IF link.value.match('^http') %]target="_new"[% END %]>[% link.key | string | html %]</a></li>
+	[%- END %]
+	</ul>
+</div>
+[% PROCESS pagefooter.html %]
+[% END %]

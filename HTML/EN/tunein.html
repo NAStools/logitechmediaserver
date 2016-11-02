@@ -1,0 +1,83 @@
+[% pagetitle = 'RADIO_TUNEIN' | string %]
+[% pageicon = icons.TUNEINURL %]
+[% pageHeaderMenu = BLOCK %]
+	/ [% 'RADIO_TUNEIN' | string %]
+[% END %]
+[% extJsScripts = BLOCK %]
+	<script type="text/javascript">
+		Ext.onReady(function(){
+			tuneIn = new Ext.form.TextField({
+				applyTo: 'url'
+			});
+		
+			Ext.get('tuneInSubmit').hide();
+			Ext.get('tuneInAdd').hide();
+
+			new Ext.Button({
+				renderTo: 'tuneIn',
+				text: '[% 'RADIO_TUNEIN_CHOOSE' | string %]',
+				handler: function(){
+					var url = Ext.get('url').getValue();
+					if (url) {
+						SqueezeJS.UI.setProgressCursor();
+						SqueezeJS.Controller.playerControl(['playlist', 'play', url]);
+					}
+				}
+			});
+
+			new Ext.Button({
+				renderTo: 'add',
+				text: '[% 'ADD' | string %]',
+				handler: function(){
+					var url = Ext.get('url').getValue();
+					if (url) {
+						SqueezeJS.UI.setProgressCursor();
+						SqueezeJS.Controller.playerControl(['playlist', 'add', url]);
+					}
+				}
+			});
+		});
+	</script>
+[% END %]
+[% PROCESS pageheader.html %]
+
+<br>
+
+[% IF url %]
+	<p><b>
+	[% 'RADIO_TUNED_IN' | string %] [% url %]
+	</b></p>
+	<br/>
+	
+	<script type="text/javascript" language="JavaScript">
+	// Reload the status frame in 5 seconds to display the newly added playlist item
+	setTimeout( "refreshStatus()", 5000 );
+	</script>
+[% END %]
+
+<form name="tune" method="post" id="tune" action="[% webroot %]tunein.html">
+	<input type="hidden" name="player" value="[% player %]">
+	[% 'RADIO_TUNEIN_RADIOURL' | string %]
+
+	<table>
+		<tr>
+			<td style="vertical-align:bottom;"><input type="text" class="stdedit" name="url" id="url" size="50%"></td>
+			<td>
+				<input type="submit" id="tuneInSubmit" class="stdclick" value="[% 'RADIO_TUNEIN_CHOOSE' | string %]">
+				<span id="tuneIn" style="vertical-align:bottom;"></span>
+			</td>
+			<td>
+				<input type="submit" id="tuneInAdd" name="tuneInAdd" class="stdclick" value="[% 'ADD' | string %]">
+				<span id="add" style="vertical-align:bottom;"></span>
+			</td>
+		</tr>
+	</table>
+</form>
+
+<br/>
+
+<p>[% 'RADIO_TUNEIN_DESC' | string %]</p>
+
+<br/>
+
+[% PROCESS pagefooter.html %]

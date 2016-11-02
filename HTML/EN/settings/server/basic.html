@@ -1,0 +1,108 @@
+[% extJsScripts = BLOCK %]
+	<script TYPE="text/javascript">
+		Ext.onReady(function(){
+			var el = Ext.get('progressLink');
+			if (el) {
+				el.on('click', function(){
+					Settings.activate('INFORMATION');
+				})
+			}
+
+			// check for rescan, disable/enable rescan buttons if needed
+			new Ext.util.TaskRunner().start({
+				run: function(items) {
+					SqueezeJS.Controller.request({
+						params: [ '', [ "rescan", "?" ] ],
+			
+						success: function(response) {
+							response = Ext.util.JSON.decode(response.responseText);
+
+							if (response && response.result) {
+								items.each(function(item) {
+									item.dom.disabled = response.result['_rescan'] ? true : false;
+								});
+							}
+						}
+					})
+				},
+				args: [ Ext.select('.disableOnScan') ],
+				interval: 2000
+			});
+		});
+	</script>
+[% END %]
+[% PROCESS settings/header.html %]
+
+	[% WRAPPER setting title="SETUP_LANGUAGE" desc="SETUP_LANGUAGE_DESC" %]
+		<select class="stdedit" name="pref_language" id="language">
+
+		[% FOREACH option = languageoptions.sort %]
+			<option [% IF prefs.pref_language == option %]selected="selected" [% END %]value="[% option %]">[% languageoptions.$option %]</option>
+		[%- END -%]
+		
+		</select>
+	[% END %]
+
+	[% WRAPPER settingSection %]
+		[% WRAPPER settingGroup title="SETUP_LIBRARY_NAME" desc="SETUP_LIBRARY_NAME_DESC" %]
+			<input type="text" class="stdedit" name="pref_libraryname" id="libraryname" value="[% prefs.pref_libraryname | html %]" size="40">
+		[% END %]
+	[% END %]
+
+	[% WRAPPER setting title="SETUP_MEDIADIRS" desc="SETUP_MEDIADIRS_DESC" %]
+		<table border="0" cellspacing="0">
+			<tr>
+				<th>[% 'FOLDER' | string %]</th>
+				<th>[% 'MUSIC' | string %]&nbsp;&nbsp;</th>
+				[% IF !noimage %]<th>[% 'PICTURES' | string %]&nbsp;&nbsp;</th>[% END %]
+				[% IF !novideo %]<th>[% 'VIDEO' | string %]</th>[% END %]
+				<th>&nbsp;</th>
+			</tr>
+
+		[% FOREACH mediadir = mediadirs %]
+			<tr>
+				<td class="[% odd ? "odd" : "even" %]">
+					<input type="text" class="stdedit selectFolder" name="pref_mediadirs[% loop.index %]" id="mediadirs[% loop.index %]" value="[% mediadir.path %]" size="40"><br/>&nbsp;
+				</td>
+				<td class="[% odd ? "odd" : "even" %]" align="center">
+					<input type=checkbox [% IF !mediadir.audio %]checked="1" [% END %] class="stdedit" name="pref_ignoreInAudioScan[% loop.index %]" id="ignoreInAudioScan[% loop.index %]" value="1" />
+				</td>
+				[% IF !noimage %]<td class="[% odd ? "odd" : "even" %]" align="center">
+					<input type=checkbox [% IF !mediadir.image %]checked="1" [% END %] class="stdedit" name="pref_ignoreInImageScan[% loop.index %]" id="ignoreInImageScan[% loop.index %]" value="1" />
+				</td>[% END %]
+				[% IF !novideo %]<td class="[% odd ? "odd" : "even" %]" align="center">
+					<input type=checkbox [% IF !mediadir.video %]checked="1" [% END %] class="stdedit" name="pref_ignoreInVideoScan[% loop.index %]" id="ignoreInVideoScan[% loop.index %]" value="1" />
+				</td>[% END %]
+				<td class="[% odd ? "odd" : "even" %]" align="center" style="padding: 0 5px">
+					[% IF mediadir.path %]<input name="pref_rescan_mediadir[% loop.index %]" type=submit value="[% "SETUP_RESCAN_BUTTON" | string %]" class="stdclick disableOnScan" [% IF scanning %]disabled[% END %] />[% END %]
+				</td>
+			</tr>
+			[% END %]
+
+			<tr style="height: 5px;"><td class="[% odd ? "odd" : "even" %]" colspan="3"></td></tr>
+		</table>
+	[% END %]
+
+	[% WRAPPER settingSection %]
+		[% WRAPPER settingGroup title="SETUP_PLAYLISTDIR" desc="SETUP_PLAYLISTDIR_DESC" %]
+			<input type="text" class="stdedit selectFolder" name="pref_playlistdir" id="playlistdir" value="[% prefs.pref_playlistdir %]" size="40">
+		[% END %]
+	[% END %]
+
+	[% WRAPPER setting title="SETUP_RESCAN" desc="SETUP_RESCAN_DESC" %]
+		<select class="stdedit disableOnScan" name="pref_rescantype" id="rescantype" [% IF scanning %]disabled[% END %]>
+
+		[% FOREACH option = {
+			'1rescan'   => 'SETUP_STANDARDRESCAN',
+			'2wipedb'   => 'SETUP_WIPEDB',
+			'3playlist' => 'SETUP_PLAYLISTRESCAN',
+		} %]
+			<option [% IF scanning == option.value %]selected [% END %]value="[% option.key %]">[% option.value | string %]</option>
+		[%- END -%]
+		
+		</select>
+		<input name="pref_rescan" type="submit" class="stdclick disableOnScan" value="[% "SETUP_RESCAN_BUTTON" | string %]" [% IF scanning %]disabled[% END %]><br/><br/>
+		<a id="progressLink" href="[% webroot %]settings/server/status.html?player=[% playerid %]">[% IF scanning %][% "SETUP_VIEW_SCANNING" | string %][% ELSE %][% "SETUP_VIEW_NOT_SCANNING" | string %][% END %]</a>
+	[% END %]
+	
+[% PROCESS settings/footer.html %]

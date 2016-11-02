@@ -1,0 +1,83 @@
+PLUGIN_WIMP_MODULE_NAME
+	EN	TIDAL
+	NL	TIDAL
+	NO	TIDAL
+	
+PLUGIN_WIMP_MODULE_DESC
+	EN	TIDAL - High Fidelity Music Streaming
+	NL	TIDAL - High Fidelity Music Streaming
+	NO	TIDAL - High Fidelity Music Streaming
+
+PLUGIN_WIMP_DIRECT_GETTING_TRACK_INFO
+	CS	Získávání informací o stopě...
+	DA	Henter oplysninger om nummer...
+	DE	Titelinfos werden geladen...
+	EN	Getting track info...
+	ES	Obteniendo información de pista...
+	FI	Haetaan raidan tietoja...
+	FR	Obtention des informations sur le morceau...
+	IT	Recupero informazioni sul brano in corso...
+	NL	Nummerinfo wordt opgehaald...
+	NO	Henter informasjon om spor ...
+	PL	Pobieranie informacji o utworze...
+	RU	Получение информации о дорожке...
+	SV	Hämtar spårinformation...
+
+PLUGIN_WIMP_ERROR_LOGGED_OUT
+	CS	Je nám líto - ke službě TIDAL se nelze připojit z jiného zařízení, pokud je používána v přehrávači Squeezebox. Zkuste službu TIDAL použít z přehrávače Squeezebox.
+	DA	Vi beklager. Du kan ikke oprette forbindelse til TIDAL fra en anden enhed mens den er i brug på din Squeezebox. Prøv at bruge TIDAL igen på din Squeezebox.
+	DE	Es ist leider nicht möglich, über ein anderes Gerät eine Verbindung zu TIDAL herzustellen, während Sie den Dienst auf Ihrer Squeezebox nutzen. Versuchen Sie erneut, TIDAL auf Ihrer Squeezebox zu verwenden.
+	EN	We're sorry - you can't connect to TIDAL from another device while using it on your Squeezebox. Please try again to use TIDAL on your Squeezebox.
+	ES	Lamentablemente, no es posible conectarse a TIDAL desde otro dispositivo mientras se usa en Squeezebox. Vuelva a intentar usar TIDAL en Squeezebox.
+	FI	Valitettavasti et voi muodostaa yhteyttä TIDAL:hen muulta laitteelta, kun käytät sitä Squeezeboxissa. Yritä TIDAL:n käyttämistä Squeezeboxissa uudelleen.
+	FR	Vous ne pouvez pas vous connecter à TIDAL à partir d'un autre dispositif lorsque vous l'utilisez sur votre Squeezebox. Veuillez réessayer d'utiliser TIDAL sur votre Squeezebox.
+	IT	Impossibile eseguire la connessione a TIDAL da un altro dispositivo durante l'utilizzo con Squeezebox. Riprovare a utilizzare TIDAL in Squeezebox.
+	NL	Wanneer je TIDAL op je Squeezebox gebruikt, kun je er helaas geen verbinding mee maken vanaf een ander apparaat. Probeer nogmaals om verbinding te maken met TIDAL via je Squeezebox.
+	NO	Beklager, du kan ikke kople til TIDAL fra en annen enhet mens du bruker tjenesten på Squeezebox. Prøv å bruke TIDAL på Squeezebox igjen.
+	PL	Niestety, nie możesz połączyć się z usługą TIDAL z innego urządzenia, kiedy używasz jej w urządzeniu Squeezebox. Spróbuj ponownie, aby użyć usługi TIDAL w urządzeniu Squeezebox.
+	RU	С другого устройства нельзя подключаться к службе TIDAL, когда она используется на плеере Squeezebox. Попробуйте снова использовать TIDAL на плеере Squeezebox.
+	SV	Du kan tyvärr inte ansluta till TIDAL från en annan enhet medan du använder den i din Squeezebox. Försök igen att använda TIDAL i din Squeezebox.
+
+PLUGIN_WIMP_ERROR
+	CS	Chyba služby TIDAL
+	DA	TIDAL-fejl
+	DE	TIDAL-Fehler
+	EN	TIDAL Error
+	ES	Error de TIDAL
+	FI	TIDAL-virhe
+	FR	Erreur de TIDAL
+	IT	Errore TIDAL
+	NL	Fout bij TIDAL
+	NO	TIDAL-feil
+	PL	Błąd usługi TIDAL
+	RU	Ошибка TIDAL
+	SV	TIDAL-fel
+
+PLUGIN_WIMP_ON_WIMP
+	CS	Na službě TIDAL
+	DA	På TIDAL
+	DE	In TIDAL
+	EN	On TIDAL
+	ES	En TIDAL
+	FI	TIDAL:ssä
+	FR	Sur TIDAL
+	IT	Su TIDAL
+	NL	Over TIDAL
+	NO	På TIDAL
+	PL	W usłudze TIDAL
+	RU	На TIDAL
+	SV	Om TIDAL
+
+PLUGIN_WIMP_STREAM_FAILED
+	DE	Fehler beim Lesen des Datenstroms
+	EN	Failed to play stream
+	NL	Afspelen stream mislukt
+	NO	Avspilling mislyktes
+	PL	Błąd odtwarzania strumienia
+
+PLUGIN_WIMP_INVALID_TRACK_ID
+	DE	Fehlende oder ungültige ID
+	EN	Missing or invalid track ID
+	NL	Track-ID mist of is ongeldig
+	NO	Manglende eller ugyldig spor-ID
+	PL	Błędny identyfikator utworu

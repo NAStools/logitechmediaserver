@@ -1,0 +1,107 @@
+[%- pagetitle = browseby | string %]
+[%- pageicon = icons.$browseby %]
+[% IF levelName == 'album' || levelName == 'age' || levelName == 'playlisttrack'; titleRight = BLOCK %]
+	<div id="viewSelect"></div>
+[% END; END %]
+[%- extJsScripts = BLOCK -%]
+	<script type="text/javascript">
+		[% PROCESS jsString id='SWITCH_TO_LIST' jsId='switch_to_list' %]
+		[% PROCESS jsString id='SWITCH_TO_EXTENDED_LIST' jsId='switch_to_extended_list' %]
+		[% PROCESS jsString id='SWITCH_TO_GALLERY' jsId='switch_to_gallery' %]
+		[% PROCESS jsString id='SORT_BY' jsId='sort_by' %]
+		[% PROCESS jsString id='ALBUM_DISPLAY_OPTIONS' jsId='display_options' %]
+
+		var orderByList;
+		[% IF levelName == 'album' %]
+			orderByList = {
+				'[% stringALBUM %]'                     : 'album.titlesort',
+				'[% "SORT_YEARALBUM" | string %]'       : 'album.year,album.titlesort',
+				'[% "SORT_YEARARTISTALBUM" | string %]' : 'album.year,contributor.namesort,album.titlesort',
+				'[% "SORT_ARTISTALBUM" | string %]'     : 'contributor.namesort,album.titlesort',
+				'[% "SORT_ARTISTYEARALBUM" | string %]' : 'contributor.namesort,album.year,album.titlesort',
+				'[% "SORT_GENREALBUM" | string %]'      : 'genre.namesort,album.titlesort',
+				'[% "SORT_GENREARTISTALBUM" | string %]': 'genre.namesort,contributor.namesort,album.titlesort'
+			}
+		[% END %]
+
+		Ext.onReady(function(){
+			Browse.init();
+		});
+ 	</script>
+[%- END -%]
+[%- PROCESS pageheader.html dontscroll=1 useSpecialExt="-browse" -%]
+
+	<div id="browsedbHeader">
+		[% IF !(artwork == 1 && (levelName == 'album' || levelName == 'age')) -%]
+			[% IF hasPagebar %][% "ITEMS" | string %] [% pageinfo.startitem + 1 %] [% "TO" | string %] [% pageinfo.enditem + 1 %] [% "OF" | string %] [% pageinfo.totalitems %][% END %]
+		[% END -%]
+		[% IF warn -%]<p>[% PROCESS scanwarning %] [%- END %]
+
+		[% IF hasPagebar -%]
+			[% PROCESS pagebar %]
+		[%- END %]
+	</div>
+
+	[%- IF artwork == 1 && (levelName == 'album' || levelName == 'age');
+			container = 'gallerycontainer';
+		ELSE;
+			container = 'contentcontainer';
+		END %]
+
+	[%- IF song_count; infoTab = BLOCK -%]
+		<div>[% album_count %] [% "WITH" | string %] [% song_count %] [% stringBY %] [% artist_count %].</div>
+	[%- END; END -%]
+
+	[%- WRAPPER $container %]
+
+		[% IF levelName == 'track' && (album.id || age.id) %]
+			[% IF age.id; album = age; END %]
+			[% 
+				# remove "All Songs" item and display links at the top
+				IF browse_items.size > 1;
+					songInfoPlayLinks = BLOCK;
+						item = browse_items.shift();
+						item.isFavorite = isFavorite;
+						item.url => itemUrl;
+						item.text => album.name;
+						PROCESS songInfoPlayLinks;
+					END;
+				END;
+
+				contributorRoles = {};
+
+				IF album.compilation;
+
+					USE Prefs;
+					includeArtist = !Prefs.preferences('server').get('titleFormat').${Prefs.preferences('server').get('titleFormatWeb')}.search('ARTIST');
+
+				ELSE;
+
+					FOREACH contributor IN album.contributors;
+						FOREACH contributor IN contributor.contributorRoles;
+							contributorRoles.${contributor} = 1;
+						END;
+					END;
+
+				END;
+
+				PROCESS songinfo_header.html albumFirst = 1 itemobj = {
+					id => coverArt || 0,
+					album => album,
+					contributorRoles => contributorRoles.keys,
+					genres => album.genre,
+					year => album.year
+				};
+			%]
+
+		[% ELSIF coverArt AND tree != 1 -%]
+
+			<p><a [% coverArtHRef %] target="cover">[% PROCESS coverImg resize='1' %]</a></p>
+		[% END -%]
+
+		[% FOREACH item = browse_items -%]
+			[%- PROCESS browsedbitems_list.html item.includeAlbum = !album.id.defined item.includeArtist = includeArtist -%]
+		[%- END %]
+	[% END -%]
+
+[% PROCESS pagefooter.html %]

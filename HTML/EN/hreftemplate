@@ -1,0 +1,258 @@
+[%- FILTER null %]
+[% 
+stringBY    = "BY" | string;
+stringFROM  = "FROM" | string;
+stringHOME  = "HOME" | string;
+stringFIRST = "FIRST" | string;
+stringLAST  = "LAST" | string;
+stringNEXT  = "NEXT" | string;
+stringUP    = "UP" | string;
+stringDOWN  = "DOWN" | string;
+stringPREVIOUS = "PREVIOUS" | string;
+stringSAVE  = "SAVE" | string;
+stringCOLON = "COLON" | string;
+stringPLAY  = "PLAY" | string;
+stringREMOVE_FROM_PLAYLIST = "REMOVE_FROM_PLAYLIST" | string;
+stringADD   = "ADD" | string;
+stringDELETE= "DELETE" | string;
+
+stringALBUM = "ALBUM" | string;
+stringARTIST= "ARTIST" | string;
+stringYEAR  = "YEAR" | string;
+
+playerURI = player | uri;
+albumHRef = BLOCK %]href="[% webroot %]clixmlbrowser/clicmd=browselibrary+items&amp;mode=tracks&amp;linktitle=[% stringALBUM %]%20([% itemobj.album.title | uri %])&amp;album_id=[% itemobj.album.id %]&amp;player=[% playerURI %]/"[% END;
+yearHRef = BLOCK %]href="[% webroot %]clixmlbrowser/clicmd=browselibrary+items&amp;mode=albums&amp;linktitle=[% stringYEAR %]%20([% itemobj.year %])&amp;year=[% itemobj.year %]&amp;player=[% playerURI %]/"[% END;
+songinfoHRef = "href=\"${webroot}songinfo.html?item=$itemobj.id&amp;player=$playerURI\"";
+coverArtHRef = "href=\"/music/$coverArt/cover.jpg\"";
+MoveUp   = "%2D1"; # -1
+minusOne = "%2D1"; # -1
+plusOne  = "%2B1"; # +1
+MoveDown = "%2B1"; # +1
+hasPagebar = (pageinfo && pageinfo.totalpages > 1 && pageinfo.totalalphapages != 1);
+
+%]
+
+[%# href for home page %]
+[% BLOCK homeLink -%]
+	[% "<a href=\"";webroot;"home.html?player=$playerURI\"" ; IF target; "target=\""; target; "\""; END; ">" %]
+	[% IF img; "<img src=\"html/images/";img;"\" >";ELSE; stringHOME; END;"</a>" -%]
+[%- END %]
+
+[%# href for save playlist command %]
+[% BLOCK savePlaylistLink -%] 
+	[% "<a href=\"edit_playlist.html?player=$playerURI&amp;saveCurrentPlaylist=1\" target=\"";$target or 'browser';"\" >" %]
+	[% IF img; "<img alt=\"";stringSAVE;"\" src=\"html/images/";img;"\" >";ELSE; stringSAVE; END;"</a>" -%]
+[%- END %]
+
+[%#href for downloading the current playlist %]
+[% BLOCK downloadPlaylistLink; downloadString = "DOWNLOAD" | string -%]
+	[% IF playlist_items %][% "<a href=\"status.m3u?player=$playerURI\" target=\"";$target or 'playlist';"\">" %]
+	[% IF img; "<img alt=\"";downloadString;"\" src=\"html/images/";img;"\" >";ELSE; downloadString; END;"</a>" -%][%- END %]
+[%- END %]
+
+[%# href for clear current playlist command %]
+[% BLOCK clearPlaylistLink; clearString = "CLEAR" | string -%]
+	[% IF playlist_items %][% "<a href=\"$statusroot?p0=playlist&amp;p1=clear&amp;player=$playerURI\" target=\"";$target or 'status';"\" >" %]
+	[% IF img; "<img alt=\"";clearString;"\" src=\"html/images/";img;"\" >";ELSE; clearString; END;"</a>" -%][%- END %]
+[%- END %]
+
+[%# img tag for album thumbnail in the now playing status context %]
+[% BLOCK statusImg -%][% IF NOT height; height = thumbSize || 100; END %][% IF NOT width; width = height; END %]
+	[% "<span style=\"width:";height;"px; height:";height;"px;\"><img src=\"/music/$coverThumb/cover_";width;"x"; height;"_f_000000.jpg\""; IF NOT serverResizesArt; "height=\"";height;"\" width=\"";height;"\""; END;
+		"id=\"coverartpath\"
+		alt=\"";IF itemobj.album.title && itemobj.album.title != noAlbum; stringFROM; itemobj.album.title | html; END; IF itemobj.artist && itemobj.artist.name != noArtist; PROCESS artistsAsText.html; END ; IF itemobj.year; " ($itemobj.year)"; END; "\" 
+		title=\"";IF itemobj.album.title && itemobj.album.title != noAlbum; itemobj.album.title | html; END; IF itemobj.artist && itemobj.artist.name != noArtist; PROCESS artistsAsText.html; END ; IF itemobj.year; " ($itemobj.year)"; END; "\"></span>" -%]
+[%- END %]
+
+[%# img tag for cover art in browsedb context %]
+[% BLOCK coverImg -%]
+[% "<img src=\"/music/$coverArt/cover.jpg\"";IF resize; ' onLoad="resize(this);"';END;">" -%]
+[%- END %]
+
+
+[%  
+	'urlcmdFor' => {
+				'play'   => 'play',
+				'add'    => 'add',
+				'insert' => 'insert',
+				'remove' => 'deleteitem',
+			}
+			
+	'cmdFor'    => {
+				'play'   => 'loadtracks',
+				'add'    => 'addtracks',
+				'insert' => 'inserttracks',
+				'remove' => 'deletetracks',
+			} 
+			
+	'numcmdFor' => {
+				'delete' => 'delete',
+				'move'   => 'move',
+				'jump'   => 'jump',
+			}
+
+	'p3For' => {
+				'move'   => 'moveTo',
+			}
+
+%]
+
+[%# command query params for commands above on remote urls %]
+[% BLOCK cmdRemoteURLQuery -%]
+p0=playlist&amp;p1=[% urlcmdFor.$cmdType %]&amp;p2=[% itemobj.url | uri | replace("'", "%27") %][% IF p3 %]&amp;p3=[% p3 %][% END %]
+[%- END %]
+
+[%# command query params for commands above on local urls %]
+[% BLOCK cmdLocalQuery -%]
+command=playlist&amp;subcommand=[% cmdFor.$cmdType %][% attributes | html %]
+[%- END %]
+
+[%# command query params for commands acting on the current playlist using numeric references %]
+[% BLOCK cmdNumericQuery -%]
+p0=playlist&amp;p1=[% numcmdFor.$cmdType %]&amp;p2=[% num %]
+	[%- IF p3For.$cmdType and ${p3For.$cmdType} %]&amp;p3=[% ${p3For.$cmdType} %][% END %]
+	[%- IF useStart and start %]&amp;start=[% start %][% END %]
+[%- END %]
+
+[%# use this to add/play/insert/remove tracks and remote URLs %]
+[% BLOCK cmdHRef -%]
+href="[% webroot %][% statusroot %]?[% 
+	IF numcmdFor.$cmdType; # better way to determine this?
+		PROCESS cmdNumericQuery;
+	ELSIF (itemobj.isRemoteURL  || !attributes || itemobj.content_type() == 'dir');
+		PROCESS cmdRemoteURLQuery;
+	ELSE;
+		PROCESS cmdLocalQuery;
+	END; %]&amp;player=[% playerURI %]"
+[%- END %]
+
+[%# ajaxCmdHRef supplies only the URL args necessary for an add/play/insert/remove 
+this should be identical to the URL args supplied in cmdHRef plus ajaxRequest=1 %]
+[% BLOCK ajaxCmdHRef -%]
+[%- IF numcmdFor.$cmdType; # better way to determine this?
+		PROCESS cmdNumericQuery;
+	ELSIF (itemobj.isRemoteURL  || !attributes || itemobj.content_type() == 'dir');
+		PROCESS cmdRemoteURLQuery;
+	ELSE;
+		PROCESS cmdLocalQuery;
+	END; %]&amp;player=[% playerURI %]&amp;ajaxRequest=1
+[%- END %]
+
+[%# this is the href to the album of item %]
+[% BLOCK albumItemHRef -%]
+href="[% webroot %]clixmlbrowser/clicmd=browselibrary+items&amp;mode=tracks&amp;linktitle=[% stringALBUM %]%20([% (item.albumTitle || item.itemobj.album.id) | uri %])&amp;album_id=[% (item.albumId || item.itemobj.album.id) %]&amp;player=[% playerURI %]/"
+[%- END %]
+
+[%# this is the href to the year of item %]
+[% BLOCK yearItemHRef -%]
+href="[% webroot %]clixmlbrowser/clicmd=browselibrary+items&amp;mode=albums&amp;linktitle=[% stringYEAR %]%20([% item.year %])&amp;year=[% item.year %][% IF artwork || artwork == 0 %]&amp;artwork=[% artwork %][% END %]&amp;player=[% playerURI %]/"
+[%- END %]
+
+[%# this is the href to the primary artist of item %]
+[% BLOCK artistItemHRef -%]
+href="[% webroot %]clixmlbrowser/clicmd=browselibrary+items&amp;mode=albums&amp;linktitle=[% stringARTIST %]%20([% (item.artist || item.name2) | uri %])&amp;artist_id=[% item.artist_id %][% IF artwork || artwork == 0 %]&amp;artwork=[% artwork %][% END %]&amp;player=[% playerURI %]/"
+[%- END %]
+
+[%# this is the href to the songinfo for item %]
+[% BLOCK songinfoItemHRef -%]
+href="[% webroot %]songinfo.html?item=[% item.item || item.itemobj.id %]&amp;player=[% playerURI %]"
+[%- END %]
+
+[%# this is the href to the cover art for item %]
+[% BLOCK coverArtItemHRef -%]
+href="/music/[% item.coverArt %]/cover.jpg"
+[%- END %]
+
+[%# this is the link tree for the setup pages %]
+[% BLOCK setupItemHRef -%]
+href="[% webroot %]setup.html?page=[% item.page %]&amp;player=[% playerURI %][% IF playerid %]&amp;playerid=[% playeridURI %][% END %]"
+[%- END %]
+
+[%# this is the href to the browse page for a upnp item %]
+[% BLOCK browseUpnpItemHRef -%]
+href="[% webroot %]browseupnp.html?device=[% item.device | uri %]&hierarchy=[% item.hierarchy | html%][% item.attributes | html %]&amp;player=[% playerURI %]"
+[%- END %]
+
+[%# this is a generic href for item, or the item itself if no href present %]
+[% BLOCK ItemHRef -%]
+[% item.href ? item.href : item %]
+[%- END %]
+
+[%# img tag for album thumbnail in browse artwork context %]
+[% BLOCK thumbnailItemImg -%]
+	[%- year = artistlist = '' %]
+	[%- IF NOT height %][%# height = thumbSize || 100 %][% END %]
+	[%- IF NOT resizeParam %]
+		[%- resizeParam = 'p' %]
+	[%- END -%]
+
+	[%- IF item.artist %]
+		[%- itemobj=item.itemobj %][% artistlist = PROCESS artistsAsText.html %]
+	[% END -%]
+	[% IF item.year; year = " (" _ item.year _ ")"; END %]
+	[% details = ( item.album _ artistlist _ year)  | html -%]
+	[% FILTER collapse %][%# collapse all whitespace and newlines into single space %]
+	<img [% style %] 
+		src=
+		[% IF item.image %]
+		"[% item.image | resizeimage(height, height, '-', webroot) %]"
+		[% ELSIF item.coverThumb %]
+		"/music/[% item.coverThumb %]/cover_[% height %]x[% height %]_[% resizeParam %][% IF bgcolor %]_[% bgcolor %][% END %]"
+		[% ELSIF item.icon %]
+		"[% item.icon | resizeimage(height, height, '-', webroot) %]"
+		[% END %]
+	[%- IF NOT serverResizesArt %]height="[% height %]" width="[% height %]"[% END %]
+		alt   = "[% details %]"
+		title = "[% details %]"
+		onLoad= "resize(this, [%- height %])">
+	[% END %]
+[%- END %]
+
+[%# img tag for album thumbnail in browse artwork context %]
+[% BLOCK dummyItemImg -%]
+	[% PROCESS thumbnailItemImg item.image = "/music/0/cover" %]
+[%- END %]
+
+[% BLOCK pagebarcalc;
+	pagebarstart = pageinfo.currentpage - (pagesperbar div 2);
+	IF (pagebarstart + pagesperbar) > pageinfo.totalpages; pagebarstart = pageinfo.totalpages - pagesperbar; END;
+	IF (pagebarstart < 0) || (pagesperbar >= pageinfo.totalpages); pagebarstart = 0; END;
+	lastpage = pageinfo.totalpages - 1;
+	pagebarend = pagebarstart + pagesperbar - 1;
+	IF pagebarend > lastpage; pagebarend = lastpage; END;
+	IF pagebarstart > 0; 
+	  pagesstart = 1;
+	  pagesprev = pageinfo.currentpage - pagesperbar;
+	  IF pagesprev < 0; pagesprev = 0; END;
+	  pagesprev = pagesprev * pageinfo.itemsperpage;
+	ELSE; 
+	  pagesstart = 0;
+	  pagesprev = '';
+	END;
+	IF pagebarend < lastpage;
+	  pagesend = lastpage * pageinfo.itemsperpage;
+	  pagesnext = pageinfo.currentpage + pagesperbar;
+	  IF pagesnext > lastpage; pagesnext = lastpage; END;
+	  pagesnext = pagesnext * pageinfo.itemsperpage;
+	ELSE;
+	  pagesend = 0;
+	  pagesnext = '';
+	END;
+	pageprev = pageinfo.currentpage > 0 ? ((pageinfo.currentpage - 1) * pageinfo.itemsperpage) : '';
+	pagenext = (pageinfo.currentpage < lastpage) ? ((pageinfo.currentpage + 1) * pageinfo.itemsperpage) : '';
+   END %]
+
+[% BLOCK alphapagecalc;
+	IF pageinfo.alphamap;
+	  FOREACH alphapage = pageinfo.alphamap.values.nsort.unique;
+	    IF alphapage == pageinfo.startitem;
+	      pageprev = loop.prev();
+	      pagenext = loop.next();
+	      LAST;
+	    END;
+	  END;
+	END;
+  END %]
+
+[% END -%]

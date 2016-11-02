@@ -1,0 +1,213 @@
+[%- IF ajaxRequest -%]
+	<pre>
+	</pre>
+[%- ELSE -%]
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	[% pagetitle = "SQUEEZEBOX_MUSIC_PLAYER" | string %]
+	[% IF player_name; name = player_name | html; END -%]
+	[% pagetitle = pagetitle _ ' ' _ name %]
+	[% PROCESS standardheader.html %]
+	<script TYPE="text/javascript">[% PROCESS html/vars.js %]</script>
+	<script type="text/javascript" src="[% webroot %]html/prototype.js?r=[% revision %]"></script>
+	<script TYPE="text/javascript" src="[% webroot %]html/global.js?r=[% revision %]"></script>
+	<script TYPE="text/javascript" src="[% webroot %]html/common.js?r=[% revision %]"></script>
+</head>
+
+<body onload="doLoad(1);">
+
+[% BLOCK statusLink -%]
+[% FILTER null %]
+	[% IF link && !linkString %]
+
+		[% linkName = link %]
+
+	[% ELSIF linkString && !link %]
+
+		[% linkName = linkString | string | upper %]
+
+	[% END %]
+[% END -%]
+<a href="[% webroot %]status_header.html?p0=[% p0 %]&amp;[%- IF p1.defined && p1 != '' %]p1=[% p1 %]&amp;[% END %][%- IF p2.defined && p2 != '' %]p2=[% p2 %]&amp;[% END %]player=[% playerURI %]" class="[% divID %]"><span class="[% divID %]">[% linkName %]</span></a>
+[%- END %]
+
+<div id="topGraphicBox">
+
+	<div id="player_logo"><a href="http://www.logitech.com/" target="sdi"><img src="[% webroot %]html/images/[% playermodel %]_logo.gif" alt="[% playermodel %]" title="[% playermodel %]" width="134" height="19"></a></div>
+	[% IF player_chooser_list %]
+	<div id="playerChooser">
+		<form style="text-align:right; vertical-align:middle;" method="GET" action="[% webroot %]index.html" target="_top">
+		<select name="player" onchange="switchPlayer(this);" class="exnowplaying">
+			[% player_chooser_list %]
+		</select>
+		</form>
+	</div>
+	[% END %]
+	<div id="topGraphicMenu1">
+		<div class="largeAttribute">[% "MUSIC_PLAYER" | string %]</div>
+
+		[% IF isplayer %]
+		<div id="powerButtons">
+			<div class="attributeBold">[% "POWER" | string | upper %][% stringCOLON %]&nbsp;</div>
+
+			[% PROCESS statusLink p0 = 'power' p1 = 1 linkString = 'ON'  divID = mode == 'on'  ? 'valueSelected' : 'valueBold' %]
+			<span class="bar">|</span>
+			[% PROCESS statusLink p0 = 'power' p1 = 0 linkString = 'OFF' divID = mode == 'off' ? 'valueSelected' : 'valueBold' %]
+		</div>
+		[% END %]
+
+		[% IF isplayer %]
+		<div id="volumeButtons">
+
+			<div class="attributeBold">[% "VOLUME" | string | upper %][% stringCOLON %]&nbsp;</div>
+
+			[%- FOREACH vol = [0,10,20,30,40,50,60,70,80,90,100] -%]
+
+				[%- PROCESS statusLink 
+					p0         = 'mixer'
+					p1         = 'volume'
+					p2         = vol
+					link       = loop.count
+					divID      = (!loop.first && (volume > loop.prev) && (volume <= vol)) ? 'valueSelected' : 'valueBold'
+					linkString = ''
+				-%]
+
+			[%- END -%]
+		</div>
+		[% END %]
+
+		<div id="transportButtons">
+
+			[% PROCESS statusLink link = '' p0 = 'playlist' p1 = 'jump' p2 = plusOne linkString = 'SKIP' divID = 'valueBold' %]
+			<span class="bar">|</span>
+			[% PROCESS statusLink p0 = 'play'  p1 = '' p2 = '' linkString = 'PLAY'  divID = modeplay  ? 'valueSelected' : 'valueBold' %]
+			<span class="bar">|</span>
+			[% PROCESS statusLink p0 = 'pause' linkString = 'PAUSE' divID = modepause ? 'valueSelected' : 'valueBold' %]
+			<span class="bar">|</span>
+			[% PROCESS statusLink p0 = 'stop'  linkString = 'STOP'  divID = modestop  ? 'valueSelected' : 'valueBold' %]
+		</div>
+
+	</div>
+
+	<div id="topGraphicMenu2">
+		<div id="repeatButtons">
+
+			<div class="attributeBold">[% "REPEAT" | string | upper %][% stringCOLON %]&nbsp;</div>
+
+			[% repeatStrings = ['OFF', 'ONE', 'ALL'] %]
+
+			[% FOREACH repeatStrings %]
+
+				[% index = loop.index %]
+
+				[% PROCESS statusLink 
+					p0         = 'playlist'
+					p1         = 'repeat'
+					p2         = index
+					linkString = repeatStrings.$index
+					link       = ''
+					divID      = (repeat == loop.index) ? 'valueSelected' : 'valueBold'
+				%]
+				[% IF index < 2 %]<span class="bar">|</span>[% END %]
+
+			[% END %]
+		</div>
+
+		<div id="shuffleButtons">
+
+			<div class="attributeBold">[% "SHUFFLE" | string | upper %][% stringCOLON %]&nbsp;</div>
+
+			[% shuffleStrings = ['OFF', 'SONGS', 'ALBUMS'] %]
+
+			[% FOREACH shuffleStrings %]
+
+				[% index = loop.index %]
+
+				[% PROCESS statusLink 
+					p0         = 'playlist'
+					p1         = 'shuffle'
+					p2         = index
+					linkString = shuffleStrings.$index
+					link       = ''
+					divID      = (shuffle == loop.index) ? 'valueSelected' : 'valueBold'
+				%]
+				[% IF index < 2 %]<span class="bar">|</span>[% END %]
+ 
+			[% END %]
+		</div>
+	</div>
+
+	<div id="topGraphicMenu3">
+		<div id="playingStatus">
+				[% IF playercount == 0 || modestop %]
+
+					[% "STOPPED" | string | upper %]
+
+				[% ELSIF modeplay || modepause %]
+
+					[% "NOW_PLAYING" | string | upper %]
+
+				[% END %]
+		</div>
+
+		<div id="playingSong">
+			[% IF player_needs_upgrade %]
+
+				[% "PLAYER_NEEDS_UPGRADE" | string %]
+
+			[% ELSE %]
+
+				[% IF playercount == 0 %]
+
+					[% "NO_PLAYER_FOUND" | string %]
+
+				[% ELSE %]
+
+					[% IF songcount == 0; "NOTHING" | string; END %]
+
+				[% END %]
+
+			[% END %]
+
+			<a [% songinfoHRef %] target="browser">[% songtitle %]</a>
+
+			[% IF itemobj.album.title && itemobj.album.title != noAlbum  && includeAlbum %]
+
+				<span class="exnotactivenowplaying">[% stringFROM %] </span>
+
+				<span class="exnowplaying"><a [% albumHRef %] target="browser">[% itemobj.album.title | html %]</a></span>
+
+			[% END %]
+
+			[% IF itemobj.artist && itemobj.artist != noArtist && includeArtist %]
+				<span class="exnowplaying">[% PROCESS artistsAsHTML.html %]</span>
+			[% END %]
+
+		</div>
+
+		[% IF songcount %]
+			<div id="statusSongRemoveButton">
+
+			[% title = 'REMOVE_FROM_PLAYLIST' | string | ucfirst %]
+
+			[% PROCESS statusLink
+				p0         = 'playlist'
+				p1         = 'delete'
+				p2         = thissongnum
+				linkString = ''
+				link       = "<img src=\"html/images/b_delete_white.gif\" width=\"13\" height=\"13\" alt=\"$title\" title=\"$title\">"
+				divID      = mode == 'off' ? 'valueSelected' : 'valueBold'
+			%]
+
+			</div>
+
+		[% END %]
+
+	</div>
+</div>
+
+</body>
+</html>
+[% END %]

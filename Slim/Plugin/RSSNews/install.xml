@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<extension>
+	<id>98E6D04C-F4F5-434C-8857-9AF1FD0D2051</id>
+        <name>PLUGIN_RSSNEWS</name>
+        <module>Slim::Plugin::RSSNews::Plugin</module>
+        <version>1.0</version>
+        <description>PLUGIN_RSSNEWS_DESC</description>
+        <creator>Logitech</creator>
+
+	<defaultState>enabled</defaultState>
+        
+	<homepageURL>http://www.mysqueezebox.com/support</homepageURL>
+	<optionsURL>plugins/RSSNews/settings/basic.html</optionsURL>
+	<type>2</type><!-- type=extension -->
+
+        <targetApplication>
+  	        <id>Logitech Media Server</id>
+                <minVersion>7.0a</minVersion>
+                <maxVersion>*</maxVersion>
+        </targetApplication>
+
+</extension>

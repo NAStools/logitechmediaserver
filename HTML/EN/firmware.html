@@ -1,0 +1,20 @@
+<html>
+  <head>
+    [% pagetitle = "PLAYER_NEEDS_UPGRADE_1" | string %]
+    [% PROCESS standardheader.html %]
+    <script TYPE="text/javascript">[% PROCESS html/vars.js %]</script>
+    <script TYPE="text/javascript" src="[% webroot %]html/common.js?r=[% revision %]"></script>
+  </head>
+  <body bgcolor="#FFFFFF">
+
+    <p>
+
+    <h3>[% "PLAYER_NEEDS_UPGRADE_1" | string %]</h3>
+    
+	<p>
+	[% "PLAYER_UPGRADE_INSTRUCTIONS" | string %]
+	
+	<form action="update_firmware.html"><input type=text name="ipaddress"><input type=submit></form>
+	</p>
+  </body>
+</html>

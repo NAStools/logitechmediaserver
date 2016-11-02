@@ -1,0 +1,38 @@
+[% IF item.currentsong %]<a name="currentsong"></a>[% END %]
+<div [% IF item.odd %]class="odd"[% END %] [% IF not item.odd %]class="even"[% END %] [% IF item.currentsong %]id="currentListItem"[% END %]>
+	<div class="browsedbListItem">
+		[% IF item.currentsong %]
+		<span class="exboldlisting">
+		[% ELSE %]
+		<span class="exlisting">
+		[% END %]
+		<a href="[% webroot %]songinfo.html?item=[% item.id %]&amp;player=[% playerURI %]" target="browser">[% item.title | html %]</a>
+		[% IF item.includeAlbum && item.album && item.album != noAlbum %]
+			[% stringFROM %]
+			[% IF item.album_id %]
+				<a href="[% webroot %]clixmlbrowser/clicmd=browselibrary+items&amp;mode=albums&amp;linktitle=[% stringALBUM %]%20([% item.album | uri %])&amp;album_id=[% item.album_id %]&amp;player=[% playerURI %]/index.html?index=0" target="browser">[% item.album | html %]</a>
+			[% ELSE; item.album; END %]
+		[% END %]
+		[% IF item.includeArtist;
+			IF item.artistsWithAttributes && item.artistsWithAttributes.0.name != noArtist; 
+				PROCESS artistsAsHTML.html;
+			ELSIF item.artist && item.artist != noArtist;
+				stringBY;
+				" ";
+				item.artist;
+			END;
+		END %]
+		</span>
+		[%# remote_title is for radio streams %]
+		[% IF item.remote_title %]
+			<br />
+			[% item.remote_title | html %]
+		[% END %]
+		<div class="playlistControls">
+			<a href="[% webroot %][% statusroot %]?p0=playlist&amp;p1=jump&amp;p2=[% item.num %]&amp;start=[% start %]&amp;player=[% playerURI %]" target="status">[% stringPLAY %]</a>
+			<a href="[% webroot %][% statusroot %]?p0=playlist&amp;p1=move&amp;p2=[% item.num %]&amp;p3=%2B1&amp;start=[% start %]&amp;player=[% playerURI %]" target="status">[% stringDOWN %]</a>
+			<a href="[% webroot %][% statusroot %]?p0=playlist&amp;p1=move&amp;p2=[% item.num %]&amp;p3=%2D1&amp;start=[% start %]&amp;player=[% playerURI %]" target="status">[% stringUP %]</a>
+			<a href="[% webroot %][% statusroot %]?p0=playlist&amp;p1=delete&amp;p2=[% item.num %]&amp;start=[% start %]&amp;player=[% playerURI %]" target="status">[% stringREMOVE_FROM_PLAYLIST %]</a>
+		</div>
+	</div>
+</div>

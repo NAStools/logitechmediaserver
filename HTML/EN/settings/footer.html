@@ -1,0 +1,46 @@
+<!-- Begin settingsfooter.html -->
+
+<input type="hidden" name="pageAntiCSRFToken" value="[% pageAntiCSRFToken %]">
+
+[%- IF versionInfo -%]<br>
+
+	<div class="settingSection">
+
+		<div class="prefHead">[% "INFORMATION_DIAGSTRING" | string  %]</div>
+
+		[% IF versionInfo -%]
+			<p>[% versionInfo %]</p>
+		[%- END %]
+
+		[%- IF newVersion %]
+			<p>[% newVersion %]</p>
+		[% END -%]
+	</div>
+[%- END %]
+
+[%# add event handlers to all fields which have a validator %]
+<script type="text/javascript">
+	[%- FOREACH pref = validate; IF pref.value %]
+	new Event.observe('[% pref.key %]', 'blur', function(){ prefValidate($('[% pref.key %]'), '[% namespace %]'); } );
+	[%- END; END %]
+
+	// add an event handler to folder/file selector fields
+	$$('.selectFolder').each(function(ele) {
+		new Ajax.FileSelector(ele, true);
+	});	
+
+	$$('.selectFile').each(function(ele) {
+		new Ajax.FileSelector(ele, false);
+	});	
+</script>
+</div>
+<div id="prefsSubmit">
+	[%- IF NOT nosubmit %]<input name="saveSettings" id="saveSettings" type="submit" class="stdclick" value="[% "SAVE_SETTINGS" | string %]">[% END %]
+	[% IF browserType == 'Safari' %]<input type="hidden" name="saveSettings" value="1">[% END %]
+</div>
+</form>
+[%- IF NOT ajaxUpdate -%]
+</div>
+<!-- End settingsfooter.html -->
+[%- PROCESS pagefooter.html -%]
+[%- END -%]

@@ -1,0 +1,16 @@
+
+# get the name of the current progress status
+[% IF progress.name %]
+progressname|[% progress.name _ "_PROGRESS" | string %]
+[% END %]
+
+# grab the object
+progressbar|[% progress.bar %]
+progressdone|[% progress.obj.done %]
+progresstotal|[% progress.obj.total %]
+
+warn|[% warn %]
+
+songcount|[% song_count %]
+artistcount|[% artist_count %]
+albumcount|[% album_count %]

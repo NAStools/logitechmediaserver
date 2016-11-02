@@ -1,0 +1,41 @@
+[% PROCESS settings/header.html %]
+
+	[% WRAPPER setting title="PLUGIN_RSSNEWS" desc="" %]
+		<div class="prefDesc">[% "SETUP_GROUP_PLUGIN_RSSNEWS_DESC" | string %]</div>
+	[% END %]
+
+	[% WRAPPER setting title="SETUP_PLUGIN_RSSNEWS_ITEMS_PER_FEED" desc="SETUP_PLUGIN_RSSNEWS_ITEMS_PER_FEED_DESC" %]
+		<input type="text" class="stdedit" name="pref_items_per_feed" value="[% prefs.pref_items_per_feed %]" size="5" />
+	[% END %]
+
+	<div class="settingSection">
+	<table>
+
+		<tr>
+		<td class="firstColumn"><label for="new_feed" class="stdlabel">[% "PLUGIN_RSSNEWS_ADD_NEW" | string %]</label></td>
+
+		<td><input type="text" class="stdedit" name="pref_newfeed" value="[% newfeedval %]" size="60" /></td>
+		</tr>
+
+		<tr></tr>
+		<tr></tr>
+		<tr><td><label>[% "SETUP_PLUGIN_RSSNEWS_EXISTING_FEEDS" | string %]</label></td><td></td><td>[% "DELETE" | string %]</td></tr>
+
+	[% FOREACH pref = prefs.feeds %]
+
+		<tr>
+		<td><label for="feeds" class="stdlabel">[% pref.1 %]</label></td>
+
+		<td><label for="urls"  class="stdlabel">[% pref.0 %]</label></td>
+
+		<td><input name="delete" type="checkbox" value="[% pref.0 %]"></td>
+
+		</tr>
+
+	[% END %]
+
+	</table>
+
+	<input name="reset" type="submit" class="stdclick" value="[% "SETUP_PLUGIN_RSSNEWS_RESET" | string %]">
+	</div>
+[% PROCESS settings/footer.html %]

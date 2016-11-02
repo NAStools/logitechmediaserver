@@ -1,0 +1,1038 @@
+[% pagetitle = 'Using Input Modes' %]
+[% techinfo = '1' %]
+[% lefttoright = '1' %]
+[% PROCESS helpheader.html %]
+
+  <h4>Overview</h4>
+  <p>
+    The Logitech Media Server software comes equipped with a number (currently five) of
+    generic input modes which can be used by other modes to handle interaction
+    with the user via the remote. This allows module writers to concentrate on
+    what to do with the input rather than the gathering of that input.
+  </p>
+  <p>
+    The general method of using these input modes is to push into them from
+    your module, setting certain parameters as desired. The most important
+    parameter will be <var>callback</var> which is a reference to a function
+    that will be called when the input session is complete, and which will
+    then handle that input. Other parameters will vary depending on the input
+    mode being used.
+  </p>
+  <p>
+    When circumstances indicate the possibility that input is complete, an
+    exit event is generated. The <var>callback</var> function will be invoked
+    to determine the action to be taken. It will be called with parameters
+    indicating the client and the type of exit event. The input modes do not
+    exit themselves, it is left to the <var>callback</var> function to decide
+    when to leave the input mode.
+  </p>
+  <p>
+    Input modes will generally have a <var>valueRef</var> parameter. This will
+    reference the current value of the input. It is a reference so that variables
+    in the calling mode (or elsewhere in the program) can be directly modified
+    by the input mode.  Variables not directly modifiable by means of a
+    reference can be modified in the <var>callback</var> function, or in an
+    <var>onChange</var> function, if available to the input mode.
+  </p>
+  <p>
+    It should be noted that the parameters supplied to the input modes are
+    stored in the stack of mode parameter hashes contained in the client object.
+    As such, all parameters will be accessible to the callback function until
+    the input mode is left. If the mode is popped off the mode stack all
+    parameters will be lost. Any maintenance of the parameters between entries
+    into the input mode are the responsibility of the calling mode.
+  </p>
+  <p>
+    The input mode names are <strong>INPUT.<em>modulename</em></strong>, where 
+    <em>modulename</em> is the name of the .pm file. A typical entry into the
+    <strong>INPUT.Text</strong> mode follows:
+<pre>
+Slim::Buttons::Common::pushMode($client,'INPUT.Text',
+					&#123;'callback' =&gt; \&amp;myCallback
+					,'valueRef' =&gt; 'Some Initial String'
+					,'charsRef' =&gt; 'Upper'
+					,'numberLetterRef' =&gt; \@myNumberLetterArray
+					,'header' =&gt; string('SOME_STRING_FOR_THE_TOP')
+					&#125;);
+</pre>
+  </p>
+  <h4>The Input Modes</h4>
+  <p>
+    <dl>
+      <dt><a href="#Text">Text</a></dt>
+      <dd>Handles input of arbitrary strings.</dd>
+      <dt><a href="#List">List</a></dt>
+      <dd>Handles selection of an item from a list of options.</dd>
+      <dt><a href="#Tree">Tree</a></dt>
+      <dd>Handles navigation of and selection from a tree of options.</dd>
+      <dt><a href="#Time">Time</a></dt>
+      <dd>Handles input of a time-based variable.</dd>
+      <dt><a href="#Bar">Bar</a></dt>
+      <dd>
+        Handles selection of a number from a range, using the amount a bar
+        is filled to indicate position of the number in the range.
+      </dd>
+    </dl>
+  </p>
+  <h4><a id="Text"></a>Text</h4>
+  <h5>Description</h5>
+  <p>
+    The <strong>Text</strong> input mode is used to enter arbitrary strings.
+    It restricts characters in the string to a list of allowable characters
+    which can be provided when entering the mode. The rightarrow symbol is
+    used to indicate when advancing past the end of the string will generate
+    an exit event. It is never allowed anywhere in the string other than the
+    end. Calling modes should strip off this symbol from the end of the string
+    prior to using the input value.
+  </p>
+  <p>
+    The string is scrolled to keep the cursor within the viewable area, except
+    when the viewable area is scrolled manually. Any change in either the cursor
+    position or the character at the cursor results in the viewable area being
+    snapped back such that the cursor is again visable.
+  </p>
+  <p>
+    On entry into the mode, any characters in the initial string not within the
+    list of allowable characters are replaced by spaces (if the space character
+    is allowable) or are removed.
+  </p>
+  <h5>Parameters</h5>
+  <p>
+    The following parameters are used by the <strong>INPUT.Text</strong> mode. They are listed
+    in the order of likelyhood to be supplied. Other parameters can be supplied
+    for use by the callback function, but will not otherwise have any effect
+    on the <strong>INPUT.Text</strong> behavior.
+  </p>
+  <p>
+    <dl>
+      <dt>callback</dt>
+      <dd>Default: none</dd>
+      <dd>
+        A code reference which is called whenever an exit event occurs. This
+        parameter should always be supplied by the calling mode, otherwise
+        <strong>INPUT.Text</strong> will simply perform a pop mode on an exit event, potentially
+        losing any input. The procedure referenced should take the client object
+        as the first parameter and the exit event type as the second.
+      </dd>
+      <dt>header</dt>
+      <dd>Default: &quot;Enter Text:&quot; (not localized)</dd>
+      <dd>
+        String to display on the top line of the display. This parameter can
+        be interpreted in a number of ways, see above. After the value to be
+        displayed is determined, it is then modified according to the
+        <var>stringHeader</var> and <var>headerAddCount</var> parameters, below.
+      </dd>
+      <dt>stringHeader</dt>
+      <dd>Default: undef</dd>
+      <dd>
+        If set to a true value, the display value of <var>header</var> is
+        passed to the <code>string()</code> function to be localized. If no
+        localized string is defined for the value of <var>header</var>, it is
+        displayed as is.
+      </dd>
+      <dt>valueRef</dt>
+      <dd>Default: &quot;&quot;</dd>
+      <dd>
+        <var>valueRef</var> contains a reference to the string being edited. It
+        can initially be set to a plain string scalar, in which case it will
+        be converted into a reference to that scalar.
+      </dd>
+      <dt>charsRef</dt>
+      <dd>Default: reference to internal @UpperChars array</dd>
+      <dd>
+        <var>charsRef</var> contains a reference to the list of allowable characters.
+        It can be supplied as an array reference, or as the strings &quot;upper&quot;
+        or &quot;both&quot;, which are converted to references to the internal
+        @UpperChars and @BothChars arrays, respectively.
+      </dd>
+      <dt>numberLetterRef</dt>
+      <dd>Default: reference to internal @numberLettersMixed array</dd>
+      <dd>
+        <var>numberLetterRef</var> contains a reference to the list of characters to use for number key entry.
+        It can be supplied as an array reference, or unsupplied for the default array.  It can also be supplied
+        as the string &quot;upper&quot; to refer to @numberLettersUpper.
+      </dd>
+      <dt>doublesizeReplace</dt>
+      <dd>Default: none</dd>
+      <dd>
+        A reference to a hash of characters to replace in doublesize mode for
+        display. This would most likely be done for custom characters which
+        have no doublesize equivalents. The referenced hash has keys equal
+        to the character to replace, and values equal to the character to use
+        in doublesize mode. For example, to replace the custom character myCustom
+        with &quot;M&quot; when doublesized would be 
+        <code>&#123;Slim::Display::Display::symbol(&quot;myCustom&quot;) =&gt; &quot;M&quot;&#125;</code>
+      </dd>
+      <dt>charIndex</dt>
+      <dd>Default: index of the current character within the charsRef array</dd>
+      <dd>
+        The index of the current character within the charsRef array. If
+        supplied, and if cursorPos ends up at the end of the valueRef string,
+        the character at this index will be appended to the end of valueRef,
+        otherwise, the rightarrow will be used. This parameter will not usually
+        need to be set on entry, but is used within the <strong>INPUT.Text</strong> mode.
+      </dd>
+      <dt>cursorPos</dt>
+      <dd>Default: end of initial string</dd>
+      <dd>
+        The current position of the cursor, which determines which character will
+        be modified. This parameter will not usually need to be set on entry, but
+        is used within the <strong>INPUT.Text</strong> mode.
+      </dd>
+      <dt>displayPos</dt>
+      <dd>
+        Default: either the beginning of the string, or such that the cursor
+        is at the rightmost position on the display.
+      </dd>
+      <dd>
+        The position within the string at which to begin the display in
+        single-height mode. If supplied when entering the mode it will be
+        ignored. This parameter will not usually need to be set on entry, but
+        is used within the <strong>INPUT.Text</strong> mode.
+      </dd>
+      <dt>displayPos2X</dt>
+      <dd>
+        Default: either the beginning of the string, or such that the cursor
+        is at the rightmost position on the display.
+      </dd>
+      <dd>
+        The position within the string at which to begin the display in
+        double-size mode. If supplied when entering the mode it will be ignored.
+        This parameter will not usually need to be set on entry, but
+        is used within the <strong>INPUT.Text</strong> mode.
+      </dd>
+      <dt>rightIndex</dt>
+      <dd>Default: index of rightarrow within the charsRef array</dd>
+      <dd>
+        If rightarrow is within the list of allowable characters, its index is
+        stored in the <var>rightIndex</var> parameter. Otherwise, the value of
+        <var>rightIndex</var> is set to -1. If supplied when entering the mode it
+        will be ignored. This parameter will not usually need to be set on entry,
+        but is used within the <strong>INPUT.Text</strong> mode.
+      </dd>
+      <dt>parentMode</dt>
+      <dd>Default: name of mode which called <strong>INPUT.Text</strong></dd>
+      <dd>
+        This parameter is used with the passback function to let a calling mode
+        set up its own button handling functions, which can then be mapped as
+        desired by the user. The default is actually the first non-INPUT mode up
+        the mode stack from the current location in order to prevent infinite
+        recursion.
+      </dd>
+    </dl>
+  </p>
+  <h5>Exit Event Types</h5>
+  <p>
+    The callback function should handle the following event types in some way.
+    Ignoring them is acceptable, crashing the server is not.
+  </p>
+  <p>
+    <dl>
+      <dt>backspace</dt>
+      <dd>
+        Generated when the backspace function is called when the cursor is at the
+        beginning of the string.
+      </dd>
+      <dt>cursor_left</dt>
+      <dd>
+        Generated when the cursor is requested to move left, and is already at the
+        beginning of the string.
+      </dd>
+      <dt>cursor_right</dt>
+      <dd>
+        Generated when the cursor is requested to move right, and is already at the
+        end of the string.
+      </dd>
+      <dt>delete</dt>
+      <dd>
+        Generated when the delete function is called on the last character in the
+        string, resulting in the empty string.
+      <dd>
+      <dt>nextChar</dt>
+      <dd>
+        Generated when the nextChar function is called and the current character
+        is the right arrow.
+      </dd>
+      <dt>scroll_left</dt>
+      <dd>
+        Generated when a scroll to the left is requested, but the beginning of the
+        string is already being displayed.
+      </dd>
+      <dt>scroll_right</dt>
+      <dd>
+        Generated when a scroll to the right is requested, but the last character
+        of the string is already being displayed in the leftmost column of the
+        display.
+      </dd>
+      <dt><em>Other</em></dt>
+      <dd>
+        Generated by the exit function where the type is determined by the
+        argument supplied. Usually will be a button name like play or add, but
+        be prepared for anything.
+      </dd>
+    </dl>
+  </p>
+  <h5>Functions</h5>
+  <p>
+    <dl>
+      <dt>up</dt>
+      <dd>
+        Changes the current character to the one preceding it in the character
+        list. Repeat is allowed and accelerates.
+      </dd>
+      <dt>down</dt>
+      <dd>
+        Changes the current character to the one following it in the character
+        list. Repeat is allowed and accelerates.
+      </dd>
+      <dt>backspace</dt>
+      <dd>
+        The current character is deleted and the cursor moved one place to the
+        left. If that movement would place the cursor before the first position
+        in the string, an exit event is generated with a type of <em>backspace</em>.
+        This function is not designed to be used with repeat.
+      </dd>
+      <dt>delete</dt>
+      <dd>
+        Similar to backspace, except the cursor is not moved. If the last character
+        remaining in the string is deleted, an exit event of type <em>delete</em>
+        is generated. This function is not designed to be used with repeat.
+      </dd>
+      <dt>nextchar</dt>
+      <dd>
+        The cursor is advanced to the next position. If the cursor was at the end
+        of the string and the rightarrow was not the current character, then an
+        additional character is added to the end of the string prior to moving
+        the cursor there. The added character will be the rightarrow character if
+        that character is in the list of allowable characters, otherwise the first
+        character in the list is used. If the cursor was at the end and the current
+        character was the rightarrow, then an exit event of type <em>nextchar</em>
+        is generated. This function is not designed to be used with repeat.
+      </dd>
+      <dt>cursor</dt>
+      <dd>
+        This function takes an argument to indicate the direction and distance
+        to move the cursor. Use <em>left</em> to move the cursor left and <em>right</em>
+        to move it right. The left or right may be followed by an underscore
+        and a number indicating the distance to move in that direction. If no
+        distance is specified, it defaults to a value of one. If the cursor was
+        originally at either end of the string and is requested to move off the
+        end, an exit event is generated with a type of either <em>cursor_left</em>
+        or <em>cursor_right</em>, depending on the requested direction. Repeat
+        is allowed, and takes place at a constant rate. The cursor stops when
+        it hits the end under repeat, but an exit event is not generated until
+        the button is released and pressed again.
+      </dd>
+      <dt>scroll</dt>
+      <dd>
+        This function takes an argument to indicate the direction and distance
+        to move the viewable area. Use <em>left</em> to move the viewable area
+        left and <em>right</em> to move it right. The left or right may be
+        followed by an underscore and a number indicating the distance to move
+        in that direction. If no distance is specified, it defaults to a value
+        of one. If the beginning of the viewable area was originally at either
+        end of the string and is requested to move off the end, an exit event
+        is generated with a type of either <em>scroll_left</em> or
+        <em>scroll_right</em>, depending on the requested direction. Repeat is
+        allowed, and takes place at a constant rate. The movement stops when it
+        hits the end under repeat, but an exit event is not generated until the
+        button is released and pressed again.
+      </dd>
+      <dt>insert</dt>
+      <dd>
+        Inserts a character at the current cursor location. The character to be
+        inserted can be supplied as an argument to the function, otherwise the
+        first non-rightarrow character in the character list is used. Any
+        supplied character must be in the allowed list of characters, otherwise
+        a space character is substituted. Since the design of the button mapping
+        mechanism does not allow for the use of the space character, the =
+        character, or the # character within arguments, alternate representations
+        are required. These can be specified as follows:
+        <ul>
+          <li>anything beginning with &quot;sp&quot; for the space character</li>
+          <li>anything beginning with &quot;eq&quot; for the = character</li>
+          <li>
+            any of &quot;hash&quot;, &quot;sharp&quot;, &quot;pound&quot;, or 
+            a string beginning with &quot;num&quot for the # character
+          </li>
+        </ul>
+        This function is not designed to be used with repeat.
+      </dd>
+      <dt>clear</dt>
+      <dd>
+        Truncates the string and adds either the rightarrow or, if the rightarrow
+        is not in the list of characters, the first character in the list.
+        This function is not designed to be used with repeat.
+      </dd>
+      <dt>numberLetter</dt>
+      <dd>
+        This function takes an argument, which it then passes to
+        Slim::Buttons::Common::numberLetter.  The returned character is then
+        checked against the list of allowable characters, and replaced by a
+        space if not present. The cursor is advanced to the next character if
+        a different button is pressed than the previous, or after an amount of
+        time equal to the <var>displayTextTimeout</var> setting passes.
+        This function is not designed to be used with repeat.
+      </dd>
+      <dt>letter</dt>
+      <dd>
+        Takes an argument, which is then validated (checked against the list of
+        characters, with similar replacements as the <em>insert</em> function).
+        The current character is changed to the validated character, and the
+        cursor advanced. This function is not designed to be used with repeat.
+      </dd>
+      <dt>exit</dt>
+      <dd>
+        Takes an argument. An exit event is generated with the type being the
+        supplied argument. If no argument is supplied, the exit event type is
+        <em>exit</em>.
+      </dd>
+      <dt>passback</dt>
+      <dd>
+        Executes the last button event (button plus pressing style) in the
+        context of the parent mode (set by the parentMode parameter). This
+        allows for parent modes to map button presses to functions without
+        needing to modify the mapping of the <strong>INPUT.Text</strong> mode.
+        The mode is not actually changed by this function, so all mode
+        parameters are still available.
+      </dd>
+    </dl>
+  </p>
+  <h4><a id="List"></a>List</h4>
+  <h5>Description</h5>
+  <p>
+    The <strong>List</strong> input mode is used to select one item from
+    a list of items.  The items in the list can have different representations
+    internally and externally.  An onChange handler can be provided for immediate
+    effects of changing position in the list.
+  </p>
+  <p>
+    On entry into the mode, the initial selection will depend on the supplied
+    parameters.  If <var>valueRef</var> is supplied, and the value it references
+    is contained in the list referenced by the supplied <var>listRef</var>, then
+    <var>listIndex</var> is updated to reflect the position of the supplied value,
+    if it does not already match. This is done through a sequential search of the
+    supplied <var>listRef</var>. If the list is of significant size and a faster
+    search method is available, it is recommended that the calling mode use that
+    method to supply the <var>listIndex</var> parameter.
+  </p>
+  <p>
+    If <var>valueRef</var> is not supplied, or if its value does not appear in
+    the list, it will be updated to be the value at position <var>listIndex</var>
+    (if supplied and in bounds, 0 if not supplied or out of bounds). If
+    <var>valueRef</var> is not being used to update a variable outside the input
+    mode, it is recommended to leave it undefined, and allow it to be initialized
+    by the input mode.
+  </p>
+  <p>
+    This mode will not maintain state between invocations, so if such state
+    information needs to be kept, it is the responsibility of the calling
+    mode to do so.
+  </p>
+  <h5>Parameters</h5>
+  <p>
+    The following parameters are used by the <strong>INPUT.List</strong> mode. They are
+    listed in the order of likelyhood to be supplied. Other parameters can be
+    supplied for use by the callback, external display, or change handler
+    functions, but will not otherwise have any effect on the <strong>INPUT.List</strong>
+    behavior.
+  </p>
+  <p>
+    The <var>header</var>, <var>externRef</var>, and <var>overlayRef</var>
+    parameters can be supplied in a number of different ways.  If a scalar, it
+    will be displayed as is. If a code reference, it will be invoked with the
+    arguments specified in the corresponding <var>Args</var> parameter
+    (<var>header</var> would use <var>headerArgs</var> etc.) and the return value
+    will be displayed. If a hash reference, the value corresponding to the key
+    indicated by the referenced value of <var>valueRef</var> will be displayed.
+    If an array ref, the value at <var>listIndex</var> of the array is extracted
+    and then interpreted as above. If the extracted value is itself an array ref,
+    the array referenced is returned (this would most likely be the case for
+    <var>overlayRef</var>, which expects an array final value).
+  </p>
+  <p>
+    <dl>
+      <dt>listRef</dt>
+      <dd>Default: none</dd>
+      <dd>
+        An array reference to the list of items. This parameter must be supplied
+        or the <strong>INPUT.List</strong> mode will not be entered. This list
+        should be the internal representations of the item values. If an array
+        ref is supplied for <var>externRef</var> but not <var>listRef</var>,
+        <var>listRef</var> will be set to the same reference as
+        <var>externRef</var>.
+      </dd>
+      <dt>callback</dt>
+      <dd>Default: none</dd>
+      <dd>
+        A code reference which is called whenever an exit event occurs. If
+        this parameter is not supplied, <strong>INPUT.List</strong> will 
+        perform a pop mode right on left exit event, bump right on right exit
+        events, and a simple pop mode on other types of exit event. This
+        behavior should be sufficient for simple list displays where nothing
+        needs to happen on a right exit event. The procedure referenced should
+        take the client object as the first parameter and the exit event type
+        as the second.
+      </dd>
+      <dt>header</dt>
+      <dd>Default: &quot;Select item:&quot; (not localized)</dd>
+      <dd>
+        String to display on the top line of the display. This parameter can
+        be interpreted in a number of ways, see above. After the value to be
+        displayed is determined, it is then modified according to the
+        <var>stringHeader</var> and <var>headerAddCount</var> parameters, below.
+      </dd>
+      <dt>headerArgs</dt>
+      <dd>Default: &quot;CV&quot;</dd>
+      <dd>
+        One of &quot;CV&quot;, &quot;C&quot;, &quot;V&quot;, or &quot;&quot;.
+        The C indicates that the client object should be passed to the function
+        to determine the header value, the V indicates that the internal value
+        should be passed.
+      </dd>
+      <dt>stringHeader</dt>
+      <dd>Default: undef</dd>
+      <dd>
+        If set to a true value, the display value of <var>header</var> is
+        passed to the <code>string()</code> function to be localized. If no
+        localized string is defined for the value of <var>header</var>, it is
+        displayed as is.
+      </dd>
+      <dt>headerAddCount</dt>
+      <dd>Default: undef</dd>
+      <dd>
+        If set to a true value, a string like &quot; (X of Y)&quot; (where the
+        &quot;of&quot; is localized) is appended to the end of the header. The
+        <strong>X</strong> is the one-based index of the current item in the
+        list, and the <strong>Y</strong> is the total number of items in the
+        list. This addition takes place after the header is modified by
+        <var>stringHeader</var>.
+      <dt>externRef</dt>
+      <dd>Default: none</dd>
+      <dd>
+        The value to be displayed on the bottom line of the display, see above
+        for interpretation of this parameter. If this parameter is not supplied,
+        it will be set to the same reference as <var>listRef</var>. After the
+        value to be displayed is determined, it is then modified according to the
+        <var>stringExternRef</var> parameter below.
+      </dd>
+      <dt>externRefArgs</dt>
+      <dd>Default: &quot;CV&quot;</dd>
+      <dd>
+        One of &quot;CV&quot;, &quot;C&quot;, &quot;V&quot;, or &quot;&quot;.
+        The C indicates that the client object should be passed to the function
+        to determine the external value, the V indicates that the internal value
+        should be passed.
+      </dd>
+      <dt>stringExternRef</dt>
+      <dd>Default: undef</dd>
+      <dd>
+        If set to a true value, the display value of <var>externRef</var> is
+        passed to the <code>string()</code> function to be localized. If no
+        localized string is defined for the value of <var>externRef</var>, it
+        is displayed as is.
+      </dd>
+      <dt>valueRef</dt>
+      <dd>
+        Default: reference to copy of item in <var>listIndex</var> position in list
+      </dd>
+      <dd>
+        <var>valueRef</var> contains a reference to the currently selected item.
+        Typically this will be a reference to a variable local to the calling
+        mode, so that the final value will not need to be explicitly assigned
+        to some local variable.
+      </dd>
+      <dt>listIndex</dt>
+      <dd>Default: 0</dd>
+      <dd>
+        The (zero based) index of the currently selected item.
+      </dd>
+      <dt>overlayRef</dt>
+      <dd>Default: undef</dd>
+      <dd>
+        Strings to use as the overlay. See interpretation rules above.
+      </dd>
+      <dt>overlayRefArgs</dt>
+      <dd>Default: &quot;CV&quot;</dd>
+      <dd>
+        One of &quot;CV&quot;, &quot;C&quot;, &quot;V&quot;, or &quot;&quot;.
+        The C indicates that the client object should be passed to the function
+        to determine the overlay values, the V indicates that the internal value
+        should be passed.
+      </dd>
+      <dt>noWrap</dt>
+      <dd>Default: undef</dd>
+      <dd>
+        Determines whether or not to wrap around the ends of the list. If set
+        to a true value, attempts to scroll past either end of the list will
+        result in a bump up or down animation, depending on the requested
+        direction. When left unset, or set to a false value (the default), moving
+        up past the beginning of the list will take you to the end of the list,
+        and moving down beyond the end of the list will take you back to the
+        beginning. The ends are sticky, so the wraparound will not take place
+        while repeating.
+      </dd>
+      <dt>onChange</dt>
+      <dd>Default: none</dd>
+      <dd>
+        A code reference which is executed each time the currently selected
+        item changes. It is passed arguments according to the value of
+        <var>onChangeArgs</var>. Any return value will be ignored.
+      </dd>
+      <dt>onChangeArgs</dt>
+      <dd>Default: &quot;CV&quot;</dd>
+      <dd>
+        Some combination of the letters C, V, and I, or the empty string.
+        The C indicates that the client object should be passed to the function,
+        the V indicates that the internal value should be passed, and the I
+        indicates that the index of the current item should be passed. The
+        arguments will always come in the order C, then V, then I, skipping
+        arguments which do not appear.
+      </dd>
+      <dt>parentMode</dt>
+      <dd>Default: name of mode which called <strong>INPUT.List</strong></dd>
+      <dd>
+        This parameter is used with the passback function to let a calling mode
+        set up its own button handling functions, which can then be mapped as
+        desired by the user. The default is actually the first non-INPUT mode up
+        the mode stack from the current location in order to prevent infinite
+        recursion.
+      </dd>
+      <dt>isSorted</dt>
+      <dd>Default: undef</dd>
+      <dd>
+        Indicates whether the internal or external list is sorted for purposes
+        of the numberScroll function. <strong>I</strong> indicates that the
+        internal list is sorted and <strong>E</strong>, the external. A value
+        of <strong>L</strong> indicates that a lookup function, supplied in
+        <var>lookupRef</var> determined the sort order. Any other value, or no
+        supplied value, means that the list will be treated as unsorted.
+      </dd>
+      <dt>lookupRef</var>
+      <dd>Default: undef</dd>
+      <dd>
+        Lookup function reference, as used by Slim::Buttons::Common::numberScroll().
+        Takes an index and returns a value for that index.
+      </dd>
+    </dl>
+  </p>
+  <h5>Exit Event Types</h5>
+  <p>
+    The callback function should handle the following event types in some way.
+    Ignoring them is acceptable, crashing the server is not.
+  </p>
+  <p>
+    <dl>
+      <dt>left</dt>
+      <dd>
+        By default, generated by a left button press. If no callback function
+        specified, this will result in leaving the mode with the animated
+        push to the right.
+      </dd>
+      <dt>right</dt>
+      <dd>
+        By default, generated by a right button press. If no callback function
+        specified, this will result in a bump right animation.
+      </dd>
+      <dt><em>Other</em></dt>
+      <dd>
+        Generated by the exit function where the type is determined by the
+        argument supplied. Usually will be a button name like play or add, but
+        be prepared for anything.
+      </dd>
+    </dl>
+  </p>
+  <h5>Functions</h5>
+  <p>
+    <dl>
+      <dt>up</dt>
+      <dd>Changes the current position in the list. Repeat is allowed and accelerates.</dd>
+      <dt>down</dt>
+      <dd>Changes the current position in the list. Repeat is allowed and accelerates.</dd>
+      <dt>exit</dt>
+      <dd>
+        Takes an argument. An exit event is generated with the type being the
+        supplied argument. If no argument is supplied, the exit event type is
+        <em>exit</em>.
+      </dd>
+      <dt>passback</dt>
+      <dd>
+        Executes the last button event (button plus pressing style) in the
+        context of the parent mode (set by the parentMode parameter). This
+        allows for parent modes to map button presses to functions without
+        needing to modify the mapping of the <strong>INPUT.List</strong> mode.
+        The mode is not actually changed by this function, so all mode
+        parameters are still available.
+      </dd>
+    </dl>
+  </p>
+  <h4><a id="Tree"></a>Tree</h4>
+  <h5>Description</h5>
+  <p>Not currently implemented.</p>
+  <h4><a id="Time"></a>Time</h4>
+  <h5>Description</h5>
+  <p>
+    The <strong>Time</strong> input mode is used to enter time values.
+    It restricts values to the allowable timeFormat as specified by the server
+    settings. Entry of digits is automatically allocated to valid columns.
+  </p>
+  <h5>Parameters</h5>
+  <p>
+    The following parameters are used by the <strong>INPUT.Time</strong> mode. They are listed
+    in the order of likelyhood to be supplied. Other parameters can be supplied
+    for use by the callback function, but will not otherwise have any effect
+    on the <strong>INPUT.Time</strong> behavior.
+  </p>
+  <p>
+    <dl>
+      <dt>callback</dt>
+      <dd>Default: none</dd>
+      <dd>
+        A code reference which is called whenever an exit event occurs. This
+        parameter should always be supplied by the calling mode, otherwise
+        <strong>INPUT.Time</strong> will simply perform a pop mode on an exit event, potentially
+        losing any input. The procedure referenced should take the client object
+        as the first parameter and the exit event type as the second.
+      </dd>
+      <dt>header</dt>
+      <dd>Default: &quot;Enter Time:&quot; (not localized)</dd>
+      <dd>
+        String to display on the top line of the display. This string is displayed
+        as supplied, so be sure to localize any strings used.
+      </dd>
+      <dt>valueRef</dt>
+      <dd>Default: 0</dd>
+      <dd>
+        <var>valueRef</var> contains a reference to the string being edited. It
+        can initially be set to a plain string scalar, in which case it will
+        be converted into a reference to that scalar.
+      </dd>
+      <dt>onChange</dt>
+      <dd>Default: none</dd>
+      <dd>
+        A code reference which is executed each time the currently selected
+        item changes. It is passed arguments according to the value of
+        <var>onChangeArgs</var>. Any return value will be ignored.
+      </dd>
+      <dt>onChangeArgs</dt>
+      <dd>Default: &quot;CV&quot;</dd>
+      <dd>
+        One of &quot;CV&quot;, &quot;C&quot;, &quot;V&quot;, or &quot;&quot;.
+        The C indicates that the client object should be passed to the function,
+        the V indicates that the internal value should be passed.
+      </dd>
+      <dt>cursorPos</dt>
+      <dd>Default: beginning of time string</dd>
+      <dd>
+        The current position of the cursor, which determines which character will
+        be modified. This parameter will not usually need to be set on entry, but
+        is used within the <strong>INPUT.Time</strong> mode.
+      </dd>
+      <dt>parentMode</dt>
+      <dd>Default: name of mode which called <strong>INPUT.Time</strong></dd>
+      <dd>
+        This parameter is used with the passback function to let a calling mode
+        set up its own button handling functions, which can then be mapped as
+        desired by the user. The default is actually the first non-INPUT mode up
+        the mode stack from the current location in order to prevent infinite
+        recursion.
+      </dd>
+    </dl>
+  </p>
+  <h5>Exit Event Types</h5>
+  <p>
+    The callback function should handle the following event types in some way.
+    Ignoring them is acceptable, crashing the server is not.
+  </p>
+  <p>
+    <dl>
+      <dt>play</dt>
+      <dd>
+        By default, generated when the play button is pressed.
+      </dd>
+      <dt>add</dt>
+      <dd>
+        By default, generated when the add button is pressed.
+      </dd>
+      <dt>search</dt>
+      <dd>
+        By default, generated when the search button is pressed.
+      </dd>
+      <dt>left</dt>
+      <dd>
+        Generated when the cursor is moved left from the leftmost position.
+      </dd>
+      <dt>right</dt>
+      <dd>
+        Generated when the cursor is moved right from the rightmost position.
+      </dd>
+      <dt><em>Other</em></dt>
+      <dd>
+        Generated by the exit function where the type is determined by the
+        argument supplied. Usually will be a button name like play or add, but
+        be prepared for anything.
+      </dd>
+    </dl>
+  </p>
+  <h5>Functions</h5>
+  <p>
+    <dl>
+      <dt>up</dt>
+      <dd>
+        Changes the current digit one higher in value. Repeat is allowed and accelerates. 
+        Rolling over will increment values to the left.
+      </dd>
+      <dt>down</dt>
+      <dd>
+       Changes the current digit one lower in value. Repeat is allowed and accelerates. 
+       Rolling over will decrement values to the left.
+      </dd>
+      <dt>left</dt>
+      <dd>
+        The the cursor moved one place to the left. If that movement would place the cursor
+        before the first position in the string, an exit event is generated with a type 
+        of <em>left</em>. This function is not designed to be used with repeat.
+      </dd>
+      <dt>right</dt>
+      <dd>
+        The cursor is advanced to the next position. If the cursor was at the end, 
+        then an exit event of type <em>right</em> is generated. This function is 
+        not designed to be used with repeat.
+      </dd>
+      <dt>cursor</dt>
+      <dd>
+        This function takes an argument to indicate the direction and distance
+        to move the cursor. Use <em>left</em> to move the cursor left and <em>right</em>
+        to move it right. The left or right may be followed by an underscore
+        and a number indicating the distance to move in that direction. If no
+        distance is specified, it defaults to a value of one. If the cursor was
+        originally at either end of the string and is requested to move off the
+        end, an exit event is generated with a type of either <em>left</em>
+        or <em>right</em>, depending on the requested direction. Repeat
+        is allowed, and takes place at a constant rate. The cursor stops when
+        it hits the end under repeat, but an exit event is not generated until
+        the button is released and pressed again.
+      </dd>
+      <dt>numberLetter</dt>
+      <dd>
+        This function enters a digit directly in the string. The cursor is 
+        advanced to the next character if a different button is pressed than 
+        the previous, or after an amount of time equal to the <var>displayTextTimeout</var> 
+        setting passes.  This function is not designed to be used with repeat.
+      </dd>
+      <dt>exit</dt>
+      <dd>
+        Takes an argument. An exit event is generated with the type being the
+        supplied argument. If no argument is supplied, the exit event type is
+        <em>exit</em>.
+      </dd>
+      <dt>passback</dt>
+      <dd>
+        Executes the last button event (button plus pressing style) in the
+        context of the parent mode (set by the parentMode parameter). This
+        allows for parent modes to map button presses to functions without
+        needing to modify the mapping of the <strong>INPUT.Time</strong> mode.
+        The mode is not actually changed by this function, so all mode
+        parameters are still available.
+      </dd>
+    </dl>
+  </p>
+  <h4><a id="Bar"></a>Bar</h4>
+  <h5>Description</h5>
+  <p>
+    The <strong>Bar</strong> input mode is used to select a value that is best represented as
+    on a sliding scale.  This may be a single direction or bi-directional slider.
+  </p>
+  <p>
+    On entry into the mode, the initial selection will depend on the supplied
+    parameters.  If <var>valueRef</var> is supplied, then the mode will begin with that value.
+    If <var>valueRef</var> is not supplied, or if its value does not appear in
+    fit withing the bounds supplied in the other parameters, the value will be assumed to be zero.
+  <p>
+    This mode will not maintain state between invocations, so if such state
+    information needs to be kept, it is the responsibility of the calling
+    mode to do so.
+  </p>
+  <h5>Parameters</h5>
+  <p>
+    The following parameters are used by the <strong>INPUT.Bar</strong> mode. They are
+    listed in the order of likelyhood to be supplied. Other parameters can be
+    supplied for use by the callback, external display, or change handler
+    functions, but will not otherwise have any effect on the <strong>INPUT.Bar</strong>
+    behavior.
+  </p>
+  <p>
+    The <var>header</var> parameter can be supplied in a number of different ways.  If a scalar, it
+    will be displayed as is. If a code reference, it will be invoked with the
+    arguments specified in the corresponding <var>Args</var> parameter
+    (<var>header</var> would use <var>headerArgs</var> etc.) and the return value
+    will be displayed. If a hash reference, the value corresponding to the key
+    indicated by the referenced value of <var>valueRef</var> will be displayed.
+    If an array ref, the value at <var>listIndex</var> of the array is extracted
+    and then interpreted as above. If the extracted value is itself an array ref,
+    the array referenced is returned.
+  </p>
+  <p>
+    <dl>
+      <dt>header</dt>
+      <dd>Default: &quot;Select item:&quot; (not localized)</dd>
+      <dd>
+        String to display on the top line of the display. This parameter can
+        be interpreted in a number of ways, see above. After the value to be
+        displayed is determined, it is then modified according to the
+        <var>stringHeader</var> and <var>headerAddCount</var> parameters, below.
+      </dd>
+      <dt>headerArgs</dt>
+      <dd>Default: &quot;CV&quot;</dd>
+      <dd>
+        One of &quot;CV&quot;, &quot;C&quot;, &quot;V&quot;, or &quot;&quot;.
+        The C indicates that the client object should be passed to the function
+        to determine the header value, the V indicates that the internal value
+        should be passed.
+      </dd>
+      <dt>stringHeader</dt>
+      <dd>Default: undef</dd>
+      <dd>
+        If set to a true value, the display value of <var>header</var> is
+        passed to the <code>string()</code> function to be localized. If no
+        localized string is defined for the value of <var>header</var>, it is
+        displayed as is.
+      </dd>
+      <dt>callback</dt>
+      <dd>Default: none</dd>
+      <dd>
+        A code reference which is called whenever an exit event occurs. If
+        this parameter is not supplied, <strong>INPUT.Bar</strong> will 
+        perform a pop mode right on left exit event, bump right on right exit
+        events, and a simple pop mode on other types of exit event. This
+        behavior should be sufficient for simple list displays where nothing
+        needs to happen on a right exit event. The procedure referenced should
+        take the client object as the first parameter and the exit event type
+        as the second.
+      </dd>
+      <dt>handleLeaveMode</dt>
+      <dd>Default: undef</dd>
+      <dd>
+      	If set and true then the exit callback handler function will be invoked
+      	whenever the mode is left. This is most useful if the mode wants to exit
+      	if another mode is pushed. 
+      </dd>
+      <dt>valueRef</dt>
+      <dd>
+        Default: reference to copy of item in <var>listIndex</var> position in list
+      </dd>
+      <dd>
+        <var>valueRef</var> contains a reference to the currently selected item.
+        Typically this will be a reference to a variable local to the calling
+        mode, so that the final value will not need to be explicitly assigned
+        to some local variable.
+      </dd>
+      <dt>trackValueChanges</dt>
+      <dd>Default: undef</dd>
+      <dd>
+        Allow the value referenced by valueRef to be modified externally and to
+        track such changes before applying up/down changes.
+      </dd>
+      <dt>min</dt>
+      <dd>Default: 0</dd>
+      <dd>
+        Sets the minimum value allowed for selection.  The slider will stop and hold 
+        at this value unless the user selects a greater value.
+      </dd>
+      <dt>max</dt>
+      <dd>Default: 100</dd>
+      <dd>
+        Sets the maximum value allowed for selection.  The slider will stop and hold 
+        at this value unless the user selects a lesser value.
+      </dd>
+      <dt>mid</dt>
+      <dd>Default: 0</dd>
+      <dd>
+        Sets the midpoint reference for bi-directional sliders.  Accellerated scrolling 
+        will pause at this point, and the bar will display mirrored output centred on this point.
+      </dd>
+      <dt>cursor</dt>
+      <dd>Default: undef</dd>
+      <dd>
+        Places a visible cursor at the specified position.
+      </dd>
+      <dt>increment</dt>
+      <dd>Default: 2.5</dd>
+      <dd>
+        Determines the value increase for each step in the scrolling function.
+      </dd>
+      <dt>barOnDouble</dt>
+      <dd>Default: 0</dd>
+      <dd>
+        Determines the display when large fonts are used.  Setting to 1 will show only the Bar on large fonts.
+        The default of 0 shows the header line provided by the <var>header</var> parameter.
+      </dd>
+      <dt>onChange</dt>
+      <dd>Default: none</dd>
+      <dd>
+        A code reference which is executed each time the currently selected
+        item changes. It is passed arguments according to the value of
+        <var>onChangeArgs</var>. Any return value will be ignored.
+      </dd>
+      <dt>onChangeArgs</dt>
+      <dd>Default: &quot;CV&quot;</dd>
+      <dd>
+        One of &quot;CV&quot;, &quot;C&quot;, &quot;V&quot;, or &quot;&quot;.
+        The C indicates that the client object should be passed to the function,
+        the V indicates that the internal value should be passed.
+      </dd>
+    </dl>
+  </p>
+  <h5>Exit Event Types</h5>
+  <p>
+    The callback function should handle the following event types in some way.
+    Ignoring them is acceptable, crashing the server is not.
+  </p>
+  <p>
+    <dl>
+      <dt>left</dt>
+      <dd>
+        By default, generated by a left button press. If no callback function
+        specified, this will result in leaving the mode with the animated
+        push to the right.
+      </dd>
+      <dt>right</dt>
+      <dd>
+        By default, generated by a right button press. If no callback function
+        specified, this will result in a bump right animation.
+      </dd>
+      <dt><em>Other</em></dt>
+      <dd>
+        Generated by the exit function where the type is determined by the
+        argument supplied. Usually will be a button name like play or add, but
+        be prepared for anything.
+      </dd>
+    </dl>
+  </p>
+  <h5>Functions</h5>
+  <p>
+    <dl>
+      <dt>up</dt>
+      <dd>Changes the current position in the list. Repeat is allowed and accelerates.
+      If the bar is bi-directional, there will be a pause at the middle value</dd>
+      <dt>down</dt>
+      <dd>Changes the current position in the list. Repeat is allowed and accelerates.
+      If the bar is bi-directional, there will be a pause at the middle value</dd>
+      <dt>exit</dt>
+      <dd>
+        Takes an argument. An exit event is generated with the type being the
+        supplied argument. If no argument is supplied, the exit event type is
+        <em>exit</em>.
+      </dd>
+      <dt>passback</dt>
+      <dd>
+        Executes the last button event (button plus pressing style) in the
+        context of the parent mode (set by the parentMode parameter). This
+        allows for parent modes to map button presses to functions without
+        needing to modify the mapping of the <strong>INPUT.Bar</strong> mode.
+        The mode is not actually changed by this function, so all mode
+        parameters are still available.
+      </dd>
+    </dl>
+  </p>
+[% PROCESS helpfooter.html %]

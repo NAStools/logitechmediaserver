@@ -1,0 +1,173 @@
+[%- IF !embedded %]
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="/html/ext/resources/css/ext-all-notheme.css" />
+		<link rel="stylesheet" type="text/css" href="[% webroot %]slimserver.css?r=[% revision %]" />
+		<link rel="stylesheet" type="text/css" href="[% webroot %]skin.css?r=[% revision %]" />
+
+		[% PROCESS standardheader.html %]
+
+		<script type="text/javascript">[% PROCESS html/vars.js %]</script>
+		<script type="text/javascript" src="[% webroot %]html/js.html?r=[% revision %]"></script>
+
+		<style>
+			body {
+				margin: 0;
+				background-color: #404040;
+			}
+		</style>
+
+		<script type="text/javascript">[% PROCESS html/SqueezeJS/Strings.js %]</script>
+		<script type="text/javascript">
+			var strings = new Array();
+
+			Ext.onReady(function(){
+				SqueezeJS.UI.buttonTemplate = new Ext.Template(
+					'<table border="0" cellpadding="0" cellspacing="0"><tbody><tr>',
+					'<td></td><td><button type="{0}" style="padding:0" class="x-btn-text {2}"></button></td><td></td>',
+					'</tr></tbody></table>'
+				);
+				SqueezeJS.UI.buttonTemplate.compile();
+
+				SqueezeJS.UI.splitButtonTemplate = new Ext.Template(
+					'<table id="{4}" cellspacing="0" class="x-btn {3}"><tbody class="{1}">',
+					'<tr><td class="x-btn-ml"><i>&#160;</i></td><td class="x-btn-mc"><em class="{2}" unselectable="on"><button type="{0}"></button></em></td><td class="x-btn-mr"><i>&#160;</i></td></tr>',
+					'</tbody></table>'
+				);
+				SqueezeJS.UI.splitButtonTemplate.compile();
+
+				// initialize global controller, which is responsible for all communication with SC
+				SqueezeJS.Controller.init({
+					player: playerid
+				});
+		
+				// initialize player control panel
+				Main.initPlayerControl();
+			});
+		</script>
+
+		[% IF debug %]
+		<style>
+			.x-layout-panel-body { background: white; }
+			.x-btn-text, .x-btn button { color: black; }
+			.x-dlg .x-tabs-bottom .x-tabs-body {
+				background: white;
+				color: black;
+			}
+		</style>
+		[% END %]
+	</head>
+	<body>
+		<div class="content">
+			<p>&nbsp;</p>
+[% END %]
+
+<script type="text/javascript">
+	[% PROCESS jsString id='LOADING' jsId='' %]
+	[% PROCESS jsString id='SETUP_SYNCHRONIZE_DESC' jsId='synchronize_desc' %]
+	[% PROCESS jsString id='EXECUTE' jsId='' %]
+	[% PROCESS jsString id='CLEAR' jsId='clear_playlist' %]
+	[% PROCESS jsString id='SAVE' jsId='' %]
+	[% PROCESS jsString id='SHOW_ARTWORK' jsId='' %]
+	[% PROCESS jsString id='HIDE_ARTWORK' jsId='' %]
+	[% PROCESS jsString id='COVERART' jsId='' %]
+	[% PROCESS jsString id='COLLAPSE' jsId='collapse' %]
+	[% PROCESS jsString id='EXPAND' jsId='expand' %]
+	[% PROCESS jsString id='UNDOCK_PLAYER_PANEL' jsId='undock' %]
+
+	Ext.onReady(function(){
+		SqueezeJS.externalImageProxy = new Ext.Template('[% imageproxy %]?u={url}&h={size}&w={size}');
+		SqueezeJS.externalImageProxy.compile();
+	});
+</script>
+
+<div id="playerbox">
+	<div style="position:relative;">
+		<table id="ctrlBar" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="50%">
+					<table border="0" cellspacing="0" cellpadding="0" width="10%">
+						<tr>
+							<td id="ctrlPrevious"></td>
+							<td id="ctrlTogglePlay"></td>
+							<td id="ctrlNext"></td>
+							<td><img src="[% webroot %]html/images/spacer.gif" alt="" border="0" width="8" /></td>
+							<td id="ctrlRepeat"></td>
+							<td id="ctrlShuffle"></td>
+						</tr>
+					</table>
+				</td>
+
+				<td width="30%" align="right">
+					<table border="0" cellspacing="0" cellpadding="0" width="10%">
+						<tr>
+							<td id="ctrlVolumeDown"></td>
+							<td id="ctrlVolume"><img src="[% webroot %]html/images/spacer.gif" alt="" border="0" /></td>
+							<td id="ctrlVolumeUp"></td>
+						</tr>
+					</table>
+				</td>
+
+				<td width="25%" align="right">
+					<span id="ctrlPower"></span>
+				</td>
+
+				<td><img src="[% webroot %]html/images/spacer.gif" alt="" height="10" width="5" border="0" /></td>
+				<td align="right" valign="top">
+					<table border="0" cellspacing="0" cellpadding="0">
+						<tr><td>
+							<div id="ctrlUndock" [% IF !embedded %]style="visibility:hidden"[% END %]></div>
+						</td></tr>
+						
+						<tr><td>
+							<div id="ctrlCollapse"></div>
+							<div id="ctrlExpand"></div>
+						</td></tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+
+		<div id="expandedPlayerPanel">
+			<div id="ctrlCurrentArt">
+				<img src="[% webroot %]music/0/cover_96x96_p" alt="" height="96" width="96" border="0"/>
+			</div>
+
+			<div id="ctrlCurrentSongInfo">
+				<div id="ctrlCurrentTitle"></div>
+				<div id="ctrlTrackInfo" class="currentTrackInfo">
+					<div id="ctrlCurrentArtist"></div>
+					<div id="ctrlCurrentAlbum"></div>
+					<div id="ctrlBitrate"></div>
+				</div>
+				<div id="ctrlPlaytimePanel">
+					<div id="ctrlPlaytime"></div>
+					<div>
+						<div id="ctrlProgress">
+							<img src="[% webroot %]html/images/spacer.gif" class="progressLeft"/><img src="[% webroot %]html/images/spacer.gif" class="progressFillLeft"/><img src="[% webroot %]html/images/spacer.gif" class="progressIndicator"/><img src="[% webroot %]html/images/spacer.gif" class="progressFillRight"/><img src="[% webroot %]html/images/spacer.gif" class="progressRight"/>
+						</div>
+					</div>
+					<div id="ctrlPlaytimeRight">
+						<span id="ctrlRemainingTime"></span>
+						&nbsp;(<span id="ctrlPlayNum"></span>&nbsp;[% "OF" | string%]&nbsp;<span id="ctrlSongCount"></span>)
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="collapsedPlayerPanel">
+			<img src="[% webroot %]html/images/spacer.gif" class='left'>
+			<img src="[% webroot %]html/images/spacer.gif" class='icon' id="nowPlayingIcon" width="10">
+			<div id="ctrlCurrentSongInfoCollapsed"></div>
+			<div id="ctrlPlaytimeCollapsed">09:09</div>
+			<img src="[% webroot %]html/images/spacer.gif" class='right'>
+		</div>
+	</div>
+</div>
+
+[% IF !embedded %]
+	</body>
+</html>
+[% END %]

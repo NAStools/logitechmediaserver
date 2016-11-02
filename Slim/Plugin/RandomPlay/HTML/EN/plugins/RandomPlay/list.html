@@ -1,0 +1,226 @@
+[% BLOCK statusInfo %]
+	[% IF pluginRandomNowPlaying != '' %]
+		[%# Reload status and playlist to reflect any new mixes %]
+		<script type="text/javascript">
+			<!--
+			refreshStatus();
+			-->
+		</script>
+
+		<p><em>
+			[% "PLUGIN_RANDOM_GENERAL_HELP" | string %]
+			[% PROCESS randomLink type="disable" addOnly="0" %]
+		</em></p>
+	[% END %]
+[% END %]
+[% IF ajaxRequest; PROCESS statusInfo; ELSE %]
+[%- pagetitle = 'PLUGIN_RANDOMPLAY' | string; pageicon = icons.PLUGIN_RANDOMPLAY -%]
+[% pageHeaderScripts = BLOCK %]
+	<script TYPE="text/javascript">[% PROCESS html/vars.js %]</script>
+	<script type="text/javascript" src="[% webroot %]html/prototype.js?r=[% revision %]" ></script>
+	<script TYPE="text/javascript" src="[% webroot %]html/global.js?r=[% revision %]"></script>
+	<script TYPE="text/javascript" src="[% webroot %]html/common.js?r=[% revision %]"></script>
+	<script TYPE="text/javascript" src="[% webroot %]html/home.js?r=[% revision %]" ></script>
+[% END %]
+[% extJsScripts = BLOCK %]
+<script type="text/javascript">
+	var RandomPlay = function(){
+		return {
+			mix: function(type, addOnly) {
+				SqueezeJS.UI.setProgressCursor();
+				document.genreForm.type.value = type;
+				document.genreForm.addOnly.value = addOnly;
+				Ext.get('randomStatus').load(
+					document.genreForm.action,
+					'ajaxRequest=1&' + Ext.Ajax.serializeForm('genreForm'),
+					refreshStatus,
+					true
+				);
+			}
+		}
+	}();
+</script>
+[% END %]
+[%- pwd_list = BLOCK -%]/
+	<a href="[% webroot %]plugins/RandomPlay/list.html?player=[% player | uri %]">
+		[% "PLUGIN_RANDOMPLAY" | string %]
+	</a>
+[% END -%]
+[%- pageHeaderInfo = BLOCK %]
+	[%- IF pluginRandomNowPlaying != '' %]
+		<strong>[% "NOW_PLAYING" | string %][% "COLON" | string %]</strong>
+		<span class="exboldnowplaying">[% "PLUGIN_RANDOM_" _ pluginRandomNowPlaying | upper | string %]</span>
+	[% END -%]
+[% END -%]
+[%- PROCESS pageheader.html %]
+
+[%# Following block generates links that submit the form if javascript is enabled.  This allows
+     users to make setting changes then click on a new mix without having to press the submit button. %]
+[% BLOCK href %]
+[% IF useExtJS %]
+href="javascript:RandomPlay.mix('[% type %]', '[% addOnly %]');"
+[% ELSE %]
+href="[% webroot %]plugins/RandomPlay/mix.html?type=[% type %]&amp;player=[% player | uri %]&amp;addOnly=[% addOnly %]"
+		 onclick='document.genreForm.type.value = "[% type %]";
+							document.genreForm.addOnly.value = [% addOnly %]
+							document.genreForm.submit();
+							refreshStatus(); return false;'
+[% END %]
+[% END %]
+
+[% BLOCK randomLink %]
+	[% IF addOnly;link='addlink';ELSE;link='playlink';END %]
+	[% IF type == 'disable' %]
+		<a [% PROCESS href %] >[% "PLUGIN_RANDOM_" _ pluginRandomNowPlaying _ "_DISABLE" | string %]</a>
+	[% ELSE %]
+		[% WRAPPER $link noTarget=1 %]
+			[% PROCESS href %]
+		[% END %]
+	[% END %]
+[% END %]
+
+[% IF player == '' %]
+	<p>[% "NO_PLAYER_FOUND" | string %]</p>
+[% ELSE %]
+
+	<form action="[% webroot %]plugins/RandomPlay/settings.html" name="genreForm" id="genreForm">
+		<input type="hidden" name="type" value="">
+		<input type="hidden" name="addOnly" value="0">
+		<input type="hidden" name="player" value="[% player %]">
+
+		<p>[% "PLUGIN_RANDOM_CHOOSE_BELOW" | string %]</p>
+
+		[% odd = 1 %]
+		[%- WRAPPER contentcontainer listid = "inlineList" %]
+		[% FOREACH type IN mixTypes %]
+			[% mixTypeMap.type; title = 'PLUGIN_RANDOM_' _ type _ '_WEB' | string %]
+			[% BLOCK controls %]
+				[%
+					itemobj = {
+						url   = "randomplay://${type}" 
+						title = title
+					};
+					PROCESS favoritescontrol isFavorite = favorites.${type}
+				%]
+				[% PROCESS randomLink type="$type" addOnly="0" %]
+				[% PROCESS randomLink type="$type" addOnly="1" %]
+			[% END %]
+			[%- WRAPPER contentitem controls='controls' %]
+				[% title %]
+			[% END %]
+			[% odd = (not odd) %]
+		[% END %]
+		[% END %]
+
+		<div id="randomStatus">
+		[% PROCESS statusInfo %]
+		</div>
+
+		<hr>
+
+		<p>
+			<input class="stdedit" type="checkbox" name="continuousMode" id="continuousMode" value="1"
+			[% IF pluginRandomContinuousMode %]checked[% END %]>
+			<label for="continuousMode">[% "PLUGIN_RANDOM_CONTINUOUS_MODE" | string %]</label>
+		</p>
+
+
+
+		<p>[% "PLUGIN_RANDOM_GENRE_FILTER_WEB" | string %]</p>
+	
+		[% odd = 1 %]
+		<table border="0" width="100%">[% USE table pluginRandomGenreListSort, cols=2, pad=0 %]
+			[%- FOREACH genrerow = table.rows %]
+				<tr class="[% odd ? "odd" : "even" %]">
+				[%- FOREACH genre = genrerow %]
+				[%- genreid = "genre_" _ pluginRandomGenreList.item("$genre").id %]
+					<td><input type="checkbox" name="[% genreid %]" id="[% genreid %]" value="1" [% pluginRandomGenreList.item("$genre").enabled ? "checked" : "" %] onclick="changeNumSelected(this)">
+					<label for="[% genreid %]">[% pluginRandomGenreList.item("$genre").name | html %]</label></td>
+				[%- END %]
+				</tr>
+				[% odd = (not odd) %]
+			[%- END %]
+		</table>
+
+		<script type="text/javascript">
+		<!--
+			var f = document.genreForm;
+			var numSelected = 0;
+			var numCheckBoxes = 0;
+			var selectAllString = '[% "PLUGIN_RANDOM_SELECT_ALL" | string %]';
+			var selectNoneString = '[% "PLUGIN_RANDOM_SELECT_NONE" | string %]';
+
+			// Work out how many checkboxes are initially selected
+			for (var i=0; i < f.elements.length; i++) {
+				if (f.elements[i].type == 'checkbox') {
+					numCheckBoxes++;
+					if (f.elements[i].checked) {
+						numSelected++;
+					}
+				}
+			}
+
+			// Select none if all are selected, else select all
+			function selectAll() {
+				var newState = numSelected != numCheckBoxes;
+
+				for (var i=0; i < f.elements.length; i++) {
+					if (f.elements[i].type == 'checkbox' && f.elements[i].name != 'continuousMode') {
+						f.elements[i].checked = newState;
+					}
+				}
+				if (newState) {
+					numSelected = numCheckBoxes;
+					f.selectAllButton.value = selectNoneString;
+				} else {
+					numSelected = 0;
+					f.selectAllButton.value = selectAllString;
+				}
+			}
+
+			// Increase/decrease num selected every time a checkbox changes
+			function changeNumSelected(checkBox) {
+				if (checkBox.checked) {
+					numSelected++;
+				} else {
+					numSelected--;
+				}
+
+				if (numSelected == numCheckBoxes) {
+				  f.selectAllButton.value = selectNoneString;
+				} else {
+					f.selectAllButton.value = selectAllString;
+				}
+			}
+
+			// Write the button using js, so it won't appear if js isn't enabled/available
+			document.write('<p><input type="button" value="'
+						   + (numSelected == numCheckBoxes ? selectNoneString : selectAllString)
+										 + '" id="selectAllButton" onclick="selectAll()"></p>');
+		// -->
+		</script>
+
+		[% IF libraries %]
+			<p>[% "PLUGIN_RANDOM_LIBRARY_FILTER" | string %][% "COLON" | string %]
+				<select class="stdedit" name="useLibrary" id="useLibrary">
+					<option value="">&nbsp;</option>
+					[% FOREACH value = libraries.keys %]
+					<option [% IF value == pluginRandomUseLibrary %]selected[% END %] value="[% value %]">[% libraries.$value %]</option>
+					[% END %]
+				</select>
+			</p>
+		[% END %]
+
+		<p>
+			[% "PLUGIN_RANDOM_BEFORE_NUM_TRACKS" | string %]
+			<input class="stdedit" type="text" size="2" name="numTracks" value="[% pluginRandomNumTracks %]">
+			[% "PLUGIN_RANDOM_AFTER_NUM_TRACKS" | string %]
+			<input class="stdedit" type="text" size="2" name="numOldTracks" value="[% pluginRandomNumOldTracks %]">
+			[% "PLUGIN_RANDOM_AFTER_NUM_OLD_TRACKS" | string %]
+		</p>
+
+		<p><input type="submit" value="[% "SAVE" | string %]"></p>
+	</form>
+[% END %]
+[% PROCESS pagefooter.html %]
+[% END %]

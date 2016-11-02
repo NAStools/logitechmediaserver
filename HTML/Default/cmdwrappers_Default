@@ -1,0 +1,171 @@
+[%- FILTER null %]
+	[% debug = 0 %]
+	[% USE Math %]
+
+	[% controlGraphics = 1 %]
+	[% browserTarget = "browser" %]
+	[% useAJAX = 0 %]
+	[% useExtJS = 1 %]
+	[% crumbSeparator = "&gt;" %]
+	[% resizeParam = "o" %]
+	[% bgcolor = "" %]
+	[% cmdLinkIconSize = 17 %]
+	[%
+	   stringUcPLAY            = stringPLAY | ucfirst;
+	   stringUcADD_TO_PLAYLIST = "ADD_TO_PLAYLIST" | string | ucfirst;
+	   stringUcMORE            = "MORE" | string | ucfirst;
+	   stringUcPLAY_NEXT       = "PLAY_NEXT" | string | ucfirst;
+	   stringUcREMOVE_FROM_PLAYLIST = stringREMOVE_FROM_PLAYLIST | ucfirst;
+	   stringUcPLUGIN_FAVORITES_ADD = "PLUGIN_FAVORITES_ADD" | string | ucfirst;
+	   stringUcPLUGIN_FAVORITES_REMOVE = "PLUGIN_FAVORITES_REMOVE" | string | ucfirst;
+	%]
+
+	[% BLOCK cmdlink -%]
+		[%
+		IF !stringCache.$cmdtitle;
+			title = cmdtitle | string | ucfirst;
+			stringCache.$cmdtitle = title;
+		END;
+		cmdtitle = stringCache.$cmdtitle;
+		%]
+		[% IF content %]<a [% content %] >[% END %]<img src="[% webroot %]html/images/[% cmdimage %]" class="cmdLinkIcon" width="[% cmdLinkIconSize %]" height="[% cmdLinkIconSize %]" alt="[% cmdtitle %]" title="[% cmdtitle %]"/>[% IF content %]</a>[% END %]
+	[%- END %]
+
+	[% # the following are all optimized (hardcoded) versions of EN, to prevent the repeated string filtering etc.
+	   # they are called very often on browse pages - can be deleted without any loss (except performance) %]
+	[% BLOCK playlink -%]
+		<a [% content %] ><img src="[% webroot %]html/images/b_play.gif" class="cmdLinkIcon" width="17" height="17" alt="[% stringUcPLAY %]" title="[% stringUcPLAY %]"/></a>
+	[%- END %]
+	
+	[% BLOCK addlink -%]
+		<a [% content %] ><img src="[% webroot %]html/images/b_add.gif" class="cmdLinkIcon" width="17" height="17" alt="[% stringUcADD_TO_PLAYLIST %]" title="[% stringUcADD_TO_PLAYLIST %]"/></a>
+	[%- END %]
+	
+	[% BLOCK removelink -%]
+		<a [% content %] ><img src="[% webroot %]html/images/b_delete.gif" class="cmdLinkIcon" width="17" height="17" alt="[% stringREMOVE_FROM_PLAYLIST %]" title="[% stringREMOVE_FROM_PLAYLIST %]"/></a>
+	[%- END %]
+	
+	[% BLOCK insertlink -%]
+		<a [% content %] ><img src="[% webroot %]html/images/b_queue.gif" class="cmdLinkIcon" width="17" height="17" alt="[% stringUcPLAY_NEXT %]" title="[% stringUcPLAY_NEXT %]"/></a>
+	[%- END %]
+	
+	[% BLOCK morelink -%]
+		<a [% content %] ><img src="[% webroot %]html/images/b_mmmix.gif" class="cmdLinkIcon" width="17" height="17" alt="[% stringUcMORE %]" title="[% stringUcMORE %]"/></a>
+	[%- END %]
+	
+	[% BLOCK favaddlink -%]
+		<a [% content %] ><img src="[% webroot %]html/images/b_favorite.gif" class="cmdLinkIcon" width="17" height="17" alt="[% stringUcPLUGIN_FAVORITES_ADD %]" title="[% stringUcPLUGIN_FAVORITES_ADD %]"/></a>
+	[%- END %]
+	
+	[% BLOCK favdellink -%]
+		<a [% content %] ><img src="[% webroot %]html/images/b_favorite_remove.gif" class="cmdLinkIcon" width="17" height="17" alt="[% stringUcPLUGIN_FAVORITES_REMOVE %]" title="[% stringUcPLUGIN_FAVORITES_REMOVE %]"/></a>
+	[%- END %]
+
+	[% BLOCK cmdHRef -%]onclick="SqueezeJS.UI.setProgressCursor();SqueezeJS.Controller.playlistRequest('[%
+		IF numcmdFor.$cmdType; # better way to determine this?
+			PROCESS cmdNumericQuery;
+		ELSIF (!item.searchResult && (itemobj.isRemoteURL || !attributes || itemobj.content_type() == 'dir'));
+			PROCESS cmdRemoteURLQuery;
+		ELSE;
+			PROCESS cmdLocalQuery;
+		END; %]&amp;player=[% playerURI %]', true)"
+	[%- END %]
+
+
+	[% BLOCK contentitem -%]
+	<div class="selectorMarker [% addClasses %]" onmouseover="Highlighter.highlight(this);" id="db[% Math.rand(1) %]_selector">
+		<div class="[% lineclass || 'browsedbListItem' %][% IF (hasArtwork && !artwork) %] itemWithCover[% END %]" [%- IF anchor %]id="anchor[% anchor | uri %]"[%- END -%]>
+			<div style="overflow:auto">[%- content %]</div>
+			<span class="browsedbControls">
+				[%- IF rightcontrols && rightcontrols != controls; PROCESS $rightcontrols; END %]
+				[%- IF leftcontrols && leftcontrols != controls; PROCESS $leftcontrols; END %]
+				[%- IF controls; PROCESS $controls; END %]
+			</span>
+		</div>
+	</div>
+	[%- END %]
+
+
+	[% BLOCK galleryitem; itemSize = item.size -%]
+	<li class="thumbwrap" [%- IF anchor %]id="anchor[% anchor | uri %]"[%- END -%] style="width:[% itemSize + 20 %]px;">
+		<div class="selectorMarker" onmouseover="Highlighter.highlight(this);" id="db[% Math.rand(1) %]_selector"><div class="thumbwrap">
+
+			<div class="thumbArtwork" style="width:[% itemSize %]px;height:[% itemSize %]px;">
+				[% IF item.weblink %]
+					<a href="[% item.weblink %]" target="_blank" [% slideshowHelpers %]>
+				[% ELSIF item.simpleAlbumLink %]
+					<a href="[% webroot %]clixmlbrowser/clicmd=browselibrary+items&amp;mode=tracks&amp;linktitle=[% stringALBUM %]%20([% item.album | uri %])&amp;album_id=[% item.id %]&amp;player=[% playerURI %]/" class="browseItemLink">
+				[% ELSIF item.type != 'text' %]
+					<a href="[% path %]?[% searchquery %]index=[% index _ (start + loop.index) %]&amp;player=[% playerURI %][% IF sess %]&amp;sess=[% sess; END %]" class="browseItemLink">
+				[% ELSIF item.type == "text" && item.image %]
+					<a href="[% UNLESS item.image.match("^(\/|http)") %][% webroot %][% END %][% item.image %]" target="_blank" [% slideshowHelpers %]>
+				[% END %]
+				[% PROCESS "thumbnailItemImg" item.icon = (item.icon || "/music/0/cover") height="$itemSize" style = 'style="max-width:' _ itemSize _ 'px;max-height:' _ itemSize _ 'px;"' %]</a>
+
+				<span class="browsedbControls">
+					[%- PROCESS $controls -%]
+				</span>
+			</div>
+
+			<div class="artworkText" style="width:[% itemSize %]px;"><span style="width:[% itemSize %]px;">
+				[%- content %]
+			</span></div>
+
+		</div></div>
+	</li>
+	[%- END %]
+
+	[% BLOCK browsecontrols %]
+		[%- header='1' width=cmdLinkIconSize height=cmdLinkIconSize -%]
+		[% IF showplayall -%]
+			[% WRAPPER playlink noTarget = 1 %]href="[% playallhref %]"[% END %]
+			[% WRAPPER addlink  noTarget = 1 %]href="[% addallhref %]"[% END %]
+		[% ELSIF showdescend && href -%]
+			[%- WRAPPER descendlink %][%- href -%][% END -%]
+			[% IF showplay -%]
+				[% WRAPPER playlink %][% PROCESS cmdHRef cmdType='play' %][% END %]
+				[% WRAPPER addlink  %][% PROCESS cmdHRef cmdType='add'  %][% END %]
+			[%- END %]
+		[% ELSE %]
+			[% PROCESS favoritescontrol %]
+			[% WRAPPER playlink %][% PROCESS cmdHRef cmdType='play' %][% END %]
+			[% WRAPPER addlink  %][% PROCESS cmdHRef cmdType='add'  %][% END %]
+			[% IF allLinks; WRAPPER removelink %][% PROCESS cmdHRef cmdType='remove' %][% END; END %]
+		[%- END %]
+	[%- END %]
+
+	[%# This is to build the pagebar or alphapagebar, it should be PROCESSed %]
+	[% BLOCK pagebar %]
+		[%- IF NOT pageinfo.alphamap; PROCESS pagebarcalc pagesperbar = 15; END %]
+		<div class="pagebar" id="pagebar">
+			[% IF pagesstart %]<a class="btn" href="[% IF useJS %]javascript:[% useJS %]('[% END %][% pageinfo.path %]?start=0[% pageinfo.otherparams | html %][% IF sess %]&amp;sess=[% sess; END %][% IF useJS %]')[% END %]"><img src="[% webroot %]html/images/b_first.gif" alt="[% stringFIRST %]" title="[% stringFIRST %]" width="13" height="13" align="top"></a> [% END %]
+			[% IF pageprev || pageprev == '0' %]<a class="btn" href="[% IF useJS %]javascript:[% useJS %]('[% END %][% pageinfo.path %]?start=[% pageprev %][% pageinfo.otherparams | html %][% IF sess %]&amp;sess=[% sess; END %][% IF useJS %]')[% END %]"><img src="[% webroot %]html/images/b_previous.gif" alt="[% stringPREVIOUS %]" title="[% stringPREVIOUS %]" width="13" height="13" align="top"></a> [% END %]
+			[%- IF pageinfo.alphamap %]
+				[%- FOREACH alphakey = pageinfo.alphaindex -%]
+					[%- curpage = (pageinfo.alphamap.item(alphakey) == pageinfo.startitem) -%]
+					[%- IF curpage %]<span onclick="Browse.gotoAnchor('[% alphakey | uri %]');">&nbsp;[% alphakey | html %]</span><wbr/>
+					[%- ELSE %]<a href="[% IF useJS %]javascript:[% useJS %]('[% END %][% pageinfo.path | html %]?start=[% pageinfo.alphamap.item(alphakey) %][% pageinfo.otherparams | html %][% IF sess %]&amp;sess=[% sess; END %]#[% alphakey | uri %][% IF useJS %]')[% END %]">&nbsp;[% alphakey | html %]</a><wbr/>
+					[%- END %]
+				[%- END %]
+			[%- ELSE %]
+				[%- FOREACH ind=[pagebarstart..pagebarend] -%]
+					[%- IF ind == pageinfo.currentpage %]<span>&nbsp;[% ind + 1 %]</span><wbr/>
+					[%- ELSE %]<a href="[% IF useJS %]javascript:[% useJS %]('[% END %][% pageinfo.path  | html %]?start=[% ind * pageinfo.itemsperpage %][% pageinfo.otherparams  | html %][% IF sess %]&amp;sess=[% sess; END %][% IF useJS %]')[% END %]">&nbsp;[% ind + 1 %]</a><wbr/>
+					[%- END %]
+				[% END %]
+			[%- END %]
+			[% IF pagenext %]<a class="btn" href="[% IF useJS %]javascript:[% useJS %]('[% END %][% pageinfo.path %]?start=[% pagenext %][% pageinfo.otherparams | html %][% IF sess %]&amp;sess=[% sess; END %][% IF useJS %]')[% END %]"><img src="[% webroot %]html/images/b_next.gif" alt="[% stringNEXT %]" title="[% stringNEXT %]" width="13" height="13" align="top"></a> [% END %]
+			[% IF pagesend %]<a class="btn" href="[% IF useJS %]javascript:[% useJS %]('[% END %][% pageinfo.path %]?start=[% pagesend %][% pageinfo.otherparams | html %][% IF sess %]&amp;sess=[% sess; END %][% IF useJS %]')[% END %]"><img src="[% webroot %]html/images/b_last.gif" alt="[% stringLAST %]" title="[% stringLAST %]" width="13" height="13" align="top"></a> [% END %]
+		</div>
+	[% END %]
+
+	[% BLOCK songInfoPlayLinks %]
+		<div id="songInfoPlayLinks">
+			[% PROCESS browsecontrols %]
+		</div>
+	[% END %]
+
+	[% BLOCK jsString %]
+		SqueezeJS.Strings['[% IF jsId; jsId; ELSE; id | lower; END %]'] = "[% id | string | replace('"', '\"') %]";
+	[% END %]
+[% END -%]

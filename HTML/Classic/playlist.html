@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	[% pagetitle = "BROWSE_MUSIC" | string %]
+	[% PROCESS standardheader.html %]
+	<script TYPE="text/javascript">[% PROCESS html/vars.js %]</script>
+	<script TYPE="text/javascript" src="[% webroot %]html/common.js?r=[% revision %]"></script>
+</head>
+
+<body onload="javascript:to_currentsong()">
+
+<div id="playList">
+	[% IF playercount == '0' %]
+	[% ELSE %]
+		<span id="currentPlaylistLabel">[% "CURRENT_PLAYLIST" | string %][% stringCOLON %][% IF current_playlist %][% current_playlist_name %] [% IF current_playlist_modified %]([% "MODIFIED" | string %])[% END %][% END %]</span>
+		<span id="currentPlaylistCommands">[% img = '' %][% IF cansave %][% PROCESS savePlaylistLink %] <span class="bar">|</span> [% END %][% PROCESS downloadPlaylistLink %] <span class="bar">|</span> [% PROCESS clearPlaylistLink %]</span>
+	[% END %]
+	[% IF pageinfo.totalpages && pageinfo.totalpages > 1 %][% PROCESS pagebar %][% END %]
+	<div class="browsedbList">
+		[% IF playercount == '0' %]
+			<p>[% "NO_PLAYER_DETAILS" | string %]</p>
+		[% ELSE %]
+			[% IF playlist_items %]
+				[% FOREACH item = playlist_items %]
+					[% PROCESS status_list.html %]
+				[% END %]
+			[% ELSE %]<p>[% "EMPTY" | string %]<a name="currentsong"></a></p>[% END %]
+		[% END %]
+	</div>
+	[% IF pageinfo.totalpages && pageinfo.totalpages > 1 %][% PROCESS pagebar %][% END %]
+
+</div>
+</body>
+</html>

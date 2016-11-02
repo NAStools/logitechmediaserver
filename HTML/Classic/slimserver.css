@@ -1,0 +1,740 @@
+body, table, input, select, textarea, select, p, li {
+	color: #333;
+	font-size: 10px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background: #FFFFFF;
+}
+
+/* Hack for IE to prevent horizontal scrollbars with frames */
+* html {
+	overflow-y: scroll;
+}
+
+.exlisting, p, ol, ul, dl, dd, td, .stdclick, .stdedit, .exboldlisting, th, h5 {
+	color: #666;
+}
+
+.faq p, h5 {
+	font-size: 11px;
+}
+
+#viewSelect
+{
+	position: absolute;
+	top: 115px;
+	right: 15px;
+	padding-right: 8px;
+	padding-top: 6px;
+}
+
+#viewSelect img {
+	vertical-align: middle;
+}
+
+a {
+	color: #333;
+	text-decoration: none;
+	outline: none;
+}
+
+a:active {
+	color: #555;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.statusarea {
+	color: #111;
+}
+
+.exnowplaying, .exboldnowplaying, .textfield, pre, code {
+	color: #111;
+}
+
+.exboldnowplaying, .exboldlisting, th, h3, h4, h5 {
+	font-weight: bold;
+}
+
+.attributeBold, #playingStatus, #currentPlaylistLabel, #currentPlaylistCommands, .pagebar, .valueBold, .valueSelected, .bar {
+	color: #000000;
+	font-weight: bold;
+	font-style: normal;
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 9px;
+	font-stretch: ultra-condensed;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+.pagebar {
+	font-weight: normal !important;
+}
+
+.attributeBold, #playingStatus, #currentPlaylistLabel, #currentPlaylistCommands {
+	margin-left: 0px;
+	display: inline;
+	white-space: nowrap;
+}
+
+#currentPlaylistLabel {
+	position: relative;
+	left: 9px;
+}
+
+#currentPlaylistCommands {
+	position: absolute;
+	right: 9px;
+}
+
+.homeMenuSection div, .settingSection div, #playingStatus, #currentPlaylistLabel {
+	color: #737373;
+}
+
+#innerblock {
+	overflow: auto;
+	width: 100%;
+	height: 50%;
+}
+
+#prefsSubmit {
+	border-top: 2px solid #c5c5c5;
+	background-color: #ececec;
+	padding-bottom: 5px;
+}
+
+.valueBold, .valueSelected, .bar {
+	color: #c5c5c5;
+	padding-right: 1px;
+	padding-left: 1px;
+	display: inline;
+	white-space: nowrap;
+}
+
+.valueSelected {
+	color: #ff7f00;
+}
+
+.bar {
+	font-weight: normal;
+}
+
+.largeAttribute {
+	color: #c5c5c5;
+	font-weight: normal;
+	font-style: normal;
+	font-family: Verdana, Helvetica, sans-serif;
+	text-decoration: none;
+	white-space: nowrap;
+	font-size: 17px;
+}
+
+pre, code, h3 {
+	font-size: 11px;
+}
+
+.textfield {
+	line-height: 0px;
+	background-color: #f3f3f3;
+}
+
+table, td, tr, form {
+	padding: 0px;
+	margin: 0px;
+	vertical-align: top; 
+	text-align: left;
+}
+
+.lightgrey, .odd {
+	background-color: #ececec;
+}
+
+.medgrey {
+	background-color: #c5c5c5;
+}
+
+.darkgrey {
+	background-color: #333333;
+}
+
+.dmedgrey {
+	background-color: #737373;
+}
+
+.greyline {
+	background-color: #9D9D9D;
+}
+
+.odd {
+}
+
+.even {
+	background-color: #ffffff;
+}
+
+img {
+	border-style: none;
+}
+
+.nowrap {
+	white-space: nowrap;
+}
+
+.PrefExtValue {
+/*	width: 200px; */
+	width: 80%;
+}
+
+div#topGraphicBox {
+	background: url(html/images/topbar.gif) repeat-x top left;
+	width: 100%;
+}
+
+div#player_logo  {
+	padding-left: 6px;
+	height: 36px;
+}  
+
+div#sdi_logo {
+	padding-left: 6px;
+	height: 36px;
+}
+
+div#topGraphicMenu1 {
+	background-color: #737373;
+	height: 60px;
+	width: auto;
+	margin-left: 8px;
+	margin-right: 8px;
+	border-bottom: 1px #9D9D9D solid;
+}
+
+div#topGraphicMenu2 {
+	background-color: #737373;
+	height: 19px;
+	width: auto;
+	margin-right: 8px;
+	margin-left: 8px;
+}
+
+div#topGraphicMenu3 {
+	background-color: #c5c5c5;
+	height: 44px;
+	width: auto;
+	margin-right: 8px;
+	margin-left: 8px;
+}
+
+div#topGraphicMenu1 .largeAttribute {
+	padding-top: 5px;
+	margin-left: 7px;
+}
+
+#sdi_logo img {
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+#player_logo img {
+	margin-top: 9px;
+	margin-left: 9px;
+}
+
+div#topGraphicBox #playerChooser {
+	position: absolute;
+	right: 20px;
+	top: 10px;
+}
+
+div#topGraphicMenu1 #powerButtons {
+	position: absolute;
+	right: 18px;
+	top: 56px;
+	white-space: nowrap;
+}
+
+div#topGraphicMenu1 #transportButtons {
+	left: 18px;
+	position: absolute;
+	top: 76px;
+	white-space: nowrap;
+}
+
+div#topGraphicMenu1 #volumeButtons {
+	position: absolute;
+	right: 18px;
+	top: 76px;
+	white-space: nowrap;
+}
+
+div#topGraphicMenu2 #repeatButtons {
+	position: absolute;
+	left: 18px;
+	top: 100px;
+	white-space: nowrap;
+}
+
+div#topGraphicMenu2 #shuffleButtons {
+	position: absolute;
+	right: 18px;
+	top: 100px;
+	white-space: nowrap;
+}
+
+div#topGraphicMenu3 #playingStatus {
+	position: absolute;
+	left: 15px;
+	top: 121px;
+}
+
+div#topGraphicMenu3 #playingSong {
+	position: absolute;
+	left: 15px;
+	top: 136px;
+	color: #111;
+	font-weight: bold;
+	height: 22px;
+	overflow: hidden;
+}
+
+div#topGraphicMenu3 #statusMessage {
+	padding-left: 7px;
+	padding-top: 6px;
+	color: #111;
+	float: left;
+}
+
+div#statusMessage form{
+	padding-top: 2px;
+}
+
+div#topGraphicMenu3 #statusSongRemoveButton {
+	position: absolute;
+	right: 18px;
+	top: 131px;
+}
+
+div#homeMenu {
+	background-color: #ffffff;
+	height: 0;
+	width: auto;
+	margin-top: 5px;
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
+.homeMenuSection div,.settingSection .groupHead, .settingSection .prefHead {
+	/* home menu list header */
+	background-color: #ececec;
+	height: 13px;
+	padding: 8px 6px 4px;
+	font-weight: bold;
+	font-size: 9px;
+}
+
+.settingGroup {
+	margin-bottom: 10px;
+}
+
+.settingSection img.playericon {
+	vertical-align: middle;
+}
+
+#innerSettingsBlock {
+	overflow: auto;
+	width: 100%;
+	height: 50%;
+}
+
+.prefHead {
+	height: 13px;
+	padding: 8px 6px 2px 0px;
+	font-weight: bold;
+	font-size: 9px;
+	margin-top: 6px;
+	margin-bottom: 6px;
+	text-transform: uppercase;
+}
+
+.groupHead {
+	margin-top: 6px;
+	margin-bottom: 6px;
+	text-transform: uppercase;
+}
+
+.prefDesc,.groupDesc,.groupHead {
+	padding-bottom: 10px;
+}
+
+.homeMenuSection ul {
+	/* the list of home menu items */
+	background-color: #ffffff;
+	padding: 0px;
+	margin: 8px 28px;
+}
+
+#songInfo {
+	height: auto;
+}
+
+#songInfo {
+	/* the list of song info items */
+	padding: 0px;
+	list-style: none;
+	margin: 8px;
+}
+
+#songInfo div {
+	padding-top: 5px;
+	clear: left;
+}
+
+.songInfoTitle {
+	float: left;
+	padding: 0px;
+	width: 25%;
+}
+
+#COVERART .songInfoText {
+	position: absolute;
+	padding: 0;
+	margin: 0;
+	top: 80px;
+	left: 10px;
+	z-index: 99;
+}
+
+#browsedbList #COVERART .songInfoText {
+	top: expression( "0px" ); /* dirty IE method */
+}
+
+#COVERART .songInfoText img {
+	max-width: 150px;
+	max-height: 150px;
+	width: expression( "150px" ); /* dirty IE workaround */
+	height: expression( "150px" );
+}
+
+#linkedSongInfoItems {
+	top: 0px;
+	padding-left: 160px;
+	padding-top: 0px !important;
+	min-height: 165px;
+	height: expression( "165px" ); /* dirty IE method */
+	position: relative;
+	z-index: 999;
+}
+
+#linkedSongInfoItems a {
+	font-weight: bold;
+}
+
+#linkedSongInfoItems img {
+	vertical-align: middle;
+}
+
+#linkedSongInfoItems .songInfoTitle {
+	text-align: left;
+	width: auto;
+	padding-right: 5px;
+}
+
+.browsedbListItem, .progressItem {
+	position: relative;
+	padding: 6px;
+	padding-right: 80px;
+}
+
+.progressBar {
+	padding: 6px 0;
+}
+
+.browsedbListItemFullWidth {
+	position: relative;
+	padding: 6px;
+	padding-right: 0px;
+}
+
+#currentListItem {
+	border: 1px solid #888;
+}
+
+.browsedbControls {
+	position: absolute;
+	top: 0px;
+	padding-top: 6px;
+	right: 10px;
+}
+
+.browsedbRightControls {
+	position: absolute;
+	top: 0px;
+	padding-top: 6px;
+	right: 10px;
+}
+
+.browsedbLeftControls {
+	padding-top: 6px;
+}
+
+.playlistControls {
+	position: absolute;
+	top: 0px;
+	padding-top: 6px;
+	right: 10px;
+}
+
+div#browsedbList {
+	clear: left;
+	width: auto;
+	height: auto;
+}
+
+div#browsedbHeader {
+	margin-left:0px;
+}
+
+div#songInfoHeader a{
+	margin-left:5px;
+	padding: 5px;
+}
+
+.pagebar {
+	clear: left;
+	margin-left:2px;
+	margin-top:0px;
+}
+
+#pageHeaderInfo {
+	margin-left:7px;
+	margin-top: 6px;
+}
+
+div#playList {
+	background-color: #ffffff;
+	position: relative;
+	height: auto;
+	width: auto;
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
+.searchHeader {
+	margin-top: 20px;
+}
+
+.browsedbArtItem {
+	position: relative;
+	float:left;
+	margin:0px;
+	padding: 6px;
+}
+
+div#playList #browsedbHeader {
+	position: relative;
+}
+
+/* Song information page */
+#songInfo {
+	position: relative;
+}
+
+#songInfoPlayLinks div, #xmlInfoPlayLinks div,
+.songInfoText, .songInfoTitle {
+	padding-bottom: 5px;
+}
+
+#songInfoPlayLinks {
+	margin-bottom: 10px;
+}
+
+#xmlInfoPlayLinks {
+	margin-left: 160px;
+}
+
+#COVERART .songInfoText {
+	position: absolute;
+	padding: 0;
+	margin: 0;
+	top: 10px;
+	left: 5px;
+	z-index: 99;
+}
+
+#COVERART .songInfoText img {
+	max-width: 150px;
+	max-height: 150px;
+	width: expression( "150px" ); /* dirty IE workaround */
+	height: expression( "150px" );
+}
+
+#linkedSongInfoItems {
+	top: 0px;
+	padding-left: 160px;
+	padding-top: 0px !important;
+	min-height: 165px;
+	height: expression( "165px" ); /* dirty IE method */	
+	position: relative;
+}
+
+#songInfo #linkedSonInfoItems {
+	padding-top: 0px;
+}
+
+#linkedSongInfoItems a {
+	font-weight: bold;
+}
+
+#linkedSongInfoItems img {
+	vertical-align: middle;
+}
+
+#linkedSongInfoItems .songInfoTitle {
+	text-align: left;
+	width: auto;
+	padding-right: 5px;
+}
+
+#songInfoItems {
+	display: table;
+}
+
+#songInfoItems div {
+	display: table-row;
+}
+
+.thumbnail {
+	padding: 0px;
+	text-align: center;
+}
+
+.artworkControls {
+	padding: 0px;
+}
+
+.artworkControls img {
+	margin-left: 5px;
+	padding-top: 6px;
+}
+
+.artworkText {
+	text-align: center;
+}
+
+.artworkImage {
+	cursor: pointer;
+}
+
+.thumbwrap {
+	display: inline-block;
+	margin: 0px;
+	padding-left: 4px;
+	padding-right: 0px;
+	padding-top: 10px;
+}
+
+.thumbwrap li {
+	display: -moz-inline-box;  /* Moz */
+	display: inline-block;  /* Op, Saf, IE \*/
+	vertical-align: top;
+	padding-right: 6px;
+	padding-top: 6px;
+}
+
+.thumbwrap a span {
+	overflow: hidden;
+}
+
+div#albumPopup {
+	position: fixed;
+	z-index: 90;
+	top: 10%;
+	left: 15%;
+	width: 70%;
+	max-height: 70%;
+	background-color: white;
+	color: black;
+	padding: 5px;
+	border: 1px solid grey;
+	overflow: auto;
+}
+
+div#closeAlbumPopup {
+	position: relative;
+	height: 12px;
+}
+
+#closeAlbumText {
+	float: right;
+	border: 1px solid #888;
+}
+
+div#albumBackground {
+	position: fixed;
+	z-index: 60;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	bottom: 0%;
+	background-color: silver;
+	opacity:.75;
+	filter: alpha(opacity=75);
+	-moz-opacity: 0.75;
+}
+
+.linkbtn {
+	color: black;
+	cursor: pointer;
+}
+
+.waitlinkbtn {
+	background-image:url("html/images/b_wait2.gif");
+	background-repeat:no-repeat;
+	cursor: pointer;
+	padding: 0px 5px 1px 5px;
+}
+
+.closelinkbtn {
+	background-image:url("html/images/b_ascend.gif");
+	background-repeat:no-repeat;
+	cursor: pointer;
+	padding: 0px 5px 1px 5px;
+}
+
+div.fileselectorautocomplete {
+	position: absolute;
+	width: 250px;
+	height: 100px;
+	overflow: auto;
+	background-color: white;
+	border: 1px solid #888;
+	margin: 0px;
+	padding: 0px;
+}
+
+div.fileselectorautocomplete ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+div.fileselectorautocomplete ul li.selected {
+	background-color: navy;
+	color: white;
+}
+
+div.fileselectorautocomplete ul li {
+	list-style-type: none;
+	display: block;
+	margin: 0;
+	padding: 2px;
+	height: 12px;
+	cursor: pointer;
+	white-space: nowrap
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<extension>
+        <id>D267DE2D-7544-4708-AB82-58CCC078D454</id>
+        <name>PLUGIN_XPL</name>
+        <module>Slim::Plugin::xPL::Plugin</module>
+        <version>1.0</version>
+        <description>PLUGIN_XPL</description>
+        <creator>Logitech</creator>
+
+	<defaultState>disabled</defaultState>
+        
+	<homepageURL>http://www.mysqueezebox.com/support</homepageURL>
+	<optionsURL>plugins/xPL/settings/basic.html</optionsURL>
+	<type>2</type><!-- type=extension -->
+
+        <targetApplication>
+  	        <id>Logitech Media Server</id>
+                <minVersion>7.0a</minVersion>
+                <maxVersion>*</maxVersion>
+        </targetApplication>
+
+</extension>

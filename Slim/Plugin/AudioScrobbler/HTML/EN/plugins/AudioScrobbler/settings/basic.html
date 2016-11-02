@@ -1,0 +1,43 @@
+[% PROCESS settings/header.html %]
+
+	[% WRAPPER setting title="SETUP_PLUGIN_AUDIOSCROBBLER_ACCOUNTS" desc="SETUP_PLUGIN_AUDIOSCROBBLER_ACCOUNTS_DESC" %]
+		[% IF prefs.pref_accounts.size > 0 %]
+			<div class="prefDesc">[% "SETUP_PLUGIN_AUDIOSCROBBLER_ACCOUNTS_DELETE" | string %]</div>
+		[% END %]
+		[% FOR account IN prefs.pref_accounts %]
+			<input type="checkbox" name="delete" value="[% account.username %]" /> [% account.username %]<br /><br />
+		[% END %]
+		
+		<div class="prefDesc">[% "SETUP_PLUGIN_AUDIOSCROBBLER_ACCOUNTS_USERNAME_PASSWORD" | string %]</div>
+		<input type="text" class="stdedit" name="pref_username" id="username" value="" size="20">
+		&nbsp;&nbsp;
+		<input type="password" class="stdedit" name="pref_password" id="password" value="" size="20">
+	[% END %]
+
+	[% WRAPPER setting title="SETUP_PLUGIN_AUDIOSCROBBLER_ENABLE_SCROBBLING" desc="SETUP_PLUGIN_AUDIOSCROBBLER_ENABLE_SCROBBLING_DESC" %]
+		<select class="stdedit" name="pref_enable_scrobbling" id="enable_scrobbling">
+			<option [% IF prefs.pref_enable_scrobbling == 1 %]selected="selected" [% END %]value="1">
+				[% 'SETUP_PLUGIN_AUDIOSCROBBLER_ENABLE_SCROBBLE_YES' | string %]
+			</option>
+			<option [% IF prefs.pref_enable_scrobbling == 0 %]selected="selected" [% END %]value="0">
+				[% 'SETUP_PLUGIN_AUDIOSCROBBLER_ENABLE_SCROBBLE_NO' | string %]
+			</option>
+		</select>
+	[% END %]
+	
+	[% WRAPPER setting title="" desc="" %]
+		[% "SETUP_PLUGIN_AUDIOSCROBBLER_PLAYER_NOTE" | string %]
+	[% END %]
+	
+	[% WRAPPER setting title="SETUP_PLUGIN_AUDIOSCROBBLER_INCLUDE_RADIO" desc="SETUP_PLUGIN_AUDIOSCROBBLER_INCLUDE_RADIO_DESC" %]
+		<select class="stdedit" name="pref_include_radio" id="include_radio">
+			<option [% IF prefs.pref_include_radio == 1 %]selected="selected" [% END %]value="1">
+				[% 'SETUP_PLUGIN_AUDIOSCROBBLER_INCLUDE_RADIO_YES' | string %]
+			</option>
+			<option [% IF prefs.pref_include_radio == 0 %]selected="selected" [% END %]value="0">
+				[% 'SETUP_PLUGIN_AUDIOSCROBBLER_INCLUDE_RADIO_NO' | string %]
+			</option>
+		</select>
+	[% END %]
+
+[% PROCESS settings/footer.html %]

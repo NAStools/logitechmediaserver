@@ -1,0 +1,493 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>[% "SQUEEZEBOX_SERVER" | string %]</title>
+
+		<link rel="stylesheet" type="text/css" href="/html/ext/resources/css/ext-all.css" />
+		<link rel="stylesheet" type="text/css" href="/Default/slimserver.css" />
+
+		<style type="text/css">
+		<!--
+			html { background: #666666; }
+
+			.maincontent {
+				background: white;
+			}
+
+			form div { cursor: default; }
+
+			.wz_desc {
+				padding: 10px;
+				background-image: linear-gradient(to bottom, #F0F0F0 0%, #FFFFFF 40%);
+			}
+
+			.wz_path {
+				width: 50%;
+				vertical-align:top;
+			}
+
+			#wz_formpanel {
+				padding: 10px;
+				position: relative;
+			}
+
+			.wz_logo {
+				float: right;
+				margin: 60px 50px 0 30px;
+			}
+
+			.wz_desc_right {
+				position: absolute;
+				left: 52%;
+				float: right;
+				width: 45%;
+			}
+
+			#wz_musicsource td {
+				vertical-align: top;
+				padding-top: 5px;
+			}
+
+			.wz_summary_list {
+				list-style-type: circle;
+				margin-left: 20px;
+			}
+
+			#language {
+				position: absolute;
+				right: 80px;
+			}
+
+			#loading-mask {
+				width: 120%;
+				height: 100%;
+				background: radial-gradient(ellipse farthest-side at bottom, #00918d 0%,#000000 100%);
+				position: absolute;
+				z-index: 20000;
+				left: 0;
+				top: 0;
+			}
+
+			#loading {
+				position: absolute;
+				left: 40%;
+				top: 40%;
+				text-align: center;
+				z-index: 20001;
+				display: none;
+			}
+
+			.x-tree .x-panel-body {
+				border: none;
+			}
+
+			#loading .loading-indicator,
+			a { color: green; }
+
+			#noJS { color: white; }
+			#noJS a, #noJS a:visited { color: yellow; }
+			
+			.loading-indicator {
+				background-image: url(/Default/html/images/loading.gif);
+			}
+
+			.box h1 {
+				font-size: 16px;
+				margin-bottom: 11px;
+			}
+
+			.box td, .box input, .box a, .box p, .box li, .box h4 {
+				font-size: 12px;
+				margin-bottom: 5px;
+			}
+
+			img#playerpic {
+				position: relative;
+				top: 0;
+				right: 0;
+				margin: 3px;
+				float: right;
+			}
+
+			div.leftbox {
+				width: 45%;
+				max-width: 450px;
+				margin: 20px 0 0 20px;
+			}
+
+			div.rightbox {
+				position: absolute;
+				top: 45px;
+				margin: 20px;
+				width: 45%;
+				max-width: 450px;
+				right: 15px;
+			}
+
+			.centeredbox {
+				margin: 25px auto;
+				width: 400px;
+			}
+
+			.box-top {
+				background-image: linear-gradient(to bottom, #FFFFFF 0%, #CCCCCC);
+				border: 1px solid #666666;
+				border-bottom: none;
+				border-radius: 15px 15px 0 0;
+				padding: 15px 14px 1px 25px;
+			}
+			
+			.box-bottom {
+				background: white;
+				border: 1px solid #666666;
+				border-top: none;
+				border-radius: 0 0 15px 15px;
+			}
+			
+			.box-inner {
+				position: relative;
+				border: 1px solid #666666;
+				border-bottom: none;
+				background-color: white;
+				padding: 15px 25px 10px;
+			}
+
+			.howto li, li.norm {
+				margin: 10px;
+				list-style-type: disc;
+			}
+			
+			.x-panel-body {
+				background-color: transparent;
+			}
+
+			[% IF rtl %]
+				.x-layout-panel, .x-btn,
+				.x-btn-text-icon .x-btn-center .x-btn-text{
+					direction: rtl
+				}
+				
+				.x-btn-text-icon .x-btn-center .x-btn-text{
+					background-position: 100% 2px;
+					padding-right:18px;
+					padding-left:0;
+				}
+				
+				.x-layout-panel-hd-text{
+					width:100%;
+				}
+				
+				.x-layout-panel-hd-tools{
+					left:0;
+				}
+				
+				.x-layout-tools-button{
+					float:left;
+				}
+
+				.wz_desc_right {
+					left: 0;
+				}
+
+				.x-btn-left {
+					background: url(/Default/html/images/slim-ext/btn-generic.png) no-repeat 0 -19px;
+				}
+
+				.x-btn-right {
+					background: url(/Default/html/images/slim-ext/btn-generic.png) no-repeat 0 0;
+				}
+
+				.x-btn-over .x-btn-left, .x-btn-menu-active .x-btn-left { background-position:0 -76px; }
+				.x-btn-over .x-btn-right, .x-btn-menu-active .x-btn-right { background-position:0 -57px; }
+				.x-btn-click .x-btn-left, .x-btn-pressed .x-btn-left  { background-position:0 -133px; }
+				.x-btn-click .x-btn-right, .x-btn-pressed .x-btn-right { background-position:0 -114px; }
+
+			[% END %]
+		-->
+		</style>
+	</head>
+
+	<body class="singlePanel">
+		<div id="background"></div>
+
+		<div id="loading-mask">&#160;</div>
+		<div id="loading">
+			<div class="loading-indicator">
+				[% "LOADING_SQUEEZEBOX_SERVER" | string %]
+			</div>
+		</div>
+		<div id="noJS">[% "SETUP_NO_JAVASCRIPT" | string %]</div>
+
+		<script type="text/javascript">
+			document.getElementById('noJS').style.display = 'none';
+			document.getElementById('loading').style.display = 'block';
+		</script>
+
+		<script type="text/javascript">[% PROCESS html/vars.js %]</script>
+		<script type="text/javascript" src="/Default/html/js.html?r=[% revision %]"></script>
+		<script type="text/javascript" src="/Default/html/Wizard.js?r=[% revision %]"></script>
+
+		<script type="text/javascript">
+			Ext.onReady(function(){
+				[% PROCESS jsString id='SETUP_WIZARD_PREVIOUS' jsId='previous' %]
+				[% PROCESS jsString id='SETUP_WIZARD_NEXT' jsId='next' %]
+				[% PROCESS jsString id='SETUP_WIZARD_SKIP' jsId='skip' %]
+				[% PROCESS jsString id='SETUP_WIZARD_FINISH' jsId='finish' %]
+				[% PROCESS jsString id='SETUP_WIZARD_CLOSE' jsId='close' %]
+				[% IF sn_server; PROCESS jsString id='SETUP_SN_VALID_LOGIN' jsId='sn_success'; END %]
+	
+				[% PROCESS jsString id='NONE' jsId='summary_none' %]
+				[% PROCESS jsString id='SETUP_AUDIODIR' jsId='summary_audiodir' %]
+				SqueezeJS.Strings['summary_audiodir'] += '[% stringCOLON %]';
+				[% PROCESS jsString id='SETUP_PLAYLISTDIR' jsId='summary_playlistdir' %]
+				SqueezeJS.Strings['summary_playlistdir'] += '[% stringCOLON %]';
+				[% PROCESS jsString id='ITUNES_DESC' jsId='summary_itunes' %]
+				[% PROCESS jsString id='MUSICMAGIC_DESC' jsId='summary_musicip' %]
+
+				try {
+					Wizard.init({
+						wizardDone: [% wizardDone ? 'true' : 'false' %], 
+						useAudioDir: [% useAudiodir ? 'true' : 'false' %],
+						useiTunes: [% useiTunes ? 'true' : 'false' %],
+						useMusicIP: [% useMusicIP ? 'true' : 'false' %]
+					}); 
+				}
+				catch(e) {
+					document.getElementById('loading').style.display = 'none';
+					document.getElementById('noJS').style.display = 'block';
+					[% IF !debug %]window.setTimeout(function(){location.href = '/classic'}, 10000);[% END %]
+				}
+			});
+		</script>
+
+		<div id="header">
+			<span><img src="[% webroot %]html/images/spacer.gif" id="squeezeboxLogo"></span>
+			<span>
+				<form name="languageForm" id="languageForm" method="post" action="[% webroot %][% path %]">
+					<select name="language" id="language">
+	
+						[% FOREACH option = languageoptions.sort %]
+							[% IF !languageoptions.$option.search('\*') %]
+								<option [% IF prefs.language == option %]selected="selected" [% preferredLanguage=1;END %]value="[% option %]">[% languageoptions.$option %]</option>
+							[% END %]
+						[%- END -%]
+	
+						[% IF !preferredLanguage %]
+							<option selected="selected" value="[% prefs.language %]">[% languageoptions.${prefs.language} %]</option>
+						[% END %]
+	
+					</select>
+					<input name="saveLanguage" type="hidden" value="1">
+				</form>
+				<a href="http://www.logitech.com" target="_blank"><img src="[% webroot %]html/images/spacer.gif" id="logitechLogo"></a>
+			</span>
+		</div>
+
+		<div id="inner_header">
+			<div class="inner">
+				<div class="inner_top"></div>
+			</div>
+		</div>
+
+
+		<div id="inner_footer">
+			<div id="infoTab" class="buttonbar">
+				<table id="buttonbar">
+					<tr>
+						<td><span id="skip"></span></td>
+						<td><span id="back"></span></td>
+						<td><span id="next"></span></td>
+					<tr>
+				</table>
+			</div>				
+
+			<div class="inner">
+				<div class="inner_bottom"></div>
+			</div>
+		</div>
+
+		<div id="footer">
+		</div>
+
+		<!-- the wizard's tabs: make them all use the same class, which is iterated by the JS -->
+		[% UNLESS wizardDone %]
+
+		<form name="wizardForm" id="wizardForm" method="post" action="[% webroot %][% path %]">
+			[% IF sn_server %]
+			<div id="sqn_p" class="wz_page wz_canskip">
+				<div id="sqn_p" class="pagetitle">[% "WELCOME_TO_SQUEEZEBOX_SERVER" | string %]</div>
+
+				<div class="wz_desc">
+				
+					<div class="centeredbox">
+						<div class="box">
+							<div class="box-top">
+								<h1>[% "LOGIN" | string %]</h1>
+							</div>
+					
+							<div class="box-inner">	
+								<p>[% "SETUP_WIZARD_SQN_PLEASE" | string %]<br/>&nbsp;</p>
+								<table>
+									<tr>
+										<td align="right" style="white-space:nowrap">[% "SETUP_SN_EMAIL" | string %][% stringCOLON %]&nbsp;</td>
+										<td>
+											<input type="text" name="sn_email" id="sn_email" value="[% prefs.sn_email %]" size="30">
+											<p id="sn_result" style="color:red">&nbsp;</p>
+										</td>
+									</tr>
+									<tr>
+										<td align="right">[% "SETUP_SN_PASSWORD" | string %][% stringCOLON %]&nbsp;</td>
+										<td>
+											<input type="password" name="sn_password_sha" id="sn_password_sha" value="[% prefs.sn_password_sha %]" size="30">
+											<p><a href="http://[% sn_server %]/user/forgotPassword" target="SQN">[% "SETUP_SN_FORGOT_PASSWORD" | string%]</a></p>
+											<p id="">&nbsp;</p>
+										</td>
+									</tr>
+									<tr>
+										<td align="right">
+											<input type="checkbox" name="sn_disable_stats" id="sn_disable_stats" value="[% !prefs.sn_disable_stats %]" checked="checked">&nbsp;
+										</td>
+										<td>
+											<span>[% "SETUP_SN_REPORT_STATS_DESC" | string %]</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+					
+					
+							<div class="box-bottom">
+								&nbsp;
+							</div>
+	
+							<div><p style="padding: 20px;"><a href="http://[% sn_server %]/" target="SQN">[% "SETUP_SN_NEED_ACCOUNT" | string%]</a></p></div>
+						</div>					
+
+					</div>
+					
+				</div>
+			</div>
+			[% END %]
+
+			<div id="audiodir_p" class="wz_page">
+				<div id="audiodir_h" class="pagetitle">[% "SETUP_WIZARD_AUDIODIR" | string %]</div>
+
+				<div class="wz_desc">
+					<div class="wz_desc_right">
+						[% "SETUP_WIZARD_AUDIODIR_DESC" | string %]
+						[% serverOS == "win" ? "SETUP_WIZARD_SHARE_WIN" : "SETUP_WIZARD_SHARE_OTHERS" | string %]
+					</div>
+					<div id="audiodirselector" class="folderselector" style="position:relative"></div>
+					<div>
+						<input type="text" name="mediadirs" id="audiodir" value="[% prefs.mediadirs %]" class="wz_path">
+					</div>
+				</div>
+			</div>
+
+			<div id="playlistdir_p" class="wz_page">
+				<div id="playlistdir_h" class="pagetitle">[% "SETUP_WIZARD_PLAYLISTDIR" | string %]</div>
+
+				<div class="wz_desc">
+					<div class="wz_desc_right">
+						[% "SETUP_WIZARD_PLAYLISTDIR_DESC" | string %]
+						[% serverOS == "win" ? "SETUP_WIZARD_SHARE_WIN" : "SETUP_WIZARD_SHARE_OTHERS" | string %]
+					</div>
+					<div id="playlistdirselector" class="folderselector"></div>
+					<div>
+						<input type="text" name="playlistdir" id="playlistdir" value="[% prefs.playlistdir %]" class="wz_path">
+					</div>
+				</div>
+			</div>
+
+			<div id="summary_p" class="wz_page wz_finish">
+				<div id="summary_h" class="pagetitle">[% "WELCOME_TO_SQUEEZEBOX_SERVER" | string %]</div>
+
+				<div class="wz_desc">
+				
+					<div class="box leftbox">
+						<div class="box-top">
+							<h1>[% "SIGNUP_LISTEN" | string %]</h1>
+						</div>
+				
+						<div class="box-inner">
+							[% IF playericon %]<img id="playerpic" src="/html/images/Players/[% playericon %]_150x150_ffffff.png">[% END %]
+							<ul class="howto">
+								<li>[% 
+									(playertype == 'boom'
+									? "HOWTO_HOME_BOOM"
+									: (playertype == 'receiver'
+										? "HOWTO_HOME_CONTROLLER"
+										: "HOWTO_HOME")) | string %]</li>
+								<li>[% 
+									(playertype == 'boom'
+									? "HOWTO_DOWN_BOOM"
+									: (playertype == 'receiver'
+										? "HOWTO_DOWN_CONTROLLER"
+										: "HOWTO_DOWN")) | string %]</li>
+								<li>[% 
+									(playertype == 'receiver'
+									? "HOWTO_STAFF_PICKS_CONTROLLER"
+									: "HOWTO_STAFF_PICKS") | string %]</li>
+								<li>[% 
+									(playertype == 'receiver'
+									? "HOWTO_INTERNET_RADIO_CONTROLLER"
+									: "HOWTO_INTERNET_RADIO") | string %]</li>
+								<li>[% "HOWTO_SHOWCASE" | string %]</li>
+								<li>[% "HOWTO_VOLUME" | string %]</li>
+								<li>[% "HOWTO_PAUSE" | string %]</li>
+							</ul>
+						</div>
+				
+						<div class="box-bottom">
+							&nbsp;
+						</div>
+					</div>
+				
+					<div class="box rightbox">				
+						<h1>[% "SETUP_WIZARD_SUMMARY_DESC" | string %]</h1>
+					
+						[% IF sn_server %]
+						<h4>[% "SETUP_WIZARD_SUMMARY_SQN" | string %]</h4>
+						<ul class="wz_summary_list">
+							<li><span id="sn_email_summary"></span> <span id="sn_result_summary">[% "NONE" | string %]</span></li>
+						</ul>
+						<br/>
+						[% END %]
+				
+						<h4>[% "SETUP_WIZARD_SUMMARY_MUSICSOURCE" | string %][% stringCOLON %]</h4>
+						<ul class="wz_summary_list" id="summary"></ul>
+				
+						<div style="height: 30px">&nbsp;</div>
+				
+						<div class="box-top">
+							<h1>[% "WHATS_NEXT" | string %]</h1>
+						</div>
+				
+						<div class="box-inner">
+							<p>[% "CONTINUE_TO_SQUEEZEBOX_SERVER" | string %]<br/>&nbsp;</p>
+						</div>
+				
+						<div class="box-bottom">
+							&nbsp;
+						</div>
+						
+					</div>
+				</div>
+			</div>
+
+			[% IF firstTimeRun %]
+			<input name="firstTimeRunCompleted" type="hidden" value="1">
+			[% END %]
+			<input name="saveSettings" type="hidden" value="1">
+		</form>
+
+		[% ELSE %]
+
+		<div id="done_p" class="wz_page wz_finish">
+			<div id="done_h" class="pagetitle">[% "SETUP_WIZARD_DONE" | string %]</div>
+			<div class="wz_desc">[% "SETUP_WIZARD_DONE_DESC" | string %]</div>
+		</div>
+
+		[% END %]
+	</body>
+</html>

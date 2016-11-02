@@ -1,0 +1,30 @@
+[% PROCESS settings/header.html %]
+
+	[% WRAPPER setting title="SETUP_GROUP_XPL" desc="SETUP_GROUP_XPL_DESC" %]
+		<table border="0" cellspacing="7" cellpaddding="7">
+
+			<tr>
+				<td><label for="xplinterval">[% "SETUP_XPLINTERVAL" | string %]</label></td>
+				<td>
+					<input type="text" class="stdedit" name="pref_interval" id="interval" value="[% prefs.pref_interval %]" size="5">
+				</td>
+			</tr>
+
+			<tr>
+				<td><label for="xplir">[% "SETUP_XPLIR" | string %]</label></td>
+				<td>
+					<select name="pref_ir">
+	
+						<option value="none" [% IF prefs.pref_ir == "none" %]selected[% END %]>[% "SETUP_XPLIR_NONE" | string %]</option>
+						<option value="buttons" [% IF prefs.pref_ir == "buttons" %]selected[% END %]>[% "SETUP_XPLIR_BUTTONS" | string %]</option>
+						<option value="raw" [% IF prefs.pref_ir == "raw" %]selected[% END %]>[% "SETUP_XPLIR_RAW" | string %]</option>
+						<option value="both" [% IF prefs.pref_ir == "both" %]selected[% END %]>[% "SETUP_XPLIR_BOTH" | string %]</option>
+	
+					</select>
+				</td>
+			</tr>
+
+		</table>
+	[% END %]
+
+[% PROCESS settings/footer.html %]

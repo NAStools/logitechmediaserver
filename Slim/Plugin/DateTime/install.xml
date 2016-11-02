@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<extension>
+	<id>FE8130FE-84DA-470B-BC73-EBBD50D70E4F</id>
+        <name>PLUGIN_SCREENSAVER_DATETIME</name>
+        <module>Slim::Plugin::DateTime::Plugin</module>
+        <version>1.0</version>
+        <description>PLUGIN_SCREENSAVER_DATETIME_DESC</description>
+        <creator>Logitech</creator>
+
+	<defaultState>enabled</defaultState>
+        
+        <homepageURL>http://www.mysqueezebox.com/support</homepageURL>
+	<optionsURL>plugins/DateTime/settings/basic.html</optionsURL>
+	<type>2</type><!-- type=extension -->
+
+        <targetApplication>
+  	        <id>Logitech Media Server</id>
+                <minVersion>7.0a</minVersion>
+                <maxVersion>*</maxVersion>
+        </targetApplication>
+
+</extension>

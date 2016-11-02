@@ -1,0 +1,66 @@
+[% extJsScripts = BLOCK %]
+	<script type="text/javascript">
+		Ext.onReady(function(){ 
+			new SqueezeJS.UI.Sortable({
+				el: 'podcasts_draggable',
+				selector: 'table#podcasts_draggable tr.podcast_draggable'
+			});
+		});
+	</script>
+[% END %]
+[% PROCESS settings/header.html %]
+
+	[% WRAPPER setting title="PLUGIN_PODCAST"%]
+		 [% "PODCAST_GROUP_DESC" | string %]
+	[% END %]
+
+	<style>
+		.podcasts td { padding-top: 5px; }
+		.podcasts .firstColumn { padding-bottom: 15px; }
+	</style>
+
+	<div class="settingSection">
+
+	<table border="0" class="podcasts" id="podcasts_draggable">
+
+		<tr>
+			<td class="firstColumn prefHead">
+				[% "SETUP_PLUGIN_PODCAST_ADD_FEED" | string %]
+			</td>
+			<td colspan="2">
+				<input type="text" class="stdedit" name="newfeed" value="[% newfeedval %]" size="60" />
+			</td>
+		</tr>
+
+		<tr>
+			<td class="prefHead">
+				[% "SETUP_PLUGIN_PODCAST_EXISTING_FEEDS" | string %]
+			</td>
+			<td>
+				[% "DELETE" | string %]
+			</td>
+			<td>&nbsp;</td>
+		</tr>
+
+		[% FOREACH pref = prefs.feeds %]
+		<tr class="podcast_draggable">
+			<input name="feedorder" type="hidden" value="[% loop.index %]">
+			<td>[% pref.1 %]</label></td>
+			<td><input name="delete" type="checkbox" value="[% pref.0 %]"></td>
+			<td><div>[% pref.0 %]</div></td>
+		</tr>
+		[% END %]
+
+	</table>
+
+	</div>
+	
+	[% WRAPPER setting title="PLUGIN_PODCAST_IMPORT" desc="" %]
+		<input type="submit" name="importFromMySB" value="[% "PLUGIN_PODCAST_IMPORT_FROM_MYSB" | string %]" />
+	[% END %]
+
+	[% WRAPPER setting title="PLUGIN_PODCAST_SKIP_BACK_SECS" desc="PLUGIN_PODCAST_SKIP_BACK_DESC" %]
+		<input type="text" class="stdedit sliderInput_5_90_5" name="pref_skipSecs" id="skipSecs" value="[% prefs.pref_skipSecs %]" size="3">
+	[% END %]
+	
+[% PROCESS settings/footer.html %]

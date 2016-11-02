@@ -1,0 +1,611 @@
+# String file for Favorites plugin
+
+FAVORITES
+	CS	Oblíbené položky
+	DA	Favoritter
+	DE	Favoriten
+	EN	Favorites
+	ES	Favoritos
+	FI	Suosikit
+	FR	Favoris
+	HE	מועדפים
+	IT	Preferiti
+	NL	Favorieten
+	NO	Favoritter
+	PL	Ulubione
+	RU	Выбранное
+	SV	Favoriter
+
+FAVORITES_NONE_DEFINED
+	CS	Neexistují žádné Oblíbené položky
+	DA	Der findes ingen favoritter
+	DE	Es sind noch keine Favoriten definiert
+	EN	No Favorites exist
+	ES	No existen favoritos
+	FI	Suosikkeja ei ole
+	FR	Aucun favori défini
+	HE	לא קיימים פריטים מועדפים
+	IT	Nessun preferito
+	NL	Er zijn geen favorieten
+	NO	Finner ingen favoritter
+	PL	Brak ulubionych
+	RU	Выбранное не существует
+	SV	Det finns inga favoriter
+
+FAVORITES_PLAYING
+	CS	Přehrávání Oblíbené položky #%s
+	DA	Afspiller favorit nr. %s
+	DE	Favorit Nr. %s läuft ...
+	EN	Playing favorite #%s
+	ES	Reproduciendo favorito nº %s
+	FI	Soitetaan suosikki #%s
+	FR	Lecture du favori n°%s
+	HE	השמעת פריט מועדף ‎#%s
+	IT	Riproduzione del brano preferito #%s
+	NL	Favoriet #%s wordt afgespeeld
+	NO	Spiller favoritt nr. %s
+	PL	Odtwarzanie ulubionego nr %s
+	RU	Воспроизводится выбранное #%s
+	SV	Spelar favorit nr %s
+
+FAVORITES_FAVORITE_NUM
+	CS	Oblíbená položka #
+	DA	Favorit nr.
+	DE	Favorit Nr.
+	EN	Favorite #
+	ES	Nº de favorito
+	FI	Suosikki #
+	FR	Favori n°
+	HE	פריט מועדף #
+	IT	Preferito #
+	NL	Favorietnr.
+	NO	Favoritt nr.
+	PL	Ulubiony nr
+	RU	Выбранное #
+	SV	Favorit nr
+	ZH_CN	最喜爱#
+
+FAVORITES_HOTKEYS
+	CS	Horké klávesy
+	DA	Genvejstaster
+	DE	Abkürzungstasten
+	EN	Hotkeys
+	ES	Teclas de acceso rápido
+	FI	Pikanäppäimet
+	FR	Raccourcis
+	IT	Tasti di scelta rapida
+	NL	Sneltoetsen
+	NO	Hurtigknapper
+	PL	Klawisze dostępu
+	RU	Сочетания клавиш
+	SV	Snabbtangenter
+
+FAVORITES_FAVORITE
+	CS	Oblíbené položky
+	DA	Favorit
+	DE	Favorit
+	EN	Favorite
+	ES	Favorito
+	FI	Suosikki
+	FR	Favori
+	IT	Preferito
+	NL	Favoriet
+	NO	Favoritt
+	PL	Ulubiony
+	RU	Выбранное
+	SV	Favorit
+
+FAVORITES_RIGHT_TO_DELETE
+	CS	Odstranit Oblíbenou položku
+	DA	Slet favorit
+	DE	Favorit entfernen
+	EN	Remove Favorite
+	ES	Quitar favorito
+	FI	Poista suosikki
+	FR	Supprimer le favori
+	IT	Rimuovi preferito
+	NL	Favoriet verwijderen
+	NO	Fjern favoritt
+	PL	Usuń ulubiony
+	RU	Удалить выбранное
+	SV	Ta bort favorit
+
+FAVORITES_NOT_A_FAVORITE
+	CS	Není oblíbené
+	DA	Ikke en favorit
+	DE	Kein Favorit
+	EN	Not a favorite
+	ES	No es un favorito
+	FI	Ei suosikki
+	FR	Pas un favori
+	HE	לא מוגדר כפריט מועדף
+	IT	Non è un preferito
+	NL	Geen favoriet
+	NO	Ikke en favoritt
+	PL	Nie ulubiony
+	RU	Не входит в выбранное
+	SV	Ingen favorit
+	ZH_CN	不是最喜爱的
+
+FAVORITES_ADDING
+	CS	Ukládání Oblíbených položek...
+	DA	Gemmer favoritter...
+	DE	Favoriten werden gespeichert ...
+	EN	Saving favorites...
+	ES	Guardando favoritos...
+	FI	Tallennetaan suosikit...
+	FR	Enregistrement des favoris...
+	HE	שומר פריטים מועדפים...
+	IT	Salvataggio preferiti in corso...
+	NL	Favorieten worden opgeslagen...
+	NO	Lagrer favoritter...
+	PL	Zapisywanie...
+	RU	Сохранение выбранного...
+	SV	Sparar favoriter...
+	ZH_CN	保存最喜爱的...
+
+FAVORITES_DELETING
+	CS	Odstraňování oblíbené položky...
+	DA	Sletter favorit...
+	DE	Favorit wird entfernt...
+	EN	Removing favorite...
+	ES	Quitando favorito...
+	FI	Poistetaan suosikki...
+	FR	Suppression du favori...
+	IT	Rimozione preferito in corso...
+	NL	Favoriet wordt verwijderd...
+	NO	Fjerner favoritt ...
+	PL	Usuwanie ulubionego...
+	RU	Удаление выбранного...
+	SV	Tar bort favorit...
+
+PLUGIN_FAVORITES_DESC
+	CS	Uložit a editovat vaše oblíbené položky
+	DA	Gem og rediger dine favoritter
+	DE	Favoriten speichern und bearbeiten
+	EN	Save and edit your favorites
+	ES	Guardar y editar favoritos
+	FI	Suosikkien tallennus ja muokkaus
+	FR	Enregistrer et modifier les favoris
+	IT	Salva e modifica i preferiti
+	NL	Je Favorieten opslaan en bewerken
+	NO	Lagre og rediger favoritter
+	PL	Zapisz i edytuj ulubione
+	RU	Сохраните и отредактируйте выбранное
+	SV	Spara och redigera favoriter
+	
+PLUGIN_FAVORITES_USE_DSTM
+	DE	Musikwiedergabe nie anhalten
+	EN	Don't Stop The Music
+	NO	Ikke stopp musikken
+
+PLUGIN_FAVORITES_USE_DSTM_DESC
+	DE	Favoriten als Option für "Musikwiedergabe nie anhalten" verwenden.
+	EN	Register favorites as options for "Don't Stop The Music".
+	NO	Legg inn favoritter som valg for "Ikke stopp musikken".
+
+PLUGIN_FAVORITES_PLAYLIST_EDITOR
+	CS	Prohlížeč a editor seznamu skladeb OPML
+	DA	Se og rediger OPML-afspilningslister
+	DE	OPML Wiedergabelisten bearbeiten
+	EN	OPML Playlist Browser & Editor
+	ES	Navegador/Editor de listas de reproducción OPML
+	FI	OPML-soittoluettelon selain ja editori
+	FR	Navigateur et éditeur de listes de lecture OPML
+	IT	Browser ed editor delle playlist OPML
+	NL	OPML Playlist Browser & Editor
+	NO	Redigerings- og leseprogram for opml-spillelister
+	PL	Przeglądarka i edytor list odtwarzania OPML
+	RU	Браузер и редактор плей-листов OPML
+	SV	Bläddring och redigering för opml-spellistor
+
+PLUGIN_FAVORITES_PLAYLIST_EDITOR_DESC
+	CS	Plugin Oblíbené vám také umožňuje procházet seznamy skladeb založené na opml, uložené na vašem serveru. K přidání tohoto režimu do složky "Doplňky" domovské stránky vašeho serveru zvolte níže uvedenou možnost.
+	DA	Med udvidelsesmodulet Favoritter kan du gennemse og redigere opml-baserede afspilningslister som er gemt på din server. Marker denne mulighed hvis du vil føje den til menuen Ekstra i den webbaserede brugerflade.
+	DE	Das Favoriten Plugin erlaubt es auch, OPML basierte Wiedergabelisten auf dem Server zu durchsuchen und bearbeiten. Aktiviere die folgende Option, um diesen Modus unter "Extras" auf dem Server Web-Interface anzuzeigen.
+	EN	The favorites plugin will also allow you to browse opml based playlists and edit opml playlists stored on your server. Select the option below to add this mode under 'Extras' on the server home page.
+	ES	El extra Favoritos le permite examinar listas basadas en opml y editar listas de ese tipo almacenadas en su servidor. Seleccione la siguiente opción para añadir este modo bajo 'Extras' en la página de inicio del servidor.
+	FI	Suosikit-laajennuksen avulla voit selata opml-pohjaisia soittoluetteloita ja muokata palvelimeen tallennettuja opml-soittoluetteloita. Lisää tämä tila kohtaan Muut palvelimen kotisivulla valitsemalla alla oleva vaihtoehto.
+	FR	Le plugin des favoris vous permet également de parcourir les listes de lecture OPML et de modifier les listes OPML stockées sur le serveur. Sélectionnez l'option ci-dessous pour ajouter ce mode sous Extras sur la page d'accueil du serveur.
+	IT	Il plugin dei preferiti consente anche di sfogliare le playlist in formato OPML e di modificare le playlist OPML memorizzate nel server. Selezionare l'opzione sottostante per aggiungere questa modalità negli Extra nella home page del server.
+	NL	Met behulp van de extra Favorieten kun je opml-playlists die op je server zijn opgeslagen, doorkijken en bewerken. Selecteer de onderstaande optie om deze modus toe te voegen onder Extra's in het serverhoofdmenu.
+	NO	Med plugin-modulen for favoritter kan du bla i opml-baserte spillelister, og redigere opml-baserte spillelister som er lagret på serveren din. Du kan legge til denne modusen under "Tillegg" i hovedmenyen til serveren ved å velge alternativet nedenfor.
+	PL	Dodatek do ulubionych elementów umożliwia także przeglądanie i edytowanie list odtwarzania opartych na języku opml zapisanych na serwerze. Wybierz opcję poniżej, aby dodać ten tryb w obszarze „Dodatki” na stronie głównej serwera.
+	RU	Плагин "Выбранное" позволяет просматривать плей-листы OPML, а также редактировать те из них, что хранятся на сервере. Выберите вариант ниже, чтобы добавить этот режим в раздел "Дополнения" на домашней странице сервера.
+	SV	Plugin-programmet för favoriter ger dig också möjlighet att bläddra i opml-baserade spellistor och att redigera opml-spellistor som sparats på din server. Markera alternativet nedan om du vill lägga till det här läget under Extrafunktioner på det webbaserade användargränssnittet.
+
+PLUGIN_FAVORITES_LOAD
+	CS	Nahrát
+	DA	Indlæs
+	DE	Laden
+	EN	Load
+	ES	Cargar
+	FI	Lataa
+	FR	Charger
+	IT	Carica
+	NL	Laden
+	NO	Last inn
+	PL	Załaduj
+	RU	Загрузить
+	SV	Läs in
+
+PLUGIN_FAVORITES_ADD
+	CS	Uložit
+	DA	Gem
+	DE	Speichern
+	EN	Save
+	ES	Guardar
+	FI	Tallenna
+	FR	Enregistrer
+	IT	Salva
+	NL	Opslaan
+	NO	Lagre
+	PL	Zapisz
+	RU	Сохранить
+	SV	Spara
+
+PLUGIN_FAVORITES_IMPORT
+	CS	Importovat
+	DA	Importer
+	DE	Importieren
+	EN	Import
+	ES	Importar
+	FI	Tuo
+	FR	Importer
+	IT	Importa
+	NL	Importeren
+	NO	Importer
+	PL	Importuj
+	RU	Импорт
+	SV	Importera
+
+PLUGIN_FAVORITES_LOADFILE
+	CS	URL nebo název souboru
+	DA	Adresse eller filnavn
+	DE	URL oder Dateiname
+	EN	URL or File Name
+	ES	URL o nombre de archivo
+	FI	URL tai tiedostonimi
+	FR	URL ou nom du fichier
+	IT	URL o nome file
+	NL	URL of bestandsnaam
+	NO	Url eller filnavn
+	PL	Adres URL lub nazwa pliku
+	RU	URL или имя файла
+	SV	Webbadress eller filnamn
+
+PLUGIN_FAVORITES_SAVEFILE
+	CS	Název souboru
+	DA	Filnavn
+	DE	Dateiname
+	EN	File Name
+	ES	Nombre de archivo
+	FI	Tiedostonimi
+	FR	Nom du fichier
+	IT	Nome file
+	NL	Bestandsnaam
+	NO	Filnavn
+	PL	Nazwa pliku
+	RU	Имя файла
+	SV	Filnamn
+
+PLUGIN_FAVORITES_IMPORTFILE
+	CS	URL nebo název souboru
+	DA	Adresse eller filnavn
+	DE	URL oder Dateiname
+	EN	URL or File Name
+	ES	URL o nombre de archivo
+	FI	URL tai tiedostonimi
+	FR	URL ou nom du fichier
+	IT	URL o nome file
+	NL	URL of bestandsnaam
+	NO	Url eller filnavn
+	PL	Adres URL lub nazwa pliku
+	RU	URL или имя файла
+	SV	Webbadress eller filnamn
+
+PLUGIN_FAVORITES_NOFILE
+	CS	Soubor nenalezen
+	DA	Filen blev ikke fundet
+	DE	Datei nicht gefunden
+	EN	File Not Found
+	ES	Archivo no encontrado
+	FI	Tiedostoa ei löydy
+	FR	Fichier introuvable
+	IT	File non trovato
+	NL	Bestand niet gevonden
+	NO	Finner ikke filen
+	PL	Nie znaleziono pliku
+	RU	Файл не найден
+	SV	Det går inte att hitta filen
+
+PLUGIN_FAVORITES_CANCEL
+	CS	Storno
+	DA	Annuller
+	DE	Abbrechen
+	EN	Cancel
+	ES	Cancelar
+	FI	Peruuta
+	FR	Annuler
+	IT	Annulla
+	NL	Annuleren
+	NO	Avbryt
+	PL	Anuluj
+	RU	Отмена
+	SV	Avbryt
+
+PLUGIN_FAVORITES_CANCELLING
+	CS	Přerušování...
+	DA	Annullerer...
+	DE	Wird abgebrochen...
+	EN	Cancelling...
+	ES	Cancelando...
+	FI	Peruutetaan...
+	FR	Annulation...
+	IT	Annullamento in corso...
+	NL	Bezig met annuleren...
+	NO	Avbryter ...
+	PL	Anulowanie...
+	RU	Отмена...
+	SV	Avbryter...
+
+PLUGIN_FAVORITES_CUT
+	CS	Vyjmout
+	DA	Klip
+	DE	Ausschneiden
+	EN	Cut
+	ES	Cortar
+	FI	Leikkaa
+	FR	Couper
+	IT	Taglia
+	NL	Knippen
+	NO	Klipp ut
+	PL	Wytnij
+	RU	Вырезать
+	SV	Klipp ut
+
+PLUGIN_FAVORITES_PASTE
+	CS	Vložit
+	DA	Sæt ind
+	DE	Einfügen
+	EN	Paste
+	ES	Pegar
+	FI	Liitä
+	FR	Coller
+	IT	Incolla
+	NL	Plakken
+	NO	Lim inn
+	PL	Wklej
+	RU	Вставить
+	SV	Klistra in
+
+PLUGIN_FAVORITES_LOADING
+	CS	Nahrávání Oblíbených položek...
+	DA	Indlæser Favoritter...
+	DE	Lade Favoriten...
+	EN	Loading Favorites...
+	ES	Cargando favoritos...
+	FI	Ladataan suosikkeja...
+	FR	Chargement des favoris...
+	IT	Caricamento dei preferiti in corso...
+	NL	Favorieten worden geladen...
+	NO	Laster favoritter...
+	PL	Ładowanie ulubionych...
+	RU	Загрузка выбранного...
+	SV	Läser in favoriter...
+
+PLUGIN_FAVORITES_NEWFOLDER
+	CS	Nová složka
+	DA	Ny mappe
+	DE	Neuer Ordner
+	EN	New Folder
+	ES	Carpeta nueva
+	FI	Uusi kansio
+	FR	Nouveau dossier
+	IT	Nuova cartella
+	NL	Nieuwe map
+	NO	Ny mappe
+	PL	Nowy folder
+	RU	Новая папка
+	SV	Ny mapp
+
+PLUGIN_FAVORITES_NEWENTRY
+	CS	Nová položka
+	DA	Ny
+	DE	Neuer Eintrag
+	EN	New Entry
+	ES	Entrada nueva
+	FI	Uusi kohde
+	FR	Nouvelle entrée
+	IT	Nuova voce
+	NL	Nieuwe ingang
+	NO	Ny oppføring
+	PL	Nowy wpis
+	RU	Новая запись
+	SV	Ny post
+
+PLUGIN_FAVORITES_NEWFAVORITE
+	CS	Nová Oblíbená položka
+	DA	Ny favorit
+	DE	Neuer Favorit
+	EN	New Favorite
+	ES	Favorito nuevo
+	FI	Uusi suosikki
+	FR	Nouveau favori
+	IT	Nuovo preferito
+	NL	Nieuwe favoriet
+	NO	Ny favoritt
+	PL	Nowy ulubiony
+	RU	Новое выбранное
+	SV	Ny favorit
+
+PLUGIN_FAVORITES_NEWURL
+	CS	Nové URL
+	DA	Ny adresse
+	DE	Neue URL
+	EN	New URL
+	ES	URL nueva
+	FI	Uusi URL
+	FR	Nouvelle URL
+	IT	Nuovo URL
+	NL	Nieuwe URL
+	NO	Ny url
+	PL	Nowy adres URL
+	RU	Новый URL
+	SV	Ny webbadress
+
+PLUGIN_FAVORITES_LOADERROR
+	CS	Chyba při nahrávání souboru
+	DA	Fejl ved indlæsning af fil
+	DE	Fehler beim Laden der Datei
+	EN	Error Loading File
+	ES	Error al cargar archivo
+	FI	Virhe ladattaessa tiedostoa
+	FR	Erreur de chargement du fichier
+	IT	Errore durante il caricamento del file
+	NL	Fout tijdens laden bestand
+	NO	Feil ved lasting av fil
+	PL	Błąd ładowania pliku
+	RU	Ошибка при загрузке файла
+	SV	Fel vid inläsning av filen
+
+PLUGIN_FAVORITES_REMOTELOADERROR
+	CS	Chyba při nahrávání URL
+	DA	Fejl ved indlæsning af adresse
+	DE	Fehler beim Lesen der URL
+	EN	Error Loading URL
+	ES	Error al cargar URL
+	FI	Virhe URL:n latauksessa
+	FR	Erreur de chargement de l'URL
+	IT	Errore durante il caricamento dell'URL
+	NL	Fout tijdens laden URL
+	NO	Feil ved lasting av url
+	PL	Błąd ładowania adresu URL
+	RU	Ошибка при загрузке URL
+	SV	Fel vid inläsning av webbadressen
+
+PLUGIN_FAVORITES_SAVEERROR
+	CS	Chyba při ukládání souboru
+	DA	Der opstod en fejl da filen skulle gemmes
+	DE	Fehler beim Speichern der Datei
+	EN	Error Saving File
+	ES	Error al guardar archivo
+	FI	Virhe tallennettaessa tiedostoa
+	FR	Erreur d'enregistrement du fichier
+	IT	Errore durante il salvataggio del file
+	NL	Fout tijdens opslaan bestand
+	NO	Feil ved lagring av fil
+	PL	Błąd zapisywania pliku
+	RU	Ошибка при сохранении файла
+	SV	Fel vid sparande av filen
+
+PLUGIN_FAVORITES_IMPORTERROR
+	CS	Chyba při importu seznamu skladeb
+	DA	Fejl ved import af afspilningsliste
+	DE	Fehler beim Import von Wiedergabelisten
+	EN	Error Importing Playlist
+	ES	Error al importar lista de reproducción
+	FI	Virhe soittoluettelon tuomisessa
+	FR	Erreur au cours de l'importation de la liste de lecture
+	IT	Errore durante l'importazione della playlist
+	NL	Fout tijdens importeren van playlist
+	NO	Feil ved importering av spilleliste
+	PL	Błąd importowania listy odtwarzania
+	RU	Ошибка при импортировании плей-листа
+	SV	Fel vid import av spellista
+
+PLUGIN_FAVORITES_NOTITLE
+	CS	Bez názvu
+	DA	Igen titel
+	DE	Kein Titel
+	EN	No Title
+	ES	Sin título
+	FI	Ei nimeä
+	FR	Pas de titre
+	IT	Nessun titolo
+	NL	Geen titel
+	NO	Ingen tittel
+	PL	Bez tytułu
+	RU	Нет названия
+	SV	Ingen titel
+
+PLUGIN_FAVORITES_NAME
+	CS	Název
+	DA	Navn
+	DE	Name
+	EN	Name
+	ES	Nombre
+	FI	Nimi
+	FR	Nom
+	IT	Nome
+	NL	Naam
+	NO	Navn
+	PL	Nazwa
+	RU	Имя
+	SV	Namn
+
+PLUGIN_FAVORITES_URL
+	CS	URL
+	DA	Internetadresse
+	DE	URL
+	EN	URL
+	ES	URL
+	FI	URL
+	FR	URL
+	IT	URL
+	NL	URL
+	NO	Url
+	PL	Adres URL
+	RU	URL
+	SV	Webbadress
+
+PLUGIN_FAVORITES_SAVE
+	CS	Uložit do Oblíbených
+	DA	Føj til favoritter
+	DE	In Favoriten speichern
+	EN	Save to Favorites
+	ES	Guardar en favoritos
+	FI	Tallenna suosikkeihin
+	FR	Enregistrer dans les favoris
+	IT	Salva nei preferiti
+	NL	In favorieten opslaan
+	NO	Lagre i favoritter
+	PL	Zapisz w ulubionych
+	RU	Сохранить в избранном
+	SV	Spara i Favoriter
+
+PLUGIN_FAVORITES_REMOVE
+	CS	Odstranit z Oblíbených položek
+	DA	Fjern fra Favoritter
+	DE	Aus Favoriten entfernen
+	EN	Remove from Favorites
+	ES	Quitar de Favoritos
+	FI	Poista suosikeista
+	FR	Supprimer des favoris
+	IT	Rimuovi dai preferiti
+	NL	Uit Favorieten verwijderen
+	NO	Fjern fra favoritter
+	PL	Usuń z ulubionych
+	RU	Удалить из выбранного
+	SV	Ta bort från favoriter
+
+PLUGIN_FAVORITES_DONT_BROWSEDB
+	DE	Verhalten mit lokaler Musik
+	EN	Local music items behaviour
+	NL	Gedrag bij locale muziek
+	NO	Oppførsel med lokal musikksamling
+	PL	Sposób przeglądania ulubionych
+
+PLUGIN_FAVORITES_DONT_BROWSEDB_ON
+	DE	Beim Anwählen eines Eintrages Favoriten abspielen, nicht durchsuchen (altes Verhalten)
+	EN	Don't browse items whene selected, just play them (old behaviour)
+	NL	Niet doorbrowsen op een geselecteerd item, maar speel af (oude gedrag)
+	NO	Spill av valgt oppføring, ikke bla videre (gammel oppførsel)
+	PL	Nie przeglądaj utworów, po prostu je odtwarzaj (klasyczne zachowanie)
+
+PLUGIN_FAVORITES_DONT_BROWSEDB_OFF
+	DE	Beim Anwählen eines favorisierten Künstlers, Genres oder Album, dessen Details anzeigen
+	EN	When you select a favorite contributor, genre or album, drill down to its content
+	NL	Als je een favoriete uitvoerende selecteert, genre of album, browse door tot de inhoud ervan
+	NO	Når du velger en favorittutøver, -sjanger eller -album, bla videre til innholdet.
+	PL	Gdy wybierzesz ulubionego wykonawcę, gatunek lub album, wyświetl utwory im odpowiadające

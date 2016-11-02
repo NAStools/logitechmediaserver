@@ -1,0 +1,28 @@
+[% PROCESS settings/header.html %]
+
+	[% WRAPPER setting title="PLUGIN_RESCAN_MUSIC_LIBRARY" desc="" %]
+		<div class="prefDesc">[% "PLUGIN_RESCAN_TIMER_DESC" | string %]</div>
+	[% END %]
+
+	[% WRAPPER settingSection %]
+		[% WRAPPER settingGroup title="PLUGIN_RESCAN_TIMER_NAME" desc="" %]
+			<select name="pref_scheduled">
+				<option value="1" [% IF prefs.pref_scheduled %]selected[% END %]>[% "ON" | string %]</option>
+				<option value="0" [% IF NOT prefs.pref_scheduled %]selected[% END %]>[% "OFF" | string %]</option>
+			</select>
+		[% END %]
+
+		[% WRAPPER settingGroup title="PLUGIN_RESCAN_TIMER_SET" desc="" %]
+			<input type="text" class="stdedit" name="pref_time" id="time" value="[% prefs.pref_time %]" size="10" />
+		[% END %]
+
+		[% WRAPPER settingGroup title="PLUGIN_RESCAN_TIMER_TYPE" desc="" %]
+			<select name="pref_type">
+				<option value="1rescan" [% IF prefs.pref_type == "1rescan" %]selected[% END %]>[% "SETUP_STANDARDRESCAN" | string %]</option>
+				<option value="2wipedb" [% IF prefs.pref_type == "2wipedb" %]selected[% END %]>[% "SETUP_WIPEDB" | string %]</option>
+				<option value="3playlist" [% IF prefs.pref_type == "3playlist" %]selected[% END %]>[% "SETUP_PLAYLISTRESCAN" | string %]</option>
+			</select>
+		[% END %]
+	[% END %]
+
+[% PROCESS settings/footer.html %]

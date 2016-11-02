@@ -1,0 +1,277 @@
+[% IF page == 'help';
+	
+	pagetitle = "HELP" | string;
+	
+	PROCESS helpheader.html noCrumbList=1;
+	
+	WRAPPER helpTopicList;
+		"<br/><br/>";
+		FOREACH link = additionalLinks.help;
+			title = link.key | string | html;
+			href = link.value;
+			PROCESS helpTopic;
+		END;
+	END;
+	
+	PROCESS helpfooter.html;
+
+ELSE %]
+	[% extJsScripts = BLOCK %]
+		<script type="text/javascript">
+			Ext.onReady(function(){
+				Home.init();
+			});
+		</script>
+	[% END %]
+
+	[%
+	my_musicItems = BLOCK;
+		FOREACH item = additionalLinkOrder.browse;
+			IF additionalLinks.browse.exists(item);	
+				link = { key=item, value=additionalLinks.browse.$item };
+				additionalLinks.icons.${link.key} = additionalLinks.icons.${link.key} || 'html/images/plugin.png';
+				IF link.key == 'FAVORITES';
+					useFavorites = 1;
+				ELSIF link.key == 'SEARCH' %]
+					<div class="selectorMarker" onmouseover="Highlighter.highlight(this);">
+						<div class="homeMenuItem" id="SEARCH">
+							[% title = link.key | getstring %]
+							<a href="[% link.value %]player=[% player %]" class="browseItemLink">
+								<span class="browseCover">
+									<img src="[% additionalLinks.icons.item(link.key) | resizeimage(25, 25) %]" width="25" border="0" alt="[% title %]">
+								</span>
+							</a>
+							<div class="smallBrowseItemDetail">
+								<a href="[% link.value %]player=[% player %]" class="browseItemLink">[% title %]</a>
+								<span id="advSearchMenuItem">(<a href="[% additionalLinks.search.ADVANCEDSEARCH | html %]player=[% playerURI %]">[% "ADVANCEDSEARCH" | string %]</a>)</span>
+							</div>
+			
+							<span class="browsedbControls">
+		 						<form method="GET" action="[% webroot %]search.html">
+									<input type="hidden" name="player" value="[% playerid %]">
+									<input type="text" name="query" id="search" class="x-form-focus searchInput" size="30">
+									<input type="image" src="[% webroot %]html/images/b_search.gif" width="17px" height="17px" alt="[% "SEARCH" | string %]">
+								</form>
+							</span>					
+						</div>
+					</div>
+				[% ELSE;
+					PROCESS menuItem;
+				END;
+			END;
+		END;
+	END;
+	
+	radioItems = BLOCK;
+		FOREACH item = additionalLinkOrder.radios;
+			IF additionalLinks.radios.exists(item);
+				link.value = additionalLinks.radios.item(item);
+				link.key = item;
+				control = '';
+				IF link.value.match('search');
+					control = BLOCK %]
+						<form method="GET" action="[% link.value %]">
+							<input type="hidden" name="player" value="[% playerid %]" />
+							<input type="hidden" name="submit" class="stdclick" value="[% "SEARCH" | string %]" />
+							<input type="text" name="q" class="x-form-focus searchInput" size="30" />
+							<input type="image" src="[% webroot %]html/images/b_search.gif" width="17px" height="17px" alt="[% "SEARCH" | string %]" />
+						</form>
+					[% END;
+				END;
+				PROCESS menuItem;
+			END;
+		END;
+		FOREACH link = additionalLinks.radios;
+			IF !additionalLinkOrder.radios.grep(link.key).size;
+				additionalLinks.icons.${link.key} = additionalLinks.icons.${link.key} || 'html/images/plugin.png';
+				PROCESS menuItem;
+			END;
+		END;
+		additionalLinks.icons.RADIO_TUNEIN = 'html/images/ServiceProviders/tuneinurl.png';
+		control = BLOCK %]
+			<input type="text" id="tuneinurl" class="x-form-focus" size="30" value="http://" onfocus="this.select();">
+			[% WRAPPER playlink %]onclick="Home.tuneInUrl('play');"[% END %]
+			[% WRAPPER addlink %]onclick="Home.tuneInUrl('add');"[% END %]
+		[% END;
+		PROCESS menuItem link={ key='RADIO_TUNEIN', value='tunein.html?' };
+	END;
+
+	my_appsItems = BLOCK;
+		FOREACH item = additionalLinkOrder.my_apps;
+			IF additionalLinks.my_apps.exists(item);
+				link.value = additionalLinks.my_apps.$item;
+				link.target = additionalLinks.my_apps.$item.match('^http:') ? "mysb" : "";
+				link.key = item;
+				PROCESS menuItem;
+			END;
+		END;
+		FOREACH link = additionalLinks.apps;
+			IF !additionalLinkOrder.my_apps.grep(link.key).size;
+				additionalLinks.icons.${link.key} = additionalLinks.icons.${link.key} || 'html/images/plugin.png';
+				PROCESS menuItem;
+			END;
+		END;
+	END;
+
+	pluginsItems = BLOCK;
+		FOREACH link = additionalLinks.plugins;
+			IF link.key == 'ALARM';
+				NEXT UNLESS player;
+				NEXT IF (nosetup || noserver);
+				link.value = webroot _ 'settings/index.html?activePage=ALARM&amp;';
+				link.target = 'sc_settings';
+			END;
+			IF link.key == 'PLUGIN_LINE_OUT';
+				NEXT UNLESS player;
+				link.value = webroot _ 'settings/index.html?activePage=AUDIO_SETTINGS&amp;';
+				link.target = 'sc_settings';
+			END;
+			IF link.key == 'PLUGIN_LINE_IN';
+				link.value = 'PLUGIN_LINE_IN_IN_USE' | getstring;
+				link.value = "javascript:Home.setLineIn('" _ link.value _"');\" \"";
+			END;
+			# we want an icon for every item in the Extras menu...
+			additionalLinks.icons.${link.key} = additionalLinks.icons.${link.key} || 'html/images/plugin.png';
+			PROCESS menuItem;
+		END;
+	END %]
+
+	[% BLOCK menuItem %]
+		<div class="selectorMarker [% expandable %]" onmouseover="Highlighter.highlight(this [% IF expandable %], Home.onSelectorClicked[% END %]);">
+			<div class="homeMenuItem [% expanded ? "homeMenuItem_expanded" : '' %]" id="[% link.key %]">
+				[% string   = link.key;
+				   stringUC = link.key | upper;
+				   IF string == stringUC; string = link.key | getstring; END;
+				%]
+				[% IF expandable %]
+					<img class="disclosure_home [% expanded ? "disclosure_expanded" : '' %]" src="[% webroot %]html/images/spacer.gif"/>
+				[% ELSE %]
+					<a href="[% link.value %]player=[% player %]" class="browseItemLink" [% IF link.target; 'target="' _ link.target _ '"'; END %]>
+				[% END %]
+
+				[% IF (additionalLinks.icons.item(link.key) || link.icon) && !noIcon;
+					link.icon = additionalLinks.icons.item(link.key) || link.icon;
+				%]
+					<span class="browseCover">
+						<img src="[% link.icon | resizeimage(25, 25) %]" width="25" border="0" alt="[% string %]">
+					</span>
+					<div class="smallBrowseItemDetail">
+				[% END %]
+				[% IF dontGetString; link.key; ELSE; string; END %]
+				[% IF link.icon && !noIcon %]
+					</div>
+				[% END %]
+
+				[% IF !expandable %]
+					</a>
+				[% END %]
+
+				[% IF control %]
+					<span class="browsedbControls">
+						[% control %]
+					</span>					
+				[% END %]
+			</div>
+		</div>
+	[% control=''; END %]
+
+	[% pagetitle = stringHOME %]
+	[% menu = BLOCK %]
+	<div class="homeMenuSection" id="homeMenu">
+		[% IF hasLibrary %]
+			[% expanded = cookies.${"Squeezebox-expanded-MY_MUSIC"}.value %]
+			[% PROCESS menuItem link.key="MY_MUSIC" link.value="home.html?" expandable="my_music" noIcon=1 %]
+			<div id="MY_MUSIC_expanded" class="expandableHomeMenuItem [% expanded ? "homeMenuSection_expanded" : '' %]" [% expanded ? 'style="display:block"' : '' %]>[%- my_musicItems -%]</div>
+		[% END %]
+		
+		[% expanded = cookies.${"Squeezebox-expanded-RADIO"}.value %]
+		[% PROCESS menuItem link.key="RADIO" link.value="home.html?" expandable="radio" noIcon=1 %]
+		<div id="RADIO_expanded" class="expandableHomeMenuItem [% expanded ? "homeMenuSection_expanded" : '' %]" [% expanded ? 'style="display:block"' : '' %]>[%- radioItems -%]</div>
+	
+		[% IF additionalLinks.my_apps %]
+			[% expanded = cookies.${"Squeezebox-expanded-PLUGIN_MY_APPS_MODULE_NAME"}.value %]
+			[% PROCESS menuItem link.key="PLUGIN_MY_APPS_MODULE_NAME" link.value="home.html?" expandable="my_apps" noIcon=1 %]
+			<div id="PLUGIN_MY_APPS_MODULE_NAME_expanded" class="expandableHomeMenuItem [% expanded ? "homeMenuSection_expanded" : '' %]" [% expanded ? 'style="display:block"' : '' %]>[%- my_appsItems -%]</div>
+		[% END %]
+
+		[% IF favorites;
+			expanded = cookies.${"Squeezebox-expanded-FAVORITES"}.value;
+			control = BLOCK; 
+				WRAPPER editlink noTarget=1;
+					'href="' _ webroot _ 'plugins/Favorites/index.html?fav"';
+				END;
+			END;
+
+			PROCESS menuItem expandable=1 noIcon=1
+				link = { 
+					key = 'FAVORITES',
+					value = additionalLinks.browse.FAVORITES
+				} 
+			%]
+			<div id="FAVORITES_expanded" class="expandableHomeMenuItem [% expanded ? "homeMenuSection_expanded" : '' %]" [% expanded ? 'style="display:block"' : '' %]>
+			[% 
+				expandable = 0;
+				dontGetString = 1;
+				FOREACH entry = favorites;
+					control = BLOCK;
+						IF entry.type == "audio" || entry.type == "playlist";
+							WRAPPER playlink noTarget=1 -%]
+								href="javascript:void(0);" onClick="SqueezeJS.UI.setProgressCursor();SqueezeJS.Controller.urlRequest('[% webroot %]plugins/Favorites/index.html?action=play&amp;index=[% loop.index %]&amp;player=[% playerURI %]', true, SqueezeJS.string('connecting_for'));"
+							[%- END;
+							IF allLinks; WRAPPER insertlink noTarget=1 -%]
+								href="javascript:void(0);" onClick="SqueezeJS.UI.setProgressCursor();SqueezeJS.Controller.urlRequest('[% webroot %]plugins/Favorites/index.html?action=insert&amp;index=[% loop.index %]&amp;player=[% playerURI %]', true, SqueezeJS.string('connecting_for'));"
+							[%- END; END;
+							WRAPPER addlink noTarget=1 -%]
+								href="javascript:void(0);" onClick="SqueezeJS.UI.setProgressCursor();SqueezeJS.Controller.urlRequest('[% webroot %]plugins/Favorites/index.html?action=add&amp;index=[% loop.index %]&amp;player=[% playerURI %]', true, SqueezeJS.string('connecting_for'));"
+							[%- END;
+						ELSE;
+							PROCESS dummylink;
+							PROCESS dummylink;
+						END;
+					END;
+
+					PROCESS menuItem noIcon=!entry.icon
+						link = {
+							icon = entry.icon,
+							key = entry.text,
+							value = webroot _ "plugins/Favorites/index.html?sess=1&amp;index=" _ loop.index _ "&amp;player=" _ playerURI
+						};
+				END;
+				noIcon=1
+				dontGetString = 0;
+			%]
+			</div>
+		[% END %]
+
+		[% IF additionalLinks.plugins %]
+			[% expanded = cookies.${"Squeezebox-expanded-PLUGINS"}.value %]
+			[% PROCESS menuItem link.key="PLUGINS" link.value="home.html?" expandable="plugins"; expandable = 0 %]
+			<div id="PLUGINS_expanded" class="expandableHomeMenuItem [% expanded ? "homeMenuSection_expanded" : '' %]" [% expanded ? 'style="display:block"' : '' %]>[%- pluginsItems -%]</div>
+		[% END %]
+	</div>
+	[% END %]
+
+	[% PROCESS pageheader.html noHomeLink=1 useSpecialExt="-browse" %]
+
+	[% menu %]
+
+	[% IF NOT warn AND (album_count OR artistcount OR song_count) %]
+		[% infoTab = BLOCK %]
+			<span id="albumcount">[% album_count %]</span> [% "WITH" | string -%]
+			<span id="songcount">[%- song_count %]</span> [% stringBY -%]
+			<span id="artistcount">[% artist_count %]</span>[% IF library_name; 
+				' (' _ library_name _ ')'; 
+			END %].
+		[% END %]
+	[% END %]
+
+	<script type="text/javascript">
+		if (Ext.isIE)
+			Ext.onReady(function(){
+				_init();
+				Home.init();
+			});
+	</script>
+
+	[% PROCESS pagefooter.html %]
+[% END %]

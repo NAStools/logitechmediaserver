@@ -1,0 +1,14 @@
+	[% WRAPPER contentitem
+			leftcontrols= 'browsecontrols'
+			itemobj     = item.itemobj
+			attributes  = item.attributes
+			odd         = item.odd
+			anchor      = item.anchor 
+			showdescend = item.showdescend
+			showplay    = item.showplay
+			showplayall = item.showplayall
+			playallhref = item.playallhref
+			addallhref  = item.addallhref
+			href        = item.href %]
+	[% UNLESS itemInfoTemplate; itemInfoTemplate = 'iteminfo'; END; PROCESS $itemInfoTemplate %]
+	[% END -%]

@@ -1,0 +1,2158 @@
+<h2><a name="v7.9.0" id="v7.9.0"></a>Version 7.9.0</h2>
+<ul>
+	<li>New Features:</li>
+	<ul>
+		<li>Library Browsing improvements:
+			<ul>
+				<li>Add option to use two browse modes for Album Artists and All Artists instead of one single, configurable list.</li>
+				<li>Add "Random Album" browse mode, to give access to a random selection of albums.</li>
+				<li>Add a "Browse Filesystem" mode to access files outside the music folder, without storing them in the database.</li>
+				<li>Add possibility to browse music managed by an other Logitech Media Server instance and play music from it without the need to switch server.</li>
+				<li>Browse favorite Artists/Genres/Albums instead of just playing them when selected.</li>
+				<li>Add Extended Browse Modes plugin to further configure the library browsing experience.</li>
+				<li>Add support for "Virtual Libraries" or custom library views, to limit the browsing to a sub-set of your overall music collection.</li>
+				<li>Restore ability to play playlists from Browse Music Folder</li>
+				<li>Improved Browse Music Folder performance.</li>
+			</ul>
+		</li>
+		
+		<li>UI improvements:
+			<ul>
+				<li>Add new, fast live search to the web UI.</li>
+				<li>Add Fulltext Search: when searching music the results are no longer limited to a simple title or name search. Fulltext search
+				    includes a lot more data like artist names, lyrics (if available), file type etc. in the evaluation of the search term.</li>
+				<li>Improve "Advanced Search": allow searching for ratings, ranges of years, save results, use results as virtual library etc.</li>
+				<li>Give (limited) control over other players connected to your server from the web UI: power them on/off or start/pause 
+				    playback without the need to switch the currently controlled player</li> 
+				<li>Add Drag'n'Drop support to the web UI: drag and drop audio files from your desktop's file manager (Finder, Explorer etc.) to the 
+				    Logitech Media Server web interface to play them back.</li>
+				<li>Allow the web UI's right hand side panel with player control and current playlist to be hidden.</li>
+				<li>Allow the web UI to be opened with a given navigation for the left hand navigation panel (eg. start with Album Artists).</li>
+				<li>Speed up library browsing in the web UI by caching rendered pages</li>
+			</ul>
+		</li>
+		
+		<li>Scanner behaviour improvements:
+			<ul>
+				<li>Allow browsing your music folder while the scanner is running.</li> 
+				<li>Don't stop the music when running a full wipe & rescan.</li>
+				<li>Add an option to disable automatic rescans on certain preference changes.</li>
+				<li>Increased scanning performance.</li>
+			</ul>
+		</li>
+			
+		<li>Add "Don't Stop The Music" plugin, allowing you to automatically continue the music listening when your playlist comes to an end.</li>
+		<li>Add support for DSD/DSF files on some platforms.</li>
+		<li>Add new way to read player specific transcoding settings from helper files (eg. for room correction). Thanks LMS0815!</li>
+		<li>Add update auto-download and/or notification for Linux distributions</li>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=596">#596</a> - Display total duration of a playlist in the web UI.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=709">#709</a> - Add support for "Browse Composers".</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=2333">#2333</a> - Play music outside the music folder without storing it in the database.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4105">#4105</a> - Don't clear the current playlist when a scan is triggered.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5108">#5108</a> - Track artist roles become artist roles when COMPILATION=0.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5715">#5715</a> - Advanced search doesn't limit results, can freeze the server.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7491">#7491</a> - Startup parameters are missing when server is run as a Windows service</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8113">#8113</a> - UPnP servers do not appear on controller.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9671">#9671</a> - Enable browsing from favorites.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9687">#9687</a> - Add option to opt out of automatically triggered library scans.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11556">#11556</a> - Resizing of left/right pane doesn't work in IE8.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=12158">#12158</a> - Allow Inclusion of Tracks from other servers in current playlist.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15604">#15604</a> - Provide a Browse Compilations browse mode.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16506">#16506</a> - Honor read access given by ACLs (thanks htgoebel!).</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17081">#17081</a> - "Various Artists" setting should not be blank, but show the default value.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17454">#17454</a> - Unable to delete playlists with playlist rescan.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17474">#17474</a> - Can't browse music folder during scan.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17404">#17404</a> - Cue-sheet problems when navigated to via Music Folder.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17526">#17526</a> - Push any firmware found in cache/updates to players, even if "Check for Updates" is disabled.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17770">#17770</a> - DISC and DISCC TAGS in cue sheets are not recognized (thanks mrthreeplates!).</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17795">#17795</a> - Missing cover blocks real artwork from being found.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17863">#17863</a> - No display of "Comment" Tag when special characters are used.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17953">#17953</a> - Wrong transcoding settings to MP3 in default install.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18107">#18107</a> - Various Artists not include among Album Artists when separate Album Artists and Artists lists are enabled.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18112">#18112</a> - Tracks with double DATE tags get the wrong year assigned by the scanner.</li>
+		<li>Fix support for multi-disc sets in cue files - thanks msrthreeplates!</li>
+		<li>Fix the band "The The". Don't strip articles from search terms.</li>
+	</ul>
+	<br />
+
+	<li>Other:</li>
+	<ul>
+		<li>Restore the ability to run a single folder scan even if the external scanner needs to run</li>
+		<li>Use VACUUM to reorganize library files when appropriate. This should help performance with larger collections and 
+		    libraries which have been updated a lot. Cache files use auto_vacuum, as they change a lot more often.</li>
+		<li>On Windows and x86 CPU based systems we're going to use more memory for buffers etc. to improve performance.</li>
+		<li>Tweak the web UI to use less graphics and simpler HTML structure. Please note that MSIE users will require version 9
+		    or later, or one of the alternative browsers.</li>
+		<li>Remove SlimService specific code. 7.9 will never be run on mysqueezebox.com.</li>
+		<li>Re-factor preference migration code. Only load migration handlers if needed.</li>
+		<li>Complete re-write of the CUE sheet parsing. Thanks marcoc1712!</li>
+		<li>Add ALBUMARTIST tag support for Cue files (thanks mrthreeplates!).</li>
+		<li>Disable cross-fading between tracks with different sample rates (thanks hickinbottoms!)</li>
+		<li>Enhance string substitution to improve 3rd party transcoding support (thanks LMS0815!)</li>
+		<li>The "mediafolder" query for music files optionally returns coverid (if available). Use the new 'c' tag.</li>
+		<li>Updated player icons in settings pages, now gracefully falling back to generic squeezeplay symbol if unknown
+		    player is connected. Thanks LMS0815!</li>
+		<li>Add helper application binaries for ARM hard float systems</li>
+		<li>Add --nomysqueezebox startup parameter to disable all interaction with mysqueezebox.com</li>
+		<li>Move UPnP client code to Remote Library plugin. Remove now unnecessary --noupnp startup parameter.</li>
+		<li>Try to automatically recover from database corruption</li>
+		<li>Updated translations: Dutch (thanks pinkdot!), French (thanks minscof!), Norwegian (thanks Moffedille!), Polish (thanks matka &amp; Maciej (mh_)!)</li>
+	</ul>
+	<br />
+</ul>
+
+
+<h2><a name="v7.8.1" id="v7.8.1"></a>Version 7.8.1</h2>
+<ul>
+	<li>New Features:</li>
+	<ul>
+		<li>Show which plugin(s) is updated and need a restart in the web UI's footer.</li>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18092">#18092</a> - albums command with sort:new included returns no entries</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18097">#18097</a> - web issues using Perl 5.20: dropdowns/file browsers not populating due to Compress::Raw::Zlib incompatibility</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18139">#18139</a> - BBC Podcast OPML listing fails to parse</li>
+		<li>Use a favourite's icon as the station artwork if available.</li>
+	</ul>
+	<br />
+
+	<li>Other:</li>
+	<ul>
+		<li>Allow firmware updater to pick up player firmware from the installation's Firmware folder</li>
+		<li>Correctly deal albums of same name and with disc number when "Treat multi-disc sets as multiple album." is set.</li>
+		<li>The special /music/current/cover URL now returns artwork for remote streams, too (if possible).</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.8.0" id="v7.8.0"></a>Version 7.8.0 - 2014-03-27</h2>
+<ul>
+	<li>New Features:</li>
+	<ul>
+		<li>Re-implement Podcast plugin to support all players. Allow resuming a podcast you partially
+		listened to before.</li>
+		<li>Modify Internet Radio integration to work independently from mysb.com if needed.</li>
+		<li>Add new scanner step to discover new/changed/removed standalone artwork for album covers.</li>
+		<li>A new generic image resizing proxy is now built in to LMS. It can be used instead of the 
+		image proxy hosted on mysqueezebox.com, or independently by plugins to eg. resize artwork 
+		local to your network (and therefore not reachable by the remote proxy).</li> 
+		<li>The default behaviour on power-on is changed to resume what was playing before power-off.
+		This change will only apply to new players attached to the server;
+		the behaviour for existing players can be changed with Settings / Player / Audio.</li>
+		<li>Support for Ogg FLAC in the server and Squeezeplay-based players</li>
+		<li>Added support for setting alarm playlist shuffle mode (thanks hickinbottoms!)</li>
+		<li>Volume adjustment for Internet Radio (feature request <a href="http://bugs.slimdevices.com/show_bug.cgi?id=2431">#2431</a>)
+		<li>Allow clients to register artwork resizing specifications to be pre-cached during the media scan.</li>
+		<li>Add Triode LocalFile 'loc' ProtocolHandler support for squeezelite.</li>
+	</ul>
+	<br />
+	
+	<li>Platform Support:</li>
+	<ul>
+		<li>Perl 5.18 modules for Linux x86_64 systems have been added.</li>
+		<li>Improved compatibility with latest Perl 5.18 changes.</li>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8180">#8180</a> - Squeezecenter prevents user logout after restart </li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17174">#17174</a> - Title info doesn't update correctly when multiple SBs are playing same station</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17634">#17634</a> - Random art represents an album as cover art, if there is track art available</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17729">#17729</a> - On Linux SBS 7.4.1 and above: service cannot be stopped or restarted after an 'internal' restart</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17758">#17758</a> - Pop up symbols linger too long on the screen</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17920">#17920</a> - TuneIn Radio Options Context Menu - Results returned are unnecessarily limited and frequently 'not available'</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17933">#17933</a> - Failure to parse m3u playlists with relative paths</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17937">#17937</a> - Now Playing information can alternate between station and current-track titles at track skip</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17950">#17950</a> - %w macros (stream seconds duration) returns negative value</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18000">#18000</a> - MusicBrainz Track IDs in .m4a files when tagged with Jaikoz, Picard, Foobar2000, MP3Tag etc.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18076">#18076</a> - MusicBrainz Track not scanned in wma files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18077">#18077</a> - Musicbrainz tags not stored for album artists</li>
+		<li>Don't submit disc number with album names when scrobbling to last.fm</li>
+	</ul>
+	<br />
+
+	<li>Other:</li>
+	<ul>
+		<li>Recognise Fedora as being a Red Hat system.</li>
+		<li>Improve Perl 5.16 compatibility to silence some warnings.</li>
+		<li>Don't enforce PNG when showing full size artwork, but only when resizing is requested. Converting a large JPG would result in a huge PNG</li>
+		<li>Don't deal with photo and/or video folders if the UPnP plugin has been disabled.</li>
+	</ul>
+	<br />
+</ul>
+
+
+<h2><a name="v7.7.6" id="v7.7.6"></a>Version 7.7.6</h2>
+<ul>
+	<li>Server Changes:</li>
+	<ul>
+		<li>Migrate our WiMP implementation to the TIDAL branding and service.</li>
+		<li>Change Napster implementation to use AAC instead of MP3.</li>
+		<li>Improve compatibility with latest iTunes 12 updates.</li>
+		<li>Limit the number of items to be added in RandomPlay. Large numbers would cause database errors.</li>
+		<li>Remove defunct Last.fm, SiriusXM and RadioIO plugins.</li>
+		<li>Rename Rhapsody to Napster.</li>
+	</ul>
+	<br />
+	
+	<li>Platform Support:</li>
+	<ul>
+		<li>Improve support for latest Mac OSX 10.11 El Capitan and Windows 10.</li>
+	</ul>
+	<br />
+	
+	<li>Bug Fixes:</li>
+	<ul>
+		<li>Fix synced playback with Spotify (SB Radio and Touch only)</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17727">#17727</a> - Playback stops with mp3 + cue sheets combination</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17901">#17901</a> - "Some settings were changed. Do you want to save them?" doesn't honor button clicked.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18078">#18078</a> - All files seen as changed after Daylight Saving time change (Windows only)</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.7.5" id="v7.7.5"></a>Version 7.7.5 - 2014-11-28</h2>
+<ul>
+	<li>Bug Fixes:</li>
+	<ul>
+		<li>Installing plugins on OSX 10.10 (Yosemite) fails. Add missing Compress::Raw::Zlib.</li>
+		<li>Can no longer use https resources, due to failure to load support for IO::Socket::SSL.</li>
+		<li>Various music services: don't hammer mysqueezebox.com requesting metadata for an empty track ID.</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.7.4" id="v7.7.4"></a>Version 7.7.4 - 2014-11-12</h2>
+<ul>
+	<li>Server Changes:</li>
+	<ul>
+		<li>Improve artwork handling when streaming online radio stations.</li>
+		<li>Remove defunct Facebook and Mediafly plugins.</li>
+		<li>Minor changes to the EN skin to improve usability on mobile devices.</li>
+	</ul>
+	<br />
+	
+	<li>Platform Support:</li>
+	<ul>
+		<li>Add support for Mac OSX 10.10 Yosemite (Perl 5.18).</li>
+		<li>Replace OSX StartupItem with a LaunchDaemon configuragion.</li>
+		<li>Fix compatibility with MS Internet Explorer 11</li>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6040">#6040</a> - Need different description for Title Format in Players settings</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17571">#17571</a> - SBS loses connection to MySB whenever the internet connection is temporarily lost</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17901">#17901</a> - "Some settings were changed. Do you want to save them?" doesn't honor button clicked.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17930">#17930</a> - New artists missing on new and changed scan</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17998">#17998</a> - Plugin display glitch in description</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18045">#18045</a> - Additional Playlist Buttons not shown in search results</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18046">#18046</a> - Perl 5.18 breaks functionality in Info.pm</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18050">#18050</a> - Duration is not shown correctly</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18052">#18052</a> - Setting the Rescan Timer is broken in ip3k interface</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18053">#18053</a> - Server does not sleep even if SB is turned off</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18084">#18084</a> - Live 365 pause function don’t stop meta data update</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18089">#18089</a> - "View Tags" for the file without any tags breaks the web UI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18102">#18102</a> - Album named "+" saved in playlist makes playlist unviewable</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18111">#18111</a> - Problem with "Various Artists" play controls in certain menus</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18113">#18113</a> - "Remove from playlist" does not clear/update the playlist panel if the playlist comes empty</li>
+		<li>Under certain circumstances the scanner wouldn't pick up new artwork, even if music file was changed.</li>
+		<li>PreventStandby plugin: use caffeinate instead of pmset on OSX versions which support it (10.8+)</li>
+		<li>Folders can't be played in Browse Music Folder mode if there are sub-folders and the Classic skin is being used</li>
+		<li>Players without digital out (Boom, Radio) could have ended up with the volume fixed to 100% and no way to change it.</li>
+		<li>Title format "CT" is now "CONTENT_TYPE". Create an alias to make "CT" available again.</li>
+	</ul>
+	<br />
+</ul>
+
+
+<h2><a name="v7.7.3" id="v7.7.3"></a>Version 7.7.3 - 2013-08-21</h2>
+<ul>
+	<li>New Features:</li>
+	<ul>
+		<li>Replace custom OSX installer with a standard installation package (.pkg file). Please note that 
+		the OSX build now requires OSX 10.5 as a minimum.</li>
+		<li>Make the OSX PrefPane 64-bit compatible.</li>
+	</ul>
+	<br />
+
+	<li>Server Changes:</li>
+	<ul>
+		<li>Improved support for radio station artwork. Improved radio station browsing.</li>
+		<li>Remove legacy Napster plugin. Napster now is a Rhapsody company.</li>
+	</ul>
+	<br />
+	
+	<li>Platform Support:</li>
+	<ul>
+		<li>Mac OSX 10.9 Mavericks, which has Perl 5.16, is now supported.</li>
+		<li>Perl 5.16 modules for Linux systems have been added.</li>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8141">#8141</a> - Macintosh: Prevent Sleep While Playing</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15896">#15896</a> - Missing metadata information due to cr/lf in title information</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16409">#16409</a> - Playlists menu should show album/artist</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17542">#17542</a> - Albums not credited to Album Artist</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17635">#17635</a> - Search results have album art instead of track art</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17894">#17894</a> - urlmd5 column in tracks table aren't set correctly for FLAC + CUE images</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18036">#18036</a> - Cometd client manager fails to purge dead clients causing memory leakage</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=18043">#18043</a> - urlmd5 column in tracks table not set properly for new playlists</li>
+		<li>Fix "cannot request non-http url" issue when bringing up the context menu on a remote stream</li>
+		<li>Artwork cache would grow forever</li>
+		<li>Fix default expiry duration in cache code - it would expire immediately if not overwritten in the caller.</li>
+		<li>Improve recovery from corrupted cache files</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.7.2" id="v7.7.2"></a>Version 7.7.2 - 2012-03-27</h2>
+<ul>
+	<li>New Features:</li>
+	<ul>
+		<li>New packages for the ReadyNAS family of storage systems to support their ARM processor based devices.</li>
+	</ul>
+	<br />
+	
+	<li>Scanner Changes:</li>
+	<ul>
+		<li>The command-line scanner no longer supports scanning a path passed on the command-line. All paths to be scanned must be listed in the prefs file.</li>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15001">#15001</a> - Save playlist plugin locks ip3k UI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17422">#17422</a> - Artist, Album and Genre Favorites with non-latin characters don't work from Player UI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17680">#17680</a> - General install issue of LMS on ReadyNAS Pro (ends up with an install error)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17777">#17777</a> - New & changed scan does not scan playlists</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17807">#17807</a> - Windows installer is showing German messages if no localization is available</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17818">#17818</a> - logitechmediaserver breaks apparmor in Ubuntu</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17819">#17819</a> - Squeezebox folder is breaking ReadyNAS Samba configuration</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17835">#17835</a> - playlistcontrol cmd:load ... play_index:yyyy doesn't work with folders</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17837">#17837</a> - Browse Music Folder fails if a file of unwanted/invalid type is in a folder</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17843">#17843</a> - renaming /c/squeezeboxserver/ to /c/.squeezeboxserver/ causes repeated crashes</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17841">#17841</a> - directory traversal vulnerability in the web UI code</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17848">#17848</a> - LMS service does NOT install on Windows 7</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17852">#17852</a> - Support for new ReadyNAS Duo and NV+ V2 devices</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17855">#17855</a> - Only enable single output channel mode if actively synced</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17858">#17858</a> - Web UI shows red X instead of artwork for absolute URL in private network</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17876">#17876</a> - Unnecessary items in context menu for current-playlist tracks</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17877">#17877</a> - Resume after underrun broken for synchronized (ip3k) players</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17881">#17881</a> - BMF scan corrupts dB replacing title with file name</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17882">#17882</a> - Fixed wrong MP4 MIME type for DLNA (audio/m4a was used instead of audio/mp4)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17885">#17885</a> - DLNA 7.3.28.2: GetProtocolInfo needs all DLNA profiles listed first</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17893">#17893</a> - Unnecessary push into current playlist when stopping playback</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.7.1" id="v7.7.1"></a>Version 7.7.1 - 2011-12-14</h2>
+<ul>
+	<li>New Features:</li>
+	<ul>
+		<li>Improved MOG support to allow dynamic control of artist radio stations.</li>
+	</ul>
+	<br />
+	
+	<li>MySQL note:</li>
+	<ul>
+		<li>DBD::mysql binaries are no longer included. If you wish to run against a MySQL server you will need to install this manually for your version of Perl.</li>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17140">#17140</a> - Non-square cover art thumbnails displayed with black borders</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17283">#17283</a> - Scanner can crash when renaming files and performing a rescan</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17348">#17348</a> - Some mp3/cue files would not scan and/or play correctly</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17441">#17441</a> - mp2/cue files no longer play</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17459">#17459</a> - Rhapsody channels and radio are not scrobbled</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17623">#17623</a> - Wrong directory in postinst script (Debian)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17639">#17639</a> - Rescan buttons scans the wrong folder</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17643">#17643</a> - Displayed playlist not refreshed on repeat with reshuffle</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17644">#17644</a> - Squeezebox database and logfiles fill up OS-partition</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17647">#17647</a> - "Generic OPML Browser" plugin needs to be forced enabled</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17650">#17650</a> - MOG track duration is lost when skipping back and forth</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17656">#17656</a> - Include missing DLNA content-types for TS, M2TS, etc.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17674">#17674</a> - Crash during rescan of music folder but only if you have images or video enabled</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17718">#17718</a> - Searching genres using "browselibrary items mode:genres" does not work</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17719">#17719</a> - Now Playing playlist in the web UI doesn't show correct metadata for remote music services</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17726">#17726</a> - Windows Control Panel can't authenticate to password protected server</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17728">#17728</a> - Web GUI Jumps to Track More Info on Playlist Play</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17731">#17731</a> - Playlist only scanning does not work</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17734">#17734</a> - Install stalls on Windows due to huge FileCache folder</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17736">#17736</a> - When running the update from the tray icon, MS VC libraries are not installed</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17737">#17737</a> - Album screensaver option creates huge menu</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17739">#17739</a> - require Windows XP or more recent for the installation to proceed</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17742">#17742</a> - Buffering status wrong for players that decode while buffering</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17749">#17749</a> - Database upgrade scripts missing for MySQL</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17752">#17752</a> - OSX PrefPane is missing localizations</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17762">#17762</a> - Control Panel Doesn't Open after Entering Credentials</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17764">#17764</a> - Embedded LMS fails to switch between sources</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17781">#17781</a> - Full wipecache is run when adding new folder with media type exclusion</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17800">#17800</a> - Invalid artwork regex leads to scan failure</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.7.0" id="v7.7.0"></a>Version 7.7.0 aka Logitech Media Server - 2011-11-01</h2>
+<ul>
+	<li>New Features:</li>
+	<ul>
+		<li>DLNA/UPnP support:</li>
+		<ul>
+			<li>Media library is exposed as a Media Server.</li>
+			<li>All connected players are exposed as Media Renderers (experimental).</li>
+		</ul>
+		<li>Image and video file scanning support has been added and is exposed via the DLNA media server.</li>
+		<ul>
+			<li>Supported video file types: asf, avi, divx, flv, hdmov, m1v, m2p, m2t, m2ts, m2v, m4v, mkv, mov, mpg, mpeg, mpe, mp2p, mp2t, mp4, mts, pes, ps, ts, vob, webm, wmv, xvid, 3gp, 3g2, 3gp2, 3gpp, mjpg</li>
+			<li>Supported image file types: JPEG, PNG, GIF, BMP</li>
+		</ul>
+		<li>Multiple media directories can now be specified. Each directory can be configured for audio, images, and/or video.</li>
+		<li>Support for MOG music service.</li>
+	</ul>
+	<br />
+
+	<li>Platform Support:</li>
+	<ul>
+		<li>Perl 5.14 modules for Linux systems have been added.</li>
+		<li>Win32 now uses ActivePerl 5.14.1.</li>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4803">#4803</a> - Scanner does not validate RATING tags</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5091">#5091</a> - DLNA (UPnP) Server Support</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11289">#11289</a> - Scanner ignores first line of cue sheet if it has a UTF-8 BOM</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17090">#17090</a> - WMA seeking fails if file does not contain an ASF_Index object</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17213">#17213</a> - Error message installing SBS 32398 on Ubuntu 11.04</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17242">#17242</a> - Perl 5.12 modules in CPAN/arch not compatible with Debian Wheezy</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17358">#17358</a> - Importers (MusicIP, iTunes) are not run during a rescan</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.6.2" id="v7.6.2"></a>Version 7.6.2 - unreleased</h2>
+<ul>
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=13814">#13814</a> - Implement synchronized unpause</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15723">#15723</a> - wrong Icons showing up for my Apps and Apps gallery and more</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16343">#16343</a> - restart server can't work with --user/--group</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17228">#17228</a> - Missing favorites button (heart) in album view</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17164">#17164</a> - Clock runs slow using internal SB touch server</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17369">#17369</a> - No direct link to album on albuminfo page</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17370">#17370</a> - Songs with no album tag do not appear within "No Album" any more</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17373">#17373</a> - playing or adding "All Songs" after searching with a search term including a period is broken</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17378">#17378</a> - With Additional Playlist Buttons enabled there is no Play Next button in track view</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17442">#17442</a> - Use Text only/Small Artwork/Large Artwork setting only for album lists</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17452">#17452</a> - Rescan can go into an endless loop when a cue sheet has been removed</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17464">#17464</a> - Basic search fails with search string containing single quotes</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17465">#17465</a> - Double quotes aren't being escaped in text fields</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17472">#17472</a> - Erratic playing of AAC stream on IP3K players.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17479">#17479</a> - Aborting a wipe scan doesn't kill the external scanner process</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17482">#17482</a> - CLI: "info total tracks/albums/artists" counts are not coherent with actual music database</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17489">#17489</a> - Artists containing ')' characters break a few things</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17493">#17493</a> - cannot access playlist information when using stream.mp3 client</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17524">#17524</a> - Large blank album icon above artist search results</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17529">#17529</a> - Now Playing screen is displayed at various "odd" times</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17530">#17530</a> - iTunes Plugin on Linux can fail to find files with Unicode paths</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.6.1" id="v7.6.1"></a>Version 7.6.1 - 2011-08-22</h2>
+<ul>
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9725">#9725</a> - Split MusicBrainz artist tag with user-defined separator</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16037">#16037</a> - Music isn't found if playlist folder is the same as the music folder</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16060">#16060</a> - New &amp; changed scan doesn't clean up unused genres</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16554">#16554</a> - of multiple artists in tag 'artist' only one shown on controller nowplaying screen</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16901">#16901</a> - SBS fails to generate MusicIP mixes</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17068">#17068</a> - Lost Artwork playing radio stations</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17255">#17255</a> - Screensaver term(s) are being used in Now Playing?</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17298">#17298</a> - Filtering by artist is broken when playing an album</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17322">#17322</a> - Leading and trailing spaces in names should be trimmed</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17340">#17340</a> - Display track artists per song, not in album info</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17342">#17342</a> - A lot of deprecated warnings in log when saving playlist</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17343">#17343</a> - %FILE artwork format not working</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17352">#17352</a> - Null item contained in empty playlist</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17360">#17360</a> - Scan hangs with 7.6</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17361">#17361</a> - Server side artwork scaling with one dimension omitted does not work</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17362">#17362</a> - Sometimes 404 Not found is returned instead of default artwork for unknown track id's</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17363">#17363</a> - Alarm-Clock link is not working</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17364">#17364</a> - Songs without album tags don't properly appear under "No Album"</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17365">#17365</a> - Won't show some artwork</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17372">#17372</a> - TuneIn Radio app - Error when using the "TuneIn Radio Options" </li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17374">#17374</a> - Can't play tracks in multiple sub-folders using Browse Music Folder</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17379">#17379</a> - Scanner progress not reported correctly for shortcuts or links</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17387">#17387</a> - Broken image in playlist when displaying album cover</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17382">#17382</a> - Artwork size incorrect when browsing into a playlist</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17395">#17395</a> - Support for /music/current/cover.jpg lost</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17397">#17397</a> - Scanner crashes with mp2/cue files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17409">#17409</a> - Third party menus ordered incorrectly</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17410">#17410</a> - The MusicIP Mood Mix menu is sorted incorrectly in web interface</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17430">#17430</a> - On initial start after a clean installation, Music Browse menus would not be initialized</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17415">#17415</a> - Interface; not possible to shift back to default (MSIE9)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17449">#17449</a> - Pressing Play on "empty" links in the web-UI causes server to use 100% for several minutes</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17450">#17450</a> - MusicIP import fails due to upper/lower case differences in the file path (Windows)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17457">#17457</a> - Import actions failing on case insensitive filesystems (Windows)</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.6.0" id="v7.6.0"></a>Version 7.6.0 - 2011-07-25</h2>
+<ul>
+	<li>Firmware updates:</li>
+	<ul>
+		<li>Boom - Version 57<br />	
+			Squeezebox 2/3 - Version 137<br />
+			Transporter - Version 87<br />
+			Receiver - Version 77
+		</li>
+		<ul>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=3932">#3932</a> - (Transporter) Discrete IR codes for power_on, power_off and digital_inputs</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4682">#4682</a> - Send WOL while in connecting state and receiving discrete power_on IR code</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=12319">#12319</a> - (Boom) Change RTC alarm time to 1 hour (was 1 minute)</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15693">#15693</a> - (Transporter) Fix for spurious AC voltage readings</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16442">#16442</a> - (Transporter) audr command to change the AK4396 rolloff filter</li>
+			<li>(Boom) Discrete IR codes for power_on, power_off and line_in</li>
+			<li>Support for output_channels flags, to output only left or right channel, useful with synced Booms.</li>
+			<li>Fixed DNS client handling when server returns multiple A records for MySB.</li>
+			<li>Fixed a bug with text scrolling in scroll-once mode.</li>		
+			<li>Added support for new Rhapsody SSL certificate.</li>
+		</ul>
+	</ul>
+	<br />
+	
+	<li>New Services:</li>
+	<ul>
+		<li>Support for Orange Liveradio (all countries).</li>
+	</ul>
+	<br />
+	
+	<li>New Features:</li>
+	<ul>
+		<li>Transcoding is now supported when requesting an HTTP download (/music/[id]/download[.extension]).</li>
+		<li>The default database is now SQLite. MySQL can still be used using ones own installation.</li>
+		<li>Native decoding for WMA Pro (<a href="http://bugs.slimdevices.com/show_bug.cgi?id=13324">#13324</a>)
+			and WMA Lossless (<a href="http://bugs.slimdevices.com/show_bug.cgi?id=13323">#13323</a>) has been added to Radio and Touch.</li>
+		<li>Cue sheet support has been improved.  The following formats will currently work with cue sheets, including seeking:</li>
+		<ul>
+			<li>FLAC (native)</li>
+			<li>Ogg Vorbis (native)</li>
+			<li>MP3 (native)</li>
+			<li>MPEG-4 AAC (native and transcoded)</li>
+			<li>MPEG-4 ALAC (native and transcoded)</li>
+			<li>WAV/AIFF (native and transcoded)</li>
+			<li>WMA (native)</li>
+			<li>WavPack (transcoded)</li>
+		</ul>
+		<li>MP3 cue sheet tracks are now played without gaps. A full rescan is required and scan time will be slower for these tracks.</li>
+		<li>Harmony remote integration: Discrete IR codes to play presets 1-6.</li>
+		<li>Transporter: DAC roll-off filter can now be toggled between sharp and slow.</li>
+		<li>A database memory option has been added to the Advanced -> Performance settings page to allow the database to use more memory.</li>
+		<li>Add original track filename to download url on trackinfo page (<a href="http://bugs.slimdevices.com/show_bug.cgi?id=16424">#16424</a>)</li>
+	</ul>
+	<br />
+	
+	<li>Other Major Changes:</li>
+	<ul>
+		<li>Major Rewrite of Library Browser</li>
+		<ul>
+			<li>A single core implementation supports WebUI, ip3k Player-UI (Boom, Transporter, Classic, SliMP3), SqueezePlay UI (Touch, Radio, Controller).</li>
+			<li>Features generally much more consistent across the different user interfaces.</li>
+			<li>Access to some features changed and some other features may behave differently or be unavailable:</li>
+			<ul>
+				<li>Playlist tracks listing includes artwork in Web and SqueezePlay UIs.</li>
+				<li>Add-as-favorite and Delete-playlist items from SqueezePlay playlist tracks listing moved to playlist context menu (More).</li>
+				<li><code>VBR_SCALE</code>, <code>BITRATE</code>, <code>TAGSIZE</code>, <code>VOLUME</code> (volume name), <code>PATH</code>, <code>FILE</code> and <code>EXT</code>
+					substitution items no longer available for title format configuration
+					(see Settings/Interface/Title&nbsp;Format and Settings/Player/<i>player</i>/Basic&nbsp;Settings/Title&nbsp;Format in the Web UI).</li>
+			<li>XML Web-UI skin removed. Use CLI or JSON/RPC instead.</li>
+			<li>Fishbone, Handheld, Nokia770, ScreenReader and Touch skins removed. Only Default and Classic remain supported.</li>
+				<li>When used in the context of browse music folder, the cli command `playlistcontrol cmd:load folder_id:&lt;id&gt;  will only load the audio files that are contained in that directory, and will not load audio files from subdirectories within that directory. This was for support of fixing <a href='http://bugs.slimdevices.com/show_bug.cgi?id=17199'>bug 17199</a>. This represents a change in behavior with this command from previous versions of SBS.</li>
+			</ul>
+			<li>API for plugin developers to modify browsing experience (see <code>BrowseLibrary.pm</code> for documentation).</li>
+		</ul>
+		<li>The CLI serverstatus lastscan field has been changed to more correctly report the timestamp of the last time the database was changed by the scanner.</li>
+		<li>The CLI charset tagged parameter has been removed from all commands that supported it. All input and output is now in UTF-8 (<a href="http://bugs.slimdevices.com/show_bug.cgi?id=16834">#16834</a>).</li>
+	</ul>
+	<br />
+	
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=2735">#2735</a> - Add pagebar functionality to the CLI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=3161">#3161</a> - Need more aggressive auto-retry for internet radio</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5207">#5207</a> - I18n: Corrupt chars in Favorites</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6754">#6754</a> - Umlauts/accented characters don't show on player when browsing music folder</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7836">#7836</a> - Can't browse all albums by a following a track artist link</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8388">#8388</a> - Bug 8388 - Controller showing different input than what appears on SC</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8808">#8808</a> - Support transcoding on download URLs</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8877">#8877</a> - MP3 cue sheets are not gapless</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9947">#9947</a> - home.html is loaded several times when web UI is opened</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9897">#9897</a> - Directory Scan misses out on Files and Folders containing accented Characters</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10199">#10199</a> - Most transcoding doesn't work with non-ascii-characters in filename</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10324">#10324</a> - No longer merge artists or genres that differ only in accents, for example Bjork and Björk</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10805">#10805</a> - FF/REW (scanning) broken within .cue files (not FLAC)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11950">#11950</a> - Support FLAC CUE sheets without transcoding</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=13153">#13153</a> - Both web interface and squeezebox "hang" when one browses folders containing non-ascii chars</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=13284">#13284</a> - Composer in artist list, while not chosen in SC</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14117">#14117</a> - Sync streaming can consume lots of memory when one player connection slow</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14825">#14825</a> - Allow multiple stream.mp3 streams from the same IP address by specifying ?player=id_string</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14641">#14641</a> - Cannot playback doublebyte files from Favourites</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14662">#14662</a> - Playing a specific track while track shuffle is enabled will play another track</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14723">#14723</a> - Genre&gt;Various Artists&gt;Play All. Creates the same playlist whatever genre is chosen.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14832">#14823</a> - variousArtistsString & libraryname prefs don't handle non-latin characters correctly</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14951">#14951</a> - Unicode search in Web UI broken</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14971">#14971</a> - Default My Music browse menus can no longer be overridden/removed</li>
+    	<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15053">#15053</a> - #slim:noscan=1 makes a stream not playable</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15068">#15068</a> - Tracks without ALBUM tags not in browse menus</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15180">#15180</a> - Genres with only VA artist are 'Empty'</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15304">#15304</a> - "Play Other Songs In Album" doesn't work for "All Songs" of an artist</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15460">#15460</a> - Track with Extended ASCII in directory name fails to appear in Browse Music Folder</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15553">#15553</a> - Album missing on Squeezebox Radio (album artist or composer but no artist)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15799">#15799</a> - When M3U playlists are written unicode characters in filenames are mangled</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15821">#15821</a> - Network interruption would leave "sticky" "File not found" message</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15826">#15826</a> - Need volume up / down events to be sent to SC even if at min or max</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15882">#15882</a> - Non-ASCII character in device name incorrectly displays in TinySC library name</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15868">#15868</a> - While playing songs from the USB if I switch between the songs the old song title re-appears for several seconds</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15887">#15887</a> - Mac: Account tab shows NULL in email field, w/ password</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15949">#15949</a> - Adding &gt;100 tracks from remote source (OMPL) makes blank entries in NP on SP and WebUI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16138">#16138</a> - Query error </li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16154">#16154</a> - If an internet radio stream fails, you can't replay the stream without first playing another stream.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16191">#16191</a> - ALAC Songs being cutoff before they end</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16233">#16233</a> - mp3 stream with Xing header is handled wrong when proxied</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16275">#16275</a> - SB Touch: Rebuffering on 1st track</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16280">#16280</a> - SB Touch: Fix ambient light calculation.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16308">#16308</a> - All MySqueezebox apps ignore Shuffle setting.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16332">#16332</a> - SB Touch: Disable proximity LEDs after startup.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16337">#16337</a> - Album Sort Method is not applied when browsing artists.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16365">#16365</a> - SB Touch / Radio: Reduce ambient light sensor polling.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16442">#16442</a> - Choice of Transporter roll-off filter</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16443">#16443</a> - URL to repositories page has changed</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16459">#16459</a> - Scan progress time display showing negative seconds</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16466">#16466</a> - Can't browse via composer in 7.6.0 on Touch</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16495">#16495</a> - Now Playing 'expand' function is broken</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16620">#16620</a> - Added 'F' option to new artwork resizing</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16662">#16662</a> - Incorrect UTF8 encoding returned by CLI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16683">#16683</a> - Non-ASCII characters in file and directory names</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16686">#16686</a> - Alarm Time timeControl has 0 width on webUI when adding alarms</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16690">#16690</a> - Inconsistent capitalization of 'Now Playing'</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16708">#16708</a> - Internet Radio Search doesn't work in non-Default skins</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16814">#16814</a> - No artwork when using UNC audio path</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16922">#16992</a> - AudioScrobbler plugin repeatedly writes prefs file preventing disk spindown</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16791">#16791</a> - No tracks listed on compilation albums with an 'Album Artist' tag, but without a 'Compilation' tag, when browsing the artists menu using SB Controller (or iPeng)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17073">#17073</a> - Playlist edit drag-and-drop only works for first page</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17173">#17173</a> - Random scanner crashes, especially on Windows.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17199">#17199</a> - Add support for a cli command to play an entire album worth of tracks, beginning at track X</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17205">#17205</a> - Accented characters not correctly sorted in pagebar</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17309">#17309</a> - Fedora 14/OpenSUSE 11.4 and other newer Linux distros are broken</li>
+		<li>SB Radio: Fixed hostname</li>
+		<li>SB Controller, Radio, Touch: Updated busybox to 1.16.2</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.5.6" id="v7.5.6"></a>Version 7.5.6</h2>
+<ul>
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=17173">#17173</a> - Music Scan Terminated Unexpectedly (Directory Scan)</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.5.5" id="v7.5.5"></a>Version 7.5.5 - 2011-07-11</h2>
+<ul>
+	<li>Firmware updates:</li>
+	<ul>
+		<li>Boom - Version 54<br />	
+			Squeezebox 2/3 - Version 134<br />
+			Transporter - Version 84<br />
+			Receiver - Version 69
+		</li>
+		<ul>
+			<li>Added support for new Rhapsody SSL certificate.</li>
+		</ul>
+	</ul>
+	<br />
+	
+	<li>Platform Support:</li>
+	<ul>
+		<li>Mac OSX 10.7 Lion, which has Perl 5.12.3, is now supported.</li>
+		<li>Perl 5.12 modules for Linux systems have been rebuilt with version 5.12.3 for improved compatibility.</li>
+	</ul>
+	<br />
+	
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15010">#15010</a> - player menus showing entries in wrong language</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.5.4" id="v7.5.4"></a>Version 7.5.4 - 2011-04-25</h2>
+<ul>
+	<li>Firmware updates:</li>
+	<ul>
+		<li>Boom - Version 53<br />	
+			Squeezebox 2/3 - Version 133<br />
+			Transporter - Version 83<br />
+			Receiver - Version 68
+		</li>
+		<ul>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16898">#16898</a> - Increased firmware idle disconnection timeout to 50 seconds.</li>
+		</ul>
+	</ul>
+	<br />
+	
+	<li>New Features:</li>
+	<ul>
+		<li>Support for using the Comet API in long-polling mode.</li>
+	</ul>
+	<br />
+	
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16874">#16874</a> - 100% CPU lockup could occur while streaming AAC radio streams</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.5.3" id="v7.5.3"></a>Version 7.5.3 - 2011-01-24</h2>
+<ul>
+	<li>Firmware updates:</li>
+	<ul>
+		<li>Boom - Version 52<br />	
+			Squeezebox 2/3 - Version 132<br />
+			Transporter - Version 82<br />
+			Receiver - Version 67
+		</li>
+		<ul>
+			<li>Reduced network traffic while connected to a server, especially MySB.</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16760">#16760</a> - 24/96 files on Transporter can cause popping during scrolling/visualizer</li>
+		</ul>
+	</ul>
+	<br />
+	
+	<li>New Services:</li>
+	<ul>
+		<li>Support for Spotify (Radio and Touch players only).</li>
+		<li>Support for WiMP.</li>
+	</ul>
+	<br />
+
+	<li>Platform Support:</li>
+	<ul>
+		<li>Perl 5.12 is now supported on Linux, enabling the newest distributions to work out of the box.</li>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:</li>
+	<ul>
+		<li>Fixed a bug where connecting to MySB from the player UI would always incorrectly use a DNS lookup, leaving the player stuck on MySB.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16183">#16183</a> - Pandora genre stations can cause blank screen</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16379">#16379</a> - aac->pcm using faad is wrong at non-44.1 samplerates</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16331">#16331</a> - SB Radio: Fix for random battery charging sound.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16452">#16452</a> - forward slashes in artist and track names after import</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.5.2" id="v7.5.2"></a>Version 7.5.2 - 2010-12-20</h2>
+<ul>
+	<li>Firmware updates:</li>
+	<ul>
+		<li>Boom - Version 51<br />	
+			Squeezebox 2/3 - Version 131<br />
+			Transporter - Version 81<br />
+			Receiver - Version 66
+		</li>
+		<ul>
+			<li>Boom: Discrete IR codes for power_on, power_off and line_in</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=3932">#3932</a> - Transporter: Discrete IR codes for power_on, power_off and digital_inputs</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4622">#4622</a> - Client-side smooth text scrolling</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4682">#4682</a> - Send WOL while in connecting state and receiving discrete power_on IR code</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=12319">#12319</a> - Boom: Change RTC alarm time to 1 hour (was 1 minute)</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16667">#16667</a> - Rhapsody stream failures</li>
+		</ul>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.5.1" id="v7.5.1"></a>Version 7.5.1 - 2010-06-10</h2>
+<ul>
+	
+	<li>New Features:</li>
+	<ul>
+		<li>Seeking within MPEG-4 files (AAC/ALAC) is now supported for players with native playback (Radio, Touch).</li>
+		<li>Switched to optimized build of faad for AAC/ALAC decoding on ReadyNAS Sparc.</li>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:</li>
+	<ul>
+		<li>ALAC playback was broken on PowerPC Macs.</li>
+		<li>Fixed corrupted Rhapsody icon.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=12173">#12173</a> - Player selected in Settings becomes target in browse window</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15662">#15662</a> - Alarm-Volume-Level with synchronised Booms</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15847">#15847</a> - Add tag mapping for WM/AlbumSortOrder => ALBUMSORT</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15910">#15910</a> - Alarm screensaver setting does not work</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15914">#15914</a> - Add tag mapping for WM/Conductor => CONDUCTOR</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15968">#15968</a> - SbS give up too quickly with a couple of bad tracks in playlist</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15992">#15992</a> - APE tags are not read if a Lyrics tag is also present</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15995">#15995</a> - Default skin's panel width resets after 7 days</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16006">#16006</a> - Ogg & some MMS streams metadata not updated on SqueezePlay UIs</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16021">#16021</a> - Improve track info menu for RadioTime streams</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16025">#16025</a> - Apple Lossless tracks could cause a crash in faad</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16039">#16039</a> - My Apps shows all apps in web UI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16052">#16052</a> - Some stations fail to play in 7.5, but play fine in 7.4 (bad stream headers)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16056">#16056</a> - APE files with invalid tags can cause scanner to crash</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16074">#16074</a> - Virtual tracks within a cue sheet don't inherit parent content-type</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16096">#16096</a> - Alarm fade-in does not work in 7.5</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16140">#16140</a> - Library stats reporting fails for album within Genre > Various Artists</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16186">#16186</a> - ALAC transcoding support broken for ReadyNAS Sparc</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16238">#16238</a> - iTunes plugin incorrectly scans ALAC files as "Quicktime Movie" files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16243">#16243</a> - AIFC (AIFF little-endian) files no longer play correctly</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=16582">#16582</a> - Playback may stop at end of first track when one synced player is off</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.5.0" id="v7.5.0"></a>Version 7.5.0 - 2010-04-06</h2>
+<ul>
+	<li>New Features:</li>
+	<ul>
+		<li>RadioTime: Use RadioTime's own track info menu which allows you to report stream problems, see related streams, etc.</li>
+		<li>Added a View Tags menu to Track Info -> More Info that displays a raw listing of all tags found in the file.</li>
+		<li>Added support for reading embedded cover art from APEv2 tags.</li>
+		<li>Added support for Ogg Vorbis METADATA_BLOCK_PICTURE artwork tag.</li>
+		<li>Added "global" search: enter search term once, easily search in local music, on online services, internet radio stations etc.</li>
+		<li>Added "On mysqueezebox.com" sub folder to favorites list, to easily access favorites managed on mysqueezebox.com</li>
+		<li>(Receiver) Added CLI for tricolor LED.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8022">#8022</a> - Make SN favorites accessible through squeezecenter</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10027">#10027</a> - Support for ARTISTSORT, ALBUMSORT, and COMPILATION in CUE sheets. (Timothy Byrd)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14674">#14674</a> - Make double clicking task bar icon action configurable</li>
+	</ul>
+	<br />
+	
+	<li>Resource Usage:</li>
+	<ul>
+		<li>Additional work on Squeezebox Server to reduce memory & other usage. The following command-line flags are available:</li>
+		<ul>
+			<li>--nostatistics - Disable maintenance of last-played, play-count and rating statistics.</li>
+		</ul>
+	</ul>
+
+	<li>Transcoding:</li>
+	<ul>
+		<li>Added support for transcoding files in MPEG-4 SLS / HD-AAC format.</li>
+		<li><code>sox</code> updated to version 14.3.0.</li>
+		<li><code>faad2</code> patched to support ALAC (Apple Lossless encoding) including 24-bit support
+		(<a href="http://bugs.slimdevices.com/show_bug.cgi?id=14700">bug 14700</a>);
+		separate <code>alac</code> program for transcoding from ALAC withdrawn.</li>
+		<li><code>faad2</code> patched to support seeking
+		(<a href="http://bugs.slimdevices.com/show_bug.cgi?id=12723">bug 12723</a>,
+		<a href="http://bugs.slimdevices.com/show_bug.cgi?id=8620">bug 8620</a>)
+		<br><i>Note to people porting to other platforms:</i> the transcoding support for AAC and ALAC that is configured
+		in <code>convert.conf</code> is dependent upon the two patches above.
+		The combined patch is available at <a href="http://svn.slimdevices.com/repos/slim/7.5/trunk/vendor/faad2/seeking+alac.patch">
+		http://svn.slimdevices.com/repos/slim/7.5/trunk/vendor/faad2/seeking+alac.patch</a></br></li>
+	</ul>
+	<br />
+	
+	<li>Bug Fixes:</li>
+	<ul>
+		<li>(Classic / Transporter / Boom) Fixed volume display when muting.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=3932">#3932</a> - (Transporter / Boom) Add discrete ir codes for power_on, power_off, digital_inputs and line_in</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6208">#6208</a> - Static/Noise delivered, then alac crashes when attempting to play 24 bit Apple Lossless songs</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8620">#8620</a> - Apple Lossless cannot fast forward/rewind</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10889">#10889</a> - Place configurable upper limit on playlist length.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11506">#11506</a> - Napster WMA playback does not sync correctly when started</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11851">#11851</a> - Ambient light sensor update - minimal brightness, smoother dimming</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=12229">#12229</a> - Disable WPS pin method - it's more secure than PBC but also very confusing</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=12723">#12723</a> - Seeking support for AAC (for platforms capable of running faad) </li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=12756">#12756</a> - Alarm clock function AM/PM difficult to set </li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=13462">#13462</a> - touch-to-play needs to style and push correctly to now playing for correct XMLBrowse items</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=13567">#13567</a> - Fix 'favorites', 'browse' and 'search' button on Touch remote</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=13622">#13622</a> - Playlist has entries such as file:///fullpath/to/directory/ instead of artist-album</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14025">#14025</a> - MacOS X Preference Pane locks up when accessing Squeezebox Control Panel</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14218">#14218</a> - Boom's bass and treble self reset to maximum</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14386">#14386</a> - Scanning broken for FLACs with CUE sheets in paths containing UTF-8 characters</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14358">#14358</a> - Playing Last.fm from TrackInfo menu doesn't work</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14405">#14405</a> - Sending a query for Playlist Name returns no response</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14423">#14423</a> - IR play command handled twice</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14474">#14474</a> - Music Folder browsing ignores non-alphanumeric characters in it's sorting algorithm</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14538">#14538</a> - Long Date format doesn't use correct locale</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14602">#14602</a> - Control panel not using web proxy setting</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14648">#14648</a> - Local playlists with remote URLs missing title</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14700">#14700</a> - Update to ALAC 0.2.0 (24-bit support)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14760">#14760</a> - Playing a music-service already-playing item should not restart it (go to Now Playing instead)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14774">#14774</a> - Remove 'Preamp Volume Control' setting for SBR</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14848">#14848</a> - Rhapsody menus don't add single track through SqueezePlay</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14937">#14937</a> - Add mute ir code</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14942">#14942</a> - Cannot change mysb.com password if using IE 7 or IE 8</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14972">#14972</a> - Do not remove last known remote SC from music list so it can be selected and wake on lan is sent</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14977">#14977</a> - Run with no user extensions ("safe Mode ") is broken</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14986">#14986</a> - Fix backlight turning back on after a while when using blank SS</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15005">#15005</a> - I can enable username/password without confirming the password</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15039">#15039</a> - Can't stop or start from System Tray w/ Password Security Enabled</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15050">#15050</a> - Fix IP address in Remote Login help text</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15052">#15052</a> - Album favorites with non-latin characters are broken</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15117">#15117</a> - Neither clockSource nor fxloop prefs are stored in the player</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15129">#15129</a> - Music IP Integration on Windows Home Server provides wrong url with Seed song to API</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15179">#15179</a> - SP based players don't keep their names, but always accept whatever was stored on the connecting server</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15204">#15204</a> - CLI tag 'j' for coverart sometimes returned a full path instead of 1</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15271">#15271</a> - Radiotime station which have aac with mp3 and/or wma stream fail on ip3k players on ReadyNAS</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15371">#15371</a> - Play or Add a Genre Does Nothing</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15382">#15382</a> - "Power On Resume" setting is not respected</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15391">#15391</a> - Too much whining after months of beta, startup and refresh of server</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15474">#15474</a> - Playing radio station, turning on an additional player in sync-group causes skip in playlist</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15477">#15477</a> - New track stream can get (superfluous) packets from old stream</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15553">#15553</a> - Track with composer but no artist tag can't be browsed on SqueezePlay devices</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15556">#15556</a> - DHCP client fix - check IP address before using it</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15566">#15566</a> - (Controller) - Fix power management settings. Only reset to default if a setting is missing.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15686">#15686</a> - Can't start a MusicIP Mix from a genre</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15815">#15815</a> - Now Playing information can alternate previous-next-previous-next at track skip</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.4.2" id="v7.4.2"></a>Version 7.4.2 - 2010-02-25</h2>
+<ul>
+	<li>Bug Fixes:</li>
+	<ul>
+		<li>Fixed UPnP compatibility with Simplify Media server.</li>
+		<li>Fixed FLAC seeking on files that contain ID3v2 tags.</li>
+		<li>Fixed sample rate detection for MPEG-4 files.</li>
+		<li>Changed Tag Version info to display all versions of ID3 tags contained within a file.</li>
+		<li>Added missing Monkey's Audio (APE) decoder binaries for i386 FreeBSD, i386/ARM/PPC Linux.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10449">#10449</a> - SqueezePlay, wrong track played when playing an artist's compilation albums</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=13955">#13955</a> - Remote ASX playlist containing MP3 stream fails</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14110">#14110</a> - Fixed scanning of iTunNORM Sound Check value in MP3 files when there is only one comment</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14321">#14321</a> - Applet Installer shows duplicate entries</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14328">#14328</a> - Need useful error messages when artwork fails</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14496">#14496</a> - Player display goes blank after upgrading to 7.4</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14824">#14824</a> - Reciva Internet Radios claim to support Icy-MetaData, but then glitch on metadata packets (Simon Hyde)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14861">#14861</a> - SBS preventing HDD shutdown</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14883">#14883</a> - Audio pops at the end of WAV/AIFF files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14905">#14905</a> - Not compatible with Ubuntu 9.10 due to MySQL 5.1</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14913">#14913</a> - Scanner calculates incorrect bitrate on Windows</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14931">#14931</a> - Can't save preset 0 on SB3</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14933">#14933</a> - Scanner only includes one comment per song</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14946">#14946</a> - Strip trailing nulls from the end of WAV LIST INFO tags</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15001">#15001</a> - Save playlist plugin locks SQB classic UI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15014">#15014</a> - Scanner should prefer Vorbis tags over ID3v2 tags for FLAC files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15105">#15105</a> - Scanner intolerant of bad FILE value in embedded cue sheets</li> (Gordon Harris)
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15190">#15190</a> - File Types page shows active option for WMA Lossless/Pro</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15196">#15196</a> - Multiple genre tags in ID3v2 not read properly</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15197">#15197</a> - Wrong bitrate/duration calculated for MPEG-2 Layer 3 files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15262">#15262</a> - Unable to scan some MP4 files encoded by Nero</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15380">#15380</a> - Return the proper content-type when streaming files (agillis)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15483">#15483</a> - Scanner fails when ReplayGain tag are invalid</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15490">#15490</a> - Gapless playback broken for PCM on SB1</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15491">#15491</a> - Try harder to read radio playlists that return text or HTML content-types</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15630">#15630</a> - Invalid characters in comment tags can break the scanner</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15707">#15707</a> - Lyrics tag in WMA files not scanned</li>
+	</ul>
+</ul>
+
+<h2><a name="v7.4.1" id="v7.4.1"></a>Version 7.4.1 - 2009-10-21</h2>
+<ul>
+	<li>Apps:</li>
+	<ul>
+		<li>Added Queen app.</li>
+	</ul>
+	<br />
+	
+	<li>Platform Support:</li>
+	<ul>
+		<li>Binaries and tarballs are now available for the following platforms:
+			<ul>
+				<li>i386 FreeBSD 7.2</li>
+				<li>ARM EABI Linux</li>
+				<li>PowerPC Linux</li>
+			</ul>
+		</li>
+	</ul>
+	<br />
+	
+	<li>Scanner bug fixes and improvements:</li>
+	<ul>
+		<li>Improved speed of FLAC scanning.</li>
+		<li>Improved accuracy of FLAC seeking.</li>
+		<li>Re-added support for ID3v2 tags in FLAC files.</li>
+		<li>AIFF: Fixed error when reading ID3 chunks with a bad chunk size.</li>
+		<li>MP4: Fixed parsing of files with short TRKN tags.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14241">#14241</a> - Fixed Win32 crash when seeking in FLAC files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14462">#14462</a> - Fixed reading of WAV files with 18-byte fmt chunks</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14476">#14476</a> - Fixed crashes when files contain very large cover art</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14658">#14658</a> - Fixed reading of MP4 tags on certain platforms</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14705">#14705</a> - Properly read ID3v2 frames in a file with a corrupt frame</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14728">#14728</a> - Try to work around broken taggers that write UTF-16 text to ID3v2.3 tags without a BOM</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14788">#14788</a> - Fixed crash when reading certain WMA tags</li>
+	</ul>
+	<br />
+	
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10429">#10429</a> - Added pref for extracting iTunes artwork, off by default</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=13264">#13264</a> - If sleeping at end of song, don't start crossfading the next track</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=13892">#13892</a> - Can't store music folder with non-latin characters</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14068">#14068</a> - Installer should pause longer when shutting down SqueezeTray</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14230">#14230</a> - Pause, play, starts a new track. Intermittent</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14340">#14340</a> - missing strings on controller</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14444">#14444</a> - Cannot View music folder with Traditional / Simplified Chinese folder name</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14438">#14438</a> - Non-Default skins lack My Apps menu item</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14451">#14451</a> - New install of Squeezebox Server 7.4 on ReadyNAS NV+ creates 2 instances of SBS</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14453">#14453</a> - Home menu inconsistent: App Gallery precedes My Apps on SqueezePlay, but follows on ip3k</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14470">#14470</a> - Scan crashes on MusicIP (Windows) import when encountering non-latin path/file names</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14471">#14471</a> - Can't open Control Panel if SBS is password protected</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14472">#14472</a> - Document CLI change from music_services to apps</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14485">#14485</a> - After 7.4.0, IR doesn't work</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14476">#14476</a> - Scanner fails when files contain very large artwork</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14503">#14503</a> - Browse Music Folder broken</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14506">#14506</a> - Control panel does not show information on password protected server</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14519">#14519</a> - Debian installer doesn't migrate settings from old squeezecenter</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14520">#14520</a> - ReadyNAS - starting with wrong locale information</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14521">#14521</a> - Save Playlist (on current playlist screen) causes reconnecting screen</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14573">#14573</a> - iTunes import crashes on DISCC for remote tracks</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14580">#14580</a> - ReadyNAS - Cannot playback AAC files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14587">#14587</a> - Duplicate albums due to bad MuiscBrainz tags</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14588">#14588</a> - Scanner reports 'File not found' for non-ASCII characters</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14590">#14590</a> - ServiceManager should treat Windows 7, 2008 et al. like Vista</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14594">#14594</a> - No FF and REW in Napster tracks</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14599">#14599</a> - Control Panel Opens When Starting Squeezebox Server</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14597">#14597</a> - AAC to MP3 fails because of bug in convert.conf file</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14745">#14745</a> - Wrong Date on Squeezebox Classic when in standby</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14758">#14758</a> - iTunes imported music is not mixable in MusicIP</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14762">#14762</a> - Cyrillic encoding is broken in Browse Music Folder</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=14783">#14783</a> - WAV -> FLAC on OSX fails: SOX error</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.4.0" id="v7.4.0"></a>Version 7.4.0 - 2009-09-28</h2>
+<ul>
+	<li>Firmware updates:</li>
+	<ul>
+		<li>Boom - Version 50<br />	
+			Squeezebox 2/3 - Version 130<br />
+			Transporter - Version 80<br />
+			Receiver - Version 65
+		</li>
+		<ul>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4834">#4834</a> - (Transporter) After switching to digital input device will not play music without a complete reset (3rd time's the charm?)</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11078">#11078</a> - Wired-only Classics can flood the network with broadcast packets</li>
+			<li>Allow players in a sync group to move between servers while remaining in the same sync group.</li>
+		</ul>
+	</ul>
+	<br />
+	
+	<li>Scanner:</li>
+	<ul>
+		<li>The file format scanning modules have been completely rewritten in C as a <a href="http://search.cpan.org/dist/Audio-Scan/">standalone module</a> with comprehensive unit tests.</li>
+		<li>This reduces memory usage, improves scanning speed, and fixes many bugs.</li>
+		<li>Seeking in WMA files is now supported.</li>
+		<li>Seeking in VBR MP3 files is now more accurate.</li>
+	</ul>
+	<br />
+	
+	<li>System integration:</li>
+	<ul>
+		<li>New Control Panel for Windows, Console for Windows Home Server and Preference Pane for OSX as a shortcut to common activities</li>
+	</ul>
+	<br />
+	
+	<li>Preset Changes:</li>
+	<ul>
+		<li>Boom/IR presets are no longer associated with Favorites, and each player now has a separate preset list.</li>
+		<li>When upgrading, any presets set within Favorites will be migrated to every player.</li>
+		<li>Presets are now synced with mysqueezebox.com (Favorites are still not synced).</li>
+		<li>Presets can no longer be set via the 'favorites add' command.</li>
+		<li>For more information, please see bug <a href="http://bugs.slimdevices.com/show_bug.cgi?id=13248">#13248</a>.</li>
+	</ul>
+	<br />
+	
+	<li>Resource Usage:</li>
+	<ul>
+		<li>Several features of Squeezebox Server can be disabled to reduce memory usage. The following command-line flags are available:</li>
+		<ul>
+			<li>--noweb - Disable web interface.</li>
+			<li>--notranscoding - Disable support for transcoding.</li>
+			<li>--nosb1slimp3sync - Disable support for SliMP3 &amp; SB1 players and associated syncing.</li>
+			<li>--noinfolog - Disable INFO-level logging.</li>
+			<li>--nodebuglog - Disable DEBUG-level logging.</li>
+		</ul>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=2611">#2611</a> - Add option to ignore some of iTunes playlists like eg. Videos, Purchased etc.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=3161">#3161</a> - Need more agressive auto-retry for internet radio
+		<br>Once a connection is established then a reconnection will be attempted if it subsequently drops</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=3592">#3592</a> - Add ability to name Squeezebox Server</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4584">#4584</a> - SqueezeCenter should support ALBUMARTISTSORT</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4665">#4665</a> - APEv2 tags supercede ID3 and ID3v2 tags</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7320">#7320</a> - Pressing Play from Web Page does not clear cache
+		<br>When paused and connected to a remote stream of unknown duration, stop when buffer fills.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7232">#7232</a> - Starting a DB Scan will halt currently playing Internet Radio stream</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8246">#8246</a> - Different behaviour with browsing shortcuts in Music Folder</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8434">#8434</a> - MP4 -&gt; FLAC conversion - big endian vs. little endian</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8563">#8563</a> - Scanner reads incorrect sample rate on 88.2kHz MP4 files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9194">#9194</a> - Track::artist expensive; suggest cache result and avoid double calls</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9351">#9351</a> - Players unpause randomly</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9673">#9673</a> - Poor recovery from empty stream</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9713">#9713</a> - WMA files cannot FWD / RWD</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9752">#9752</a> - fade_volume doesn't always call callbacks at end of fade</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10026">#10026</a> - PCM != WAV<br>Add (restore) WAV seek capability</br></li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10188">#10188</a> - Improved scanner logging</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10199">#10199</a> - Most transcoding doesn't work with non-ascii-characters in filename</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10278">#10278</a> - exit search jumps back to home menu</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10320">#10320</a> - Time command should remain paused if paused</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10443">#10443</a> - Failure to resume song on connection recovery after short network disruption</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10645">#10645</a> - Improve pausing on remote sources that support seeking</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10660">#10660</a> - Allow Squeezebox Server to downsample WAV using SoX</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10731">#10731</a> - WAV convert to LAME (MP3) fails</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10814">#10814</a> - Transcoding Framework only replaces variable once (need global replace)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10841">#10841</a> - SC reverts to last stream played if ShoutCast server reached max. # listeners</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11099">#11099</a> - Now playing remote stream shows duration bar initially</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11285">#11285</a> - Allow Squeezebox Server to downsample AIF using SoX</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11447">#11447</a> - Clearing the current playlist does not clear the current index of the playlist</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11652">#11652</a> - Previous alarm goes off on Boom even though it was changed (Manoj Kasichainula)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11722">#11722</a> - Fix RandomMix genre list sort order</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11780">#11780</a> - Scanner failing on common album names</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11912">#11912</a> - Repeat should be turned off by default</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11888">#11888</a> - Player should reconnect to a remote stream if the connection ends before the known duration</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=12240">#12240</a> - Last.fm does not scrobble last track in playlist (until new playlist started)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=12873">#12873</a> - Sample Size information for FLAC doesn't show up in UI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=13248">#13248</a> - Change presets to be per-player, separate from favorites</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=13600">#13600</a> - Non-western characters incorrectly sorted</li>
+	</ul>
+	<br />
+</ul>
+
+<h2><a name="v7.3.4" id="v7.3.4"></a>Version 7.3.4 - not released</h2>
+<ul>
+	<li>Platform Support:</li>
+	<ul>
+		<li>Support for Mac OS X Snow Leopard.  SqueezeCenter itself will run in 64-bit mode, but note that the Preference Pane only supports 32-bit mode.</li>
+	</ul>
+	<br />
+	
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4584">#4584</a> - Support for ALBUMARTISTSORT</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11217">#11217</a> - Un-mute does not work</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=12475">#12475</a> - If initial DNS test fails, keep using original DNS servers</li>
+	</ul>
+</ul>
+
+<h2><a name="v7.3.3" id="v7.3.3"></a>Version 7.3.3 - 2009-06-16</h2>
+<ul>
+	<li>Firmware updates:</li>
+	<ul>
+		<li>Boom - Version 47<br />	
+			Squeezebox 2/3 - Version 127<br />
+			Transporter - Version 77<br />
+			Receiver - Version 62
+		</li>
+		<ul>
+			<li>Ogg Vorbis streams can now be played.  Note that low-bitrate streams less than 64k are not supported due to excess memory requirements.</li>
+			<li>No longer use OpenDNS as a fallback, as it may return inconsistent SN results from other devices on the network.</li>
+			<li>Fixed DNS incompatibility with certain Netgear routers.</li> 
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4418">#4418</a> - Ogg Vorbis streams crash player</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7857">#7857</a> - Player crashes when playing an Ogg file with large headers</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10638">#10638</a> - Boom: No sound from Line In in setup menu</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10815">#10815</a> - Extend STMn to indicate why decoder failed</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10944">#10944</a> - serv 0 does not return player to Select Music Source</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10945">#10945</a> - Boom will not power cycle from IR remote</li>
+		</ul>
+	</ul>
+	<br />
+
+	<li>Networking:</li>
+	<ul>
+		<li>No longer use OpenDNS as a fallback, as it may return inconsistent SN results from other devices on the network.</li>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=1361">#1361</a> - Mac: expand the music folder path if it's an alias, or SC would crash at startup</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7794">#7794</a> - Removal of Windows specific plugin in debian build</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8426">#8426</a> - Controller Artist Search is restricted to whole-album Artists</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8683">#8683</a> - Squeezecenter .deb's logrotate should not restart</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9472">#9472</a> - Remote playlist with multiple WMA streams plays only first stream</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9878">#9878</a> - Favorites with non-latin characters in their url don't work</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9931">#9931</a> - MIP playlist is not restored after a player reconnects to SC</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10060">#10060</a> - The alarm doesn't fade in if the source is Internet radio</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10087">#10087</a> - Backup alarm does not work if SC is password-protected</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10112">#10112</a> - Problem seeking in podcasts with large ID3v2 tags</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10310">#10310</a> - Changing volume on syncd player causes volume to jump to pre-syncd level</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10325">#10325</a> - Player UI (SB 3/Classic) clock gets stuck - does not update after a server was in suspend mode</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10371">#10371</a> - Bright white LED does not go off at end of play</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10458">#10458</a> - onStop handler is called when seeking</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10479">#10475</a> - Last 15 seconds of song gets chopped off (skipped)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10479">#10479</a> - WMA files streamed from HTTP servers cause player to reboot</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10583">#10583</a> - VA albums handled as many one-track albums with 2 artists each</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10635">#10635</a> - Non-user-friendly message for bad podcast files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10640">#10640</a> - Local real time clock showing in Now Playing in SN Radio</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10681">#10681</a> - Fail to start new track after underrun (esp. when synced)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10692">#10692</a> - Early (premature) STMd (decoder buffer underrun) provokes hang</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10693">#10693</a> - Abort link present after scan complete in web UI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10702">#10702</a> - MusicIP Mood menu missing from Jive's menu</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10724">#10724</a> - MB changed MUSICBRAINZ ALBUM ARTIST</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10730">#10730</a> - Downloads from SqueezeCenter cut off prematurely</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10736">#10736</a> - Extension Downloader shows plugins for upgrade when already at latest version</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10744">#10744</a> - International characters sorted wrong when browsing Music Folder</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10749">#10749</a> - Support "Album Artist" for FLAC used by JR Media Center</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10752">#10752</a> - Logging output is displayed in OSX installer's OK dialog box</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10761">#10761</a> - Formats::WMA doesn't map WM/ArtistSortOrder</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10762">#10762</a> - WMA: WM/Comments should be mapped to COMMENT</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10807">#10807</a> - Unavailable plugins can be placed on the Home Menu</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10818">#10818</a> - Some types of transcoding degrade SC & GUI responsiveness</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10828">#10828</a> - Unexpected unpause when synced upon power-on</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10833">#10833</a> - Startup time for remote streams is too slow</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10886">#10886</a> - Cannot play AIFF files ripped with dBpoweramp</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10928">#10928</a> - Settings Web UI broken in Safari</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10939">#10939</a> - Non-square artwork does not display correctly in web UI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11001">#11001</a> - Icecast authenticated streams that allow 1 con/user sometimes fail</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11006">#11006</a> - No sound after upgrade; SOX has wrong arguments for Ogg-&gt;AIFF</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11056">#11056</a> - Vorbis Comment "DESCRIPTION" frame should be mapped to "COMMENT"</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11222">#11222</a> - Playing a playlist causes controller to disconnect from SC</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11259">#11259</a> - Network test not working on SB1</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11261">#11261</a> - After disconnecting from power, Boom would forget bass/treble/stereoxl</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=11446">#11446</a> - Radio logos not showing</li>
+	</ul>
+</ul>
+
+<h2><a name="v7.3.2" id="v7.3.2"></a>Version 7.3.2 - 2009-01-20</h2>
+<ul>
+	<li>Firmware updates:</li>
+	<ul>
+		<li>Boom - Version 43<br />	
+			Squeezebox 2/3 - Version 123<br />
+			Transporter - Version 73<br />
+			Receiver - Version 58
+		</li>
+		<ul>
+			<li>(Boom) Improved Woofer-Tweeter crossover.</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7681">#7681</a> - (Boom) In 'Off' mode it uses 8 Watts, while playing it uses 9 Watts</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7918">#7918</a> - strm-a (skip-ahead) can provoke STMo (output buffer underrun)</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9796">#9796</a> - (Boom) Firmware messages not shown if power off brightness is set to 0 (Dark)</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10161">#10161</a> - Some items are editable in Current Settings but changes do not stick</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10383">#10383</a> - All players should set firmware auto update option to true</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10493">#10493</a> - Long Rhapsody trial session IDs can fail with org.xml.sax.SAXParseException</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10705">#10705</a> - (Boom) RTC alarm is muted - only the alarm bell sign flashes</li>
+		</ul>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:</li>
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7966">#7966</a> - SqueezeCenter does not recognize wide characters if using iTunes</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9132">#9132</a> - Status command does not return updated ratings until SC restart</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9544">#9544</a> - Large number of plugins with web pages could break the web UI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9623">#9623</a> - SqueezeCenter tried to download firmwares to Firmware dir</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9737">#9737</a> - Add clock display to SB/TP when pressing snooze button</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9754">#9754</a> - Settings screens lose scroll bar, buttons etc.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9833">#9833</a> - RTC alarm should only be set if the next alarm is within 24 hours</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9962">#9962</a> - Player Settings->Remote not appearing in SLIMP3 web settings page</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9970">#9970</a> - Scanner crashes when handling FLAC with embedded cue and external cue</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9997">#9997</a> - Add updated sox with FLAC support
+		<br>This means that downsampling of FLAC will produce FLAC instead of MP3 by default</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10033">#10033</a> - APE --> MP3 via Lame is broken</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10180">#10180</a> - add support for textkeys in raw CLI queries for albums, artists, genres and musicfolder</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10181">#10181</a> - Press and hold front panel power toggles power</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10186">#10186</a> - Add a set preset option to the favorites CLI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10283">#10283</a> - Zap ignored during screen saver</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10361">#10361</a> - Display full file name instead of Windows' short file name for files with unicode in the path/name (most noticeable in Browse Music Folder)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10386">#10386</a> - ID3 chunk in WAV files not read sometimes</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10391">#10391</a> - RandomMix with now genre selected leads to DB error</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10400">#10400</a> - Sync'd playlists don't advance with SLIMP3/SB1-only sync-group</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10406">#10406</a> - Sync'd playback occurs on powered off players</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10407">#10407</a> - Streaming can get blocked after a failure</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10419">#10419</a> - FWD/REW (scanning) broken for remote tracks</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10437">#10437</a> - Initial audio block algorithm fails for small initial chunks</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10438">#10438</a> - SliMP3/SB1 sync broken after first track</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10446">#10446</a> - No FeedBack in web UI on love/ban track</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10450">#10450</a> - Bad use of pretty string bitrate description instead of numeric value</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10451">#10451</a> - Pipeline / socketwrapper use may impose additional overhead</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10452">#10452</a> - Bogus " (Disc 1)" suffix appended to single-disc album titles of FLAC tracks ripped by dBpoweramp CD Ripper.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10474">#10474</a> - New Windows sox build dependent upon cygwin1.dll</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10499">#10499</a> - Scanner and progress use different time formats</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10510">#10510</a> - Restore now playing show briefly on jump</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10514">#10514</a> - Volume Bar is not in center of screen</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10521">#10521</a> - Artist not updated in status view in Fishbone skin</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10534">#10534</a> - Uncaught streaming connection close can fill logfile</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10540">#10540</a> - Garbaged characters displayed when offering the download of a new version of SC</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10566">#10566</a> - Windows Media Player Playlists empty in SqueezeCenter 7.3.1</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10567">#10567</a> - Allow plugins to disable crossfade for certain tracks</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10615">#10615</a> - Synchronized play can stall / be silent at track change</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10634">#10634</a> - Sync unreliable after server sleep (standby)</li>
+	</ul>
+</ul>
+
+<h2><a name="v7.3.1" id="v7.3.1"></a>Version 7.3.1 - 2008-12-22</h2>
+<ul>
+	<li>Firmware updates:</li>
+	<ul>
+		<li>Boom - Version 41<br />	
+			Squeezebox 2/3 - Version 121<br />
+			Transporter - Version 71<br />
+			Receiver - Version 56
+		</li>
+		<ul>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7814">#7814</a> - Glitches in some MP3 radio streams</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9003">#9003</a> - Occasional loud noises when moving to a new Rhapsody track</li>
+		</ul>
+	</ul>
+	<br />
+	
+	<li>Bug Fixes:</li>
+	<ul> 	 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4578">#4578</a> - Accented characters in playlist entries don't rescan correctly</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5119">#5119</a> - Replay gain with positive gain setting can cause clipping</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8654">#8654</a> - Update to WavPack 4.50</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9553">#9553</a> - Track title metadata missing when track title contains ellipsis in cue file</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10009">#10009</a> - SC not able to read cyrillic-based name</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10053">#10053</a> - Random Mix favorites doesn't work from Controller</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10155">#10155</a> - Scanner does not find OGA files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10293">#10293</a> - use custom-convert.conf instead of customized convert.conf on ReadyNAS</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10303">#10303</a> - WMA metadata is delayed too long</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10307">#10307</a> - build-perl-modules.pl DBD-mysql-3.002 calls wrong DBI version</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10315">#10315</a> - MusicIP Playlist names with non-ASCII characters need sanitizing on Windows</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10316">#10316</a> - MusicIP Mood names with non-ASCII characters need sanitizing on Windows</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10317">#10317</a> - Music Stores listed twice on new player</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10326">#10326</a> - Adding certain menu items to the player menu breaks the menu</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10331">#10331</a> - PrefSync from SN happens even if SN Integration is disabled in SC</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10334">#10334</a> - Typo in convert.conf for mov->mp3</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10379">#10379</a> - Pandora does not properly continue after an audio URL fails</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10388">#10388</a> - Change flac->flac to flac->wav or similar for flac/cue files on sparc based ReadyNAS</li>
+	</ul>
+</ul>
+
+<h2><a name="v7.3" id="v7.3"></a>Version 7.3 - 2008-12-11</h2>
+<ul>
+	<li>Firmware updates:</li>
+	<ul>
+		<li>Boom - Version 40<br />	
+			Squeezebox 2/3 - Version 120<br />
+			Transporter - Version 70<br />
+			Receiver - Version 55
+		</li>
+		<ul>
+			<li>Improved Rhapsody performance.</li>
+			<li>Support for Rhapsody seeking.</li>
+			<li>Improved Sirius metadata handling.</li>
+			<li>Support for WMA radio metadata.</li>
+			<li>(Boom) Brightness setting would not stick if Boom gets disconnected from SC or wireless access point.</li>
+			<li>(Boom) Fixed RTC clock not showing if Boom gets disconnected from wireless access point.</li>
+			<li>(Boom) Changed wording for pre SC 7.2 error message asking people to upgrade their SC. Only show this error message when trying to connect to SC.</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=1397">#1397</a> - Digital outputs remain active in sleep / off mode</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5206">#5206</a> - Add menu function to SB to perform a Factory Reset</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7995">#7995</a> - Send WOL from Boom before alarm is due</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8489">#8489</a> - (Boom) Changed "wheel" to "knob".</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8575">#8575</a> - Add right arrow to 'Current Settings' items that are editable</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8710">#8710</a> - Fixed a race condition where a track start event was not sent during track changes.</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9051">#9051</a> - (Boom) 'Always On' and 'Always Off' line-out modes</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=3958">#3598</a>,
+				<a href="http://bugs.slimdevices.com/show_bug.cgi?id=9266">#9266</a>,
+				<a href="http://bugs.slimdevices.com/show_bug.cgi?id=9477">#9477</a> - All errors now show for about 30 seconds before the display goes dark on SB3/Transporter. When the display is dark, pressing any button shows the last error message again for about 30 seconds.</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9415">#9415</a> - DHCP timeout too short</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9517">#9517</a>,
+				<a href="http://bugs.slimdevices.com/show_bug.cgi?id=9565">#9565</a> - Fixed bug in FLAC decoder that caused underrun events to not be sent.</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9597">#9597</a> - (Boom) Bass/treble controls do not affect headphone out</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9644">#9644</a> - WOL packet not sent from SBC if Duet setup in bridged mode</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9706">#9706</a> - Going to SC from SN can prompt user for stuff that's already been chosen.</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9836">#9836</a> - WMA ChunkTypeChangingMedia not handled properly</li>
+		</ul>
+	</ul>
+	<br />
+	
+	<li>Web UI:</li>
+	<ul>
+		<li>Improved, simplified first run wizard</li>
+		<li>New ScreenReader skin - based on Handheld, with some optimizations for screen readers as used by blind users.</li>
+		<li>Faster page loading (reduced JS file size).</li>
+		<li>Remember width of "Now Playing" panel</li>
+		<li>"Extension Installer" for simplifying installation of SqueezeCenter Plugins and Squeezebox Controller Applets</li>
+	</ul>
+	<br />
+	
+	<li>Platform support:</li>
+	<ul>
+		<li>New Slim::Utils::OS classes allow for simplified SqueezeCenter customizing and platform support. See the <a href="http://wiki.slimdevices.com/index.php/Customizing_SqueezeCenter_using_Slim::Utils::OS::Custom">wiki article about Slim::Utils::OS::Custom</a> for details.</li>
+		<li>Improved detection of initial server settings like music source, iTunes integration etc.</li>
+		<li>Significantly reduce memory consumption of the scanner</li>
+		<li>More memory and performance optimizations for low power platforms.</li>
+		<li>Enable unattended installation on Windows</li>
+		<li>SqueezeCenter log files are rotated when they grow beyond 100MB (Windows/OSX)</li>
+	</ul>
+	<br />
+	
+	<li>Synchronization & Streaming:</li>
+	<ul>
+		<li>Gapless synchronization (but not for SliMP3 or SB1)</li>
+		<li>Crossfade with synchronization</li>
+		<li>Mid-track join, when a new player joins a sync-group,
+			by restarting all players in a sync-group at the current playing position
+			(for stream sources that support this)</li>
+		<li>Gapless play (well almost) on SliMP3 (but not when synced)</li>
+		<li>Share bandwidth and support proper synced play of remote MMS/WMA streams, including Sirius.</li>
+		<li>Share bandwidth when playing synced Rhapsody.</li>
+		<li>Removed Rhapsody stream limit for synced players.  Each sync group now counts as one stream.</li>
+	</ul>
+	<br />
+	
+	<li>Internet Radio:</li>
+	<ul>
+		<li>Re-organized Internet Radio menu to make it easier to find radio stations.</li>
+		<li>Now-Playing metadata support for RadioTime stations.</li>
+	</ul>
+	
+	<li>Music Services:</li>
+	<ul>
+		<li>Deezer Radio (France, UK, Germany)</li>
+	</ul>
+	
+	<li>Boom</li>
+	<ul>
+		<li>Speakers can be used even if headphones are plugged in</li>
+	</ul>
+	<br />
+	
+	<li>Bug Fixes:</li>
+
+	<ul> 	 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=529">#529</a> - Add feature to disable re-buffering at the beginning of each track when syncing</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=571">#571</a>,
+			<a href="http://bugs.slimdevices.com/show_bug.cgi?id=9153">#9153</a> - Transcoded files cannot FWD / RWD</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=1943">#1943</a> - Rotating SlimServer logs (Windows/OSX only)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=1845">#1845</a> - crossfade and gapless does not function properly when synchronized</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=3751">#3751</a> - Now Playing jumps ahead on SB1</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4266">#4266</a> - Bitrate limiting does not work for MP3 streams</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4578">#4578</a> - Accented characters in playlist entries don't rescan correctly</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4834">#4834</a> - After Switching to digital input device will not play music without a comlete reset.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5637">#5637</a> - Speed up MusicIP scanning by (optionally) not reading metadata from MIP</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6407">#6407</a> - Transporter won't play optical when sync'd with squeezebox</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6537">#6537</a> - Respect title format pref for remote metadata</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6599">#6599</a> - WMA should support proxied streaming</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6615">#6615</a> - Does not repeat after remote stream failure at end of playlist</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7091">#7091</a> - Player settings are overridden by sync group settings</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7121">#7121</a> - Syncing a Powered off player to a powered on player can cause music from "off" player</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7501">#7501</a> - stream.mp3 stops at end of playlist and disappears from Web UI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7531">#7531</a> - Sync/unsync operations sometimes need to consider players which are off</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7990">#7990</a> - CLI: Status subscribe: not all players notified when synchronization is cancelled</li>
+
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8327">#8327</a> - Squeezecenter should downsample high-sample-rate files for older players</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8637">#8637</a> - Searching for files with non-ASCII characters on Linux works intermittently</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8766">#8766</a> - Deleted MusicIP filters should not be used anymore by SC</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8914">#8914</a> - Moving 1 player from a sync to SN will cause all players to halt playback</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8952">#8952</a> - Update notification needs to be localized</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9002">#9002</a> - MusicIP fails to import existing playlists</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9039">#9039</a> - No track seeking when playing flac .cue files</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9154">#9154</a> - When displaying 'large' artwork, certain info tags should be cut short...</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9230">#9230</a> - SBC fails firmware upgrade if SC has a bad internet connection</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9272">#9272</a> - MusicIP import doesn't remove stale playlists</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9368">#9368</a> - Unable to enter AM in alarm when switching Time Format</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9382">#9382</a> - 'Add Next' does not work from XMLBrowser menus</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9404">#9404</a> - Boom: Added minimum and sensitivity settings (web, player ui, jive) for automatic brightness</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9405">#9405</a> - Restore original volume when alarm ends</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9429">#9429</a> - Rescan music library shows wrong type during scan</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9484">#9484</a> - Connection loss between controller and Squeezecenter while accessing large directories/albums (Music Folder Browsing)</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9501">#9501</a> - Unattended installs difficult with present windows installer</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9541">#9541</a> - DRM-ed ITunes files in playlists should not appear in Player UI</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9555">#9555</a> - Some Rhapsody items don't work when saved as favorites</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9587">#9587</a> - Standard web interface freezes when a TwonkyMedia is on network</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9598">#9598</a> - Add the ability to retrieve possible alarm playlist urls via CLI</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9601">#9601</a> - Don't fallback to OpenDNS if non-primary local NS tests fail</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9605">#9605</a> - MIP-Mixes won't contain tracks with non-ascii characters in it's file/directoryname</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9608">#9608</a> - SC max synced players (List Box) - not displaying all players with many players connected</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9666">#9666</a> - Time box missing from Alarm panel, once alarm is set</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9681">#9681</a> - Spectrum analyzer screensaver behaves differently since SC7.2/FW112</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9703">#9703</a> - Add date & time of last scan to Music Scan Details</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9709">#9709</a> - Stack Overflow podcast doesn't play (using direct streaming)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9722">#9722</a> - Sync when already synced should show "unsyncing" show-briefly</li> 
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9801">#9801</a> - stream.mp3 times out after a minute</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9818">#9818</a> - Real Time clock not set after clock change on server</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9863">#9863</a> - Add a "favorites exists url/id" command to CLI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9899">#9899</a> - Send 'dsco' for an unrecognized player type</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9910">#9910</a> - Scroll once then stop and long titles breaks screensaver</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9913">#9913</a> - Disable 96KHz and 88.1KHz by default on products that can't play it</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=10014">#10014</a> - Screen flashes off when browsing to a Now Playing current playlist (SB1 text display)</li>
+	</ul>
+</ul>
+
+<h2><a name="v7.2.1" id="v7.2.1"></a>Version 7.2.1 - 2008-10-20</h2>
+<ul>
+	<li>Firmware updates:</li>
+	<ul>
+		<li>Boom - Version 33<br />	
+			Squeezebox 2/3 - Version 113<br />
+			Transporter - Version 63<br />
+			Receiver - Version 48
+		</li>
+		<ul>
+			<li>Reduced audio glitches during re-buffering.</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8375">#8375</a> - (Boom) Holding down Add (+) button during power cycle fails to perform factory reset</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9104">#9104</a> - (Boom) Improved ambient light sensor performance</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9142">#9142</a> - (Boom) "Power off audio: Outputs always on" inappropriate for Boom</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9532">#9532</a> - MP3 decoder chokes on files with large headers</li>
+		</ul>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=3992">#3992</a> - don't trigger play action when pressing play button from idle/now playing screensaver</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8146#c9">#8146</a> - During an alarm, only change line-out mode to sub-woofer if line-out is connected</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8555">#8555</a> - Time displayed on Now Playing screensaver (for Boom used as alarm/radio)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8670#c3">#8670</a> - CLI queries fail when no client is connected</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9141">#9141</a> - SBR turns itself on</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9199">#9199</a> - Knob should not trigger volume in idle screen saver</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9240">#9240</a> - MP3::Info : ULT tag should be handled like USLT tag</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9277">#9277</a> - ASX playlists containing RTSP as first URL causes error</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9291">#9291</a> - 22050 Sample Rate 56k cbr mp3 does not play correctly</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9323">#9323</a> - Home Server and Lame 3.98 don't work well together</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9344">#9344</a> - Ensure latest font files included with plugins are used</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9340">#9340</a> - never hide the Radio home menu in Default skin</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9350">#9350</a> - can't change brightness on SliMP3/SB1 using the settings menu</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9359">#9359</a> - Scanner aborts when finding files with 'id' tag</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9363">#9363</a> - Add 224 kbps to Bitrate Limiting options</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9367">#9367</a> - Alarms are not rescheduled on system time changes, including DST</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9378">#9378</a> - Some podcasts do not display titles</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9420">#9420</a> - Squeezecenter 7.2 does not play ALAC on Linux</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9432">#9432</a> - 7.2 can crash on "new and changed music" scan</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9455">#9455</a> - Transporter VU Display Switches Off when Volume Up or Down is engaged</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9462">#9462</a> - xPL Plugin initializes with wrong local IP</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9476">#9476</a> - Make it easier to display clock by pressing snooze button when display is dark.  Show next alarm time on second press.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9492">#9492</a> - Support OPML playlist defined in a single file</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9502">#9502</a> - INPUT.Text truncates valueRef param at first "0" char</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9545">#9545</a> - Press and hold Pause (Stop) fails in screensaver</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9546">#9546</a> - Add option to suppress scrobbling of internet radio</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9549">#9549</a> - Improve reading of ID3 tags in WAV files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9093">#9093</a> - Powering off during alarm causes music to stop, start then stop again</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9333">#9333</a> - Adding an album shows wrong text on player UI</li>
+	</ul>
+	<br />
+</ul>
+
+
+<h2><a name="v7.2" id="v7.2"></a>Version 7.2 - 2008-08-28</h2>
+<ul>
+	<li>International:
+	<ul>
+		<li>Four new official translations: Danish, Suomi, Norsk, Svenska</li>
+	</ul>
+	<br />
+
+	<li>Firmware updates:</li>
+	<ul>
+		<li>Boom - Version 32</li>
+		<ul>
+			<li>Initial Boom firmware.</li>
+		</ul>
+				
+		<li>Squeezebox 2/3 - Version 112<br />
+			Transporter - Version 62<br />
+			Receiver - Version 47
+		</li>
+		<ul>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=3958">#3958</a> - Show error messages during first setup (don't go dark after 10 seconds)</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4120">#4120</a>,
+				<a href="http://bugs.slimdevices.com/show_bug.cgi?id=7773">#7773</a>,
+				<a href="http://bugs.slimdevices.com/show_bug.cgi?id=8665">#8665</a> - Fix crash when switching between different wireless encryption modes.
+			</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7594">#7594</a> - Revert latest WOL change and learn SC address again always (this will break setups where SC is behind a wireless bridge reporting its own instead of SCs MAC address)</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8959">#8959</a> - Local Control when SqueezeCenter/Network Down</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9003">#9003</a> - Occasional loud noises when moving to a new Rhapsody track</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9099">#9099</a> - SB3 Factory reset - due to single key on Bose Wave Radio remote</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9157">#9157</a> - Rhapsody error: not a version 3 EA file (code 105)</li>
+		</ul>
+		<li>Receiver Only</li>
+		<ul>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8647">#8647</a> - Support WOL when pressing front button when LED is blue</li>
+		</ul>
+		<li>Transporter Only</li>
+		<ul>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9005">#9005</a> - RS-232 broken</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9058">#9058</a> - Panic due to incorrect AC line voltage measurement</li>
+		</ul>
+	</ul>
+	<br />
+
+	<li>Web UI<ul>
+		<li>Improved performance of web interface.</li>
+		<li>Ask for confirmation when setting a password to prevent typos in web page protection.</li>
+		<li>Split up Audio settings page into Audio and separate Synchronization pages</li>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7586">#7586</a> - FLAC.pm should be a little stricter parsing track titles from CDDB tags</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8116">#8116</a> - SongScanner key defs should be in default.map</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8443">#8443</a> - FLAC file with invalid embedded cue sheet isn't scanned properly</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8689">#8689</a> - Missing important encodings for XML parsing</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8704">#8704</a> - Seek: FFWD/REW scanner UI timer doesn't reset with each button press</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8797">#8797</a> - Support for LAME 3.98 default endianness change</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8926">#8926</a> - CLI interface not returning hasitems correctly for Staff Picks</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8939">#8939</a> - MP3 file with invalid id3v2 data causes the scanner to crash</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8986">#8986</a> - make sure iTunes/MusicIP settings are saved before audiodir, as changing audiodir automatically launches a rescan</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9031">#9031</a> - Shuffle tooltip undefined</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9065">#9065</a> - Windows Server 2008 and not Windows Vista</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9112">#9112</a> - Last.fm settings menu is useless when no account is registered</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9144">#9144</a> - Non-Default skin settings pages broken in Safari 3.1.2 on OS X</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9168">#9168</a> - PluginManager fails with more than one targetPlatform in install.xml</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=9170">#9170</a> - xPL IR Code Broadcast Broken</li>
+	</ul>
+	<br />
+	
+	<li>Softsqueeze<ul>
+		<li>Bumped Version to 3.7b0 (eternal beta now).</li>
+		<li>Fixed version check to last through 7.5, followed by more appropriate warning after.</li>
+		<li>New Boom skin and remote.</li>
+	</ul>
+	<br />
+
+	<li>
+		Improved alarm clock functionality:
+		<ul>
+			<li>Alarms can be set for any combination of days at a specified time, allowing weekday alarms, weekend alarms etc (<a href="http://bugs.slimdevices.com/show_bug.cgi?id=2263">#2263</a>)</li>
+			<li>Alarms can now be snoozed</li>
+			<li>The time is displayed on screen during an alarm with feedback about the current alarm or snooze</li>
+			<li>The Date Time screensaver now indicates when the next alarm will go off</li>
+			<li>Alarms can be configured as one-off alarms that disable themselves after they go off</li>
+			<li>Ability to quickly disable all alarms (holiday mode)</li>
+			<li>Can choose to one volume setting for all alarms, allowing the volume to be quickly changed</li>
+			<li>
+				Back end:
+				<ul>
+					<li>The CLI alarm and alarms commands have changed!  External callers will need to be updated to remain compatible</li>
+					<li>INPUT.Time now exits on both left and right.  Plugins that use this mode will need to be updated to handle the new exit conditions.</li>
+					<li>
+						New Slim::Utils::Alarm class provides easy access to alarm functionality
+						<ul>
+							<li>The screensaver used during an alarm is configurable (via calls into Slim::Utils::Alarm)</li>
+							<li>Plugins can register new playlists that can then be selected by the user as alarm playlists</li>
+							<li>See docs in Slim::Utils::Alarm for more details
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+</ul>
+
+<h2><a name="v7.1" id="v7.1"></a>Version 7.1 - 2008-07-28</h2>
+
+<ul>
+
+	<li>Firmware updates:
+	<ul>
+		<li>Squeezebox 2/3 - Version 101<br />
+			Transporter - Version 50<br />
+			Receiver - Version 36
+		</li>
+		<ul>
+			<li>Updated Rhapsody Direct to higher quality 192k MP3.</li>
+			<li>Gapless MP3 fixes.</li>
+			<li>Changed "fixed digital levels" to fix both digital and analog levels. This was necessitated by an architectural change.</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5720">#5720</a> - Gapless MP3 not possible if file has CRC</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6684">#6684</a> - Enable UDAP for SB3 and TR</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8698">#8698</a> - Strings fix for SB3 and added some missing translations.</li>
+		</ul>
+		<li>Transporter-specific features and fixes</li>
+		<ul>
+			<li>Added "effects loop" feature for hooking in an external DSP via S/PDIF.</li>
+			<li>New programmable logic: Xilinx CPLD will be automatically upgraded,	but if you subsequently downgrade to an earlier firmware, it must be manually re-flashed to the older rev (press '1' on startup).</li>
+			<li>Added support for native 88.2k playback.</li>
+			<li>CPU optimizations in UART and IR blaster, freed up over 20 MIPS. Should prevent 24/96 FLAC from ever being able to max out the CPU, even with replaygain and spectrum analyzer enabled.</li>
+			<li>Word clock and effects loop settings take effect immediately - no need to reconnect or restart the track.</li>
+			<li>Make word clock and effects loop settings take effect immediately instead of on player's initial connection to the server.</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4322">#4322</a> - Digital input does not come back from pause reliably</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4436">#4436</a> - No AES output when wordclock signal is disconnected then reconnected</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4634">#4634</a> - Cannot slave to 96k external word clock</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4712">#4712</a> - Support for 88.2kHz sample rate</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4834">#4834</a> - After Switching to digital input device will not play music without a complete reset</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4895">#4895</a> - Lack of audio output after turning on</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6937">#6937</a> - Rhapsody fails to play in bridged mode</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7269">#7269</a> - Volume control breaking digital inputs</li>
+		</ul>
+	</ul>
+	<br />
+	
+	<li>Music Services:
+	<ul>
+		<li>Support for Last.fm Radio</li>
+	</ul>
+	<br />
+
+	<li>Seek Improvements:
+	<ul>
+		<li>Improved FF/REW seek UI.</li>
+		<li>Seek support for natively streamed Ogg files.</li>
+		<li>Seek support for remote MP3 files (i.e. podcasts) on servers that support it.</li>
+		<li>Seek support for remote WMA files on Windows Media Servers.</li>
+	</ul>
+	<br />
+
+	<li>Default Web UI:
+	<ul>
+		<li>SqueezeJS framework</li>
+		<li>Show notification messages for various actions which might be delayed</li>
+		<li>Add web GUI main menu icons for favorites</li>
+		<li>Allow MusicIP moods and RandomPlay mixes to be saved as favorites</li>
+	</ul>
+	<br />
+
+	<li>Player handling:
+	<ul>
+		<li>Discover players connected to other SqueezeCenters in your local network</li>
+		<li>Connect players to and disconnect from other SqueezeCenters or SqueezeNetwork</li>
+		<li>Add CLI support, player and web UI</li>
+		<li>Add way to reset player to default values</li>
+	</ul>
+	<br />
+
+	<li>Windows installer:
+	<ul>
+		<li>during installation check for port conflicts and blocking firewalls</li>
+		<li>optionally remove all SC preferences, logs and registry keys to make sure a fresh install
+			creates a working system</li>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=1592">#1592</a> - Fast forward / rewind rework</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=2319">#2319</a> - Don't crossfade successive album tracks</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=3809">#3809</a> - No scanning (FF/RW) with Ogg</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4402">#4402</a> - If music library unavailable duplicate album entries created</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4760">#4760</a> - Players not doing FF/RW while synced, although display says otherwise</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5907">#5907</a> - Home on breadcrumb trail in Infobrowser Settings Edit -loses edit</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5979">#5979</a> - Add option to cancel a scan in progress</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6049">#6049</a> - Information Browser has duplicate entries</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6235">#6235</a> - Many players sync'ed: can't see names in classic/fishbone skin's status frame</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6266">#6266</a> - SqueezeCenter does not stream to iPod Touch or iPhone</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6471">#6471</a> - Huge thumbnails being generated in PNG format</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6836">#6836</a> - lack of cue sheet support for .ogg files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6890">#6890</a> - Implement smarter RVA/track gain + SoundCheck logic</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7068">#7068</a> - Fast-forward/rewind is broken on controller</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7103">#7103</a> - Option to disable artwork pre-caching at scan time</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7489">#7489</a> - Safari/WebKit doesn't recognize encoding returned when saving SN settings in SC</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7497">#7497</a> - gototime when paused restarts play but does not unmute</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7702">#7702</a> - Random Mix: powered off player turns on and starts playing by itself</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7820">#7820</a> - Play doesn't cancel fast forward mode from controller</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8003">#8003</a> - Playing Pandora after leaving Controller idle over night doesn't work</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8112">#8112</a> - Playing a remote stream while player is off does not turn on player right away</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8148">#8148</a> - Playing Sirius Internet Radio via SoftSqueeze fails on stream</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8175">#8175</a> - Atom feeds may not parse properly</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8181">#8181</a> - Quote symbol causes adding song(s) to playlist to fail using Fishbone</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8192">#8192</a> - Toggling favorites form Songinfo page broken in non Default skins</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8212">#8212</a> - Default Crossfade duration is zero</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8248">#8248</a> - Use RadioTime logos in Now Playing</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8254">#8254</a> - Allowed IP Addresses field validation is not accurate</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8275">#8275</a> - MusicIP Mix for New Music broken</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8276">#8276</a> - Trackinfo from MusicIP mix fails</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8278">#8278</a> - Changing players in SC causes "Tune in URL" to play when it shouldn't</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8332">#8332</a> - MusicIP error when choosing mix parameters</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8334">#8334</a> - Menu does not return to HOME when switching from SN > SC</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8344">#8344</a> - disable authentication if user/password are empty</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8360">#8360</a> - 7.0.1 fails scanning on OSX</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8465">#8465</a> - Error message when trying to update SC while scan is running.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8410">#8410</a> - Add possibility to force a character set to be used by SqueezeCenter where no such locale is available</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8519">#8519</a> - Support ID32 block type in WAV files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8601">#8601</a> - WavPack files with large RIFF headers not parsed correctly</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8622">#8622</a> - Box for player selection is not correctly resized after player change</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8864">#8864</a> - Extended text scrolls on push/pop mode when it should not</li>
+	</ul>
+</ul>
+
+<h2><a name="v7.0.1" id="v7.0.1"></a>Version 7.0.1 - 2008-05-14</h2>
+
+<ul>
+	<li>Firmware updates:
+	<ul>
+		<li>
+			Squeezebox Classic - Version 88<br />
+			Transporter - Version 37<br />
+			Squeezebox Receiver - Version 23
+		</li>
+		<ul>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=15">#15</a> - DHCP fails with Mac OS X network sharing DHCP server</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6513">#6513</a> - WPA / WPA2 Personal: Setting passphrase to more than 63 characters shows garbage characters and crashes the Squeezebox</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6994">#6994</a> - Problems connecting WPA and WPA2 to Netgear WNR3500</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7415">#7415</a> - Apple Time Capsule, Airport Express N don't work with Squeezebox</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7637">#7637</a> - Change serv 2 to www.test.squeezenetwork.com</li>
+		</ul>
+		</li>
+		<li>Transporter - Version 37</li>
+		<ul>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4653">#4653</a> - Right screen does not update during button tests</li>
+		</ul>
+		</li>
+	</ul>
+	<br />
+	
+	<li>Music Services:
+	<ul>
+		<li>Support for SIRIUS Internet Radio.</li>
+	</ul>
+	<br />
+	
+	<li>Squeezebox Controller:
+	<ul>
+		<li>Fully support per device language settings</li>
+	</ul>
+	<br />
+	
+	<li>Tag Reading:
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=3727">#3727</a> - Unicode genres are duplicated between MP3 and FLACs</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7782">#7782</a> - Use COVERART tag in Ogg files</li>
+	</ul>
+	<br />
+	
+	<li>Bug Fixes:<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4092">#4092</a> - Multiple radio stations in a playlist don't work</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4276">#4276</a> - Accented / special characters in cue file name</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4361">#4361</a> - Albums with same name but different artists are wrongly grouped together if &quot;Treat multi-disc sets as a single album&quot; is set.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5143">#5143</a> - View log file from web interface</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5339">#5339</a> - Music containing special characters does not appear when integrating iTunes XML on Linux</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5584">#5584</a> - Add support for Mac aliases in music folder</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5833">#5833</a> - log4perl error messages when scripts return to the console/shell</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6621">#6621</a> - Can't store non-latin characters in preference file</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6628">#6628</a> - Sync RadioTime and Last.fm prefs with SN</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6643">#6643</a> - Searching for "Various Artists" Hangs SC</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6689">#6689</a> - UTF-8 not rendered correctly on web browser in scan progress</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6712">#6712</a> - Rebuffering (due to output-buffer underrun) should have time-limit</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6720">#6720</a> - Year not removed from database when last song with that year is changed</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6789">#6789</a> - Accented characters in music folder setting not accepted</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6823">#6823</a> - Player name of newly attached player is empty in settings page</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6864">#6864</a> - SB1 synch problems
+			<br>Please note that the original Squeezebox (Squeezebox v1) is less capable of maintaining synchronization than newer Squeezebox models.
+			See the notes associated with this bug for more information
+		</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6914">#6914</a> - Encoding problems in Podcasts display</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6920">#6920</a> - 88.2kHz 24-bit WMA displayed incorrectly</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6928">#6928</a> - CLI query playlist with stream items fails</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7053">#7053</a> - Tags with cyrillic characters breaks CLI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7061">#7061</a> - Power on Resume behaviour is broken when not playing at power off</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7066">#7066</a> - Bad Favorites URLs can't be edited and made playable</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7073">#7073</a> - Filenames with accented characters truncated when browsing</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7089">#7089</a> - Items in Extras Menu are not ordered correctly</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7092">#7092</a> - New players should only be given a default name with a number if there's a player without a number with the same default name</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7286">#7286</a> - Scrolling through UTF-8 chars on medium font misses a couple of pixels</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7303">#7303</a> - MusicIP plugin active even when disabled</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7314">#7314</a> - DateTime screensaver doesn't display alarm bell for alarms on sundays</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7351">#7351</a> - Mac Installer prompts to stop server error</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7369">#7369</a> - Ampersand in iTunes playlists names kills those playlists</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7376">#7376</a> - SBC unresponsive when coming out of sleep mode</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7414">#7414</a> - Selecting favorites by typing numbers should be enabled again</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7424">#7424</a> - LAME Installed Correctly shown when it's not</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7426">#7426</a> - Power-on-resume does not work for Internet radio</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7430">#7430</a> - XMLBrowser pagination broken for search result lists</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7443">#7443</a> - Artwork doesn't show properly if each track has a different image</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7460">#7460</a> - mac (Monkey's Audio) darwin binary is PPC-only</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7465">#7465</a> - Strings are not updated when a plugin is updated</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7470">#7470</a> - Podcast Time Played/Remaining off on various UIs</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7478">#7478</a> - playlistTrack not mixable on player UI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7479">#7479</a> - Lyrics does not display correctly accented characters</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7507">#7507</a> - Failure to scan dirs/files with names contaning non-latin chars</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7509">#7509</a> - Changing Last.fm accounts does not work for Audioscrobbler</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7517">#7517</a> - Rhapsody:  Song # 200 is &quot;Play All&quot; in top tracks for an artist.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7524">#7524</a> - Non-blocking connect() fails on win32</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7526">#7526</a> - Problem switching players in Handheld skin</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7537">#7537</a> - MusicIP icon in invalid locations</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7547">#7547</a> - Don't utf8 decode file paths in CUE sheets</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7549">#7549</a> - No error message when selecting to transcode when decoder is not installed correctly</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7563">#7563</a> - Unable to add audio urls to favorties if mime type not known</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7574">#7574</a> - Problems with hebrew characters in various aspects of the product</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7582">#7582</a> - Random Mix plugin no longer distinguishes between 'add' and 'play' in player UI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7583">#7583</a> - SlimServer 7.0 throws an exception when shutting down.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7585">#7585</a> - DRM track in Playlists causes scanner to quit scan</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7610">#7610</a> - Playlists with . seperating words have the . converted to a space</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7633">#7633</a> - server.prefs re-written every 5 min. and prevents HDD spin-down</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7636">#7636</a> - CLI response when browsing XMLBrowser should include type of item</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7643">#7643</a> - CLI current duration value wrong for some plugins</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7648">#7648</a> - JPEG image headers truncated for some APIC frames</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7649">#7649</a> - MusicIP should return info about missing player instead of empty playlist</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7667">#7667</a> - Synchronize pop-up window doesn't use HTML label tags</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7675">#7675</a> - new scan is not launched when needed if only iTunes or MusicIP, but no music path is defined</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7679">#7679</a> - CLI search command does not respect itemsPerResponse parameter</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7684">#7684</a> - CLI hasitems tag doesnt return 0 when it should</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7685">#7685</a> - Unable to clear out SqueezeNetwork account info in SqueezeCenter</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7692">#7692</a> - Simplify access to log files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7703">#7703</a> - Visualizer screen gets extended text stuck, won't clear</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7739">#7739</a> - pcmsamplesize not set right for all remote WMA files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7744">#7744</a> - Player Plugin information menu is wrong</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7752">#7752</a> - scanner won't scan folders with "foreign " characters</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7769">#7769</a> - missing/wrong fields in Internet Radio Station Description on Controller when streaming to iTunes</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7778">#7778</a> - Song information doesn't always show duration in web interface</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7789">#7789</a> - Can't delete playlists in default and Fishbone skins </li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7791">#7791</a> - Web UI blocks creating playlists with illegal characters, player UI does not </li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7800">#7800</a> - cli_socket_accept doesn't accept() if max connections reached</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7818">#7818</a> - Sleep timer + Alarm does not reset idle timer, Pandora won't play</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7840">#7840</a> - does not find custom artwork.jpg files in folders that have a file name with non-latin characters</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7881">#7881</a> - Ogg tag parser is broken</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7907">#7907</a> - Artwork in FLAC not showing if picture type is not 3 (Cover)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7936">#7936</a> - When enabling/disabling plugins, enforced plugins are always listed as changed</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7957">#7957</a> - VBRI header not read in MP3 files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7960">#7960</a> - Random Plugin Not Honouring 'ADD' or 'ADD Next'</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7986">#7986</a> - Embedded Artwork Error in WMA lossless</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=7992">#7992</a> - Bad query used for CLI 'artists in genre' queries</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8007">#8007</a> - Display Settings not correct for SB3</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8036">#8036</a> - CLI: albums query hangs sometimes with "a" tags</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8069">#8069</a> - Title Format pref not shown for stream.mp3 clients</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=8101">#8101</a> - Rhapsody track search, pick "All Songs", plays wrong tracks.</li>
+	</ul>
+</ul>
+
+
+<h2><a name="v7.0" id="v7.0"></a>Version 7.0 - 2008-03-03</h2>
+
+<ul>
+	<li>General:
+	<ul>
+		<li>Renamed SlimServer to SqueezeCenter</li>
+	</ul>
+	<br />
+
+	<li>Firmware updates:
+	<ul>
+		<li>Use new OpenDNS servers if default DNS servers fail, when connecting to SN</li>
+
+		<li>Squeezebox 2 - Version 86</li>
+		<ul>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6478">#6478</a> - Fix slim discovery</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6030">#6030</a> - Fix WPA group key renewal</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4664">#4664</a> - Fix WOL if SC is behind a wireless bridge</li>
+		</ul>
+		</li>
+		<li>Squeezebox 2 - Version 84</li>
+		<ul>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5959">#5959</a> - Fix premature STMo</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6156">#6156</a> - Fix double STMs</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6256">#6256</a> - Replace SlimServer with SqueezeCenter</li>
+		</ul>
+		</li>
+		<li>Squeezebox 2 - Version 83</li>
+		<ul>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5171">#5171</a> - Some settings were lost when after a factory reset the player was connecting directly to SN (w/o first being connected to SC)</li>
+		</ul>
+		</li>
+		<li>Transporter - Version 36</li>
+		<ul>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6478">#6478</a> - Fix slim discovery</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6030">#6030</a> - Fix WPA group key renewal</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4664">#4664</a> - Fix WOL if SC is behind a wireless bridge</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5092">#5092</a> - Fix WOL for Transporter</li>
+		</ul>
+		</li>
+		<li>Transporter - Version 34</li>
+		<ul>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5959">#5959</a> - Fix premature STMo</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6156">#6156</a> - Fix double STMs</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6256">#6256</a> - Replace SlimServer with SqueezeCenter</li>
+		</ul>
+		</li>
+		<li>Transporter - Version 33</li>
+		<ul>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4580">#4580</a> - Fix brief noise when switching digital inputs</li>
+			<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5171">#5171</a> - Some settings were lost when after a factory reset the player was connecting directly to SN (w/o first being connected to SC)</li>
+		</ul>
+		</li>
+	</ul>
+	<br />
+
+	<li>File Formats:
+	<ul>
+		<li>WavPack is now supported.</li>
+	</ul>
+	<br />
+
+	<li>Internationalization:
+	<ul>
+		<li>Updated official translations (EN, DE, ES, FR, IT, NL) 
+		<li>Updated Danish translations from Bjørn Haagensen
+	</ul>
+	<br />
+
+	<li>Internet Radio/Music on Demand:
+	<ul>
+		<li>Support for Slacker</li>
+		<li>Support for Pandora</li>
+		<li>Support for Rhapsody Direct</li>
+		<li>Support for MP3tunes</li>
+		<li>Last.fm AudioScrobbler is now included.</li>
+	</ul>
+	<br />
+
+	<li>SqueezeNetwork:
+	<ul>
+		<li>Preferences integration - preferences for SqueezeCenter and SqueezeNetwork are synchronized.</li>
+		<li>View and switch players that are connected to SqueezeNetwork.</li>
+	</ul>
+	<br />
+
+	<li>Skins:
+	<ul>
+		<li>Brand new default skin</li>
+		<li>Old Default skin renamed to Classic</li>
+		<li>Fishbone: ability to toggle display of album text in gallery view</li>
+		<li>Fishbone: drag n drop playlist manipulation</li>
+		<li>Classic & Fishbone: popup album track list when clicking on album art</li>
+		<li>Classic & Fishbone: browse multiple levels with 'tree' view (icon on left of browse items)</li>
+		<li>unsupported and unmaintained skins are no longer part of the distribution</li>
+	</ul>
+	<br />
+
+	<li>Performance:
+	<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=259">#259</a> - Syncing of multiple players has been greatly improved.  Players are now able to stay in sync with each other even in the face of poor network conditions or while playing long radio streams.</li>
+	</ul>
+	<br />
+
+	<li>Player UI:
+	<ul>
+		<li>Suppress "Play All" at top level browse menus</li>
+		<li>Play other songs on album feature is now a per-player setting - default is to use the older server preference if no player preference has been chosen yet</li>
+		<li>Repeated pressing of browse or search button will now toggle through the list of options respectively</li>
+	</ul>
+	<br />
+
+	<li>Platform Support:
+	<ul>
+		<li>Logging/Debugging has been overhauled. We now use Log::Log4perl</li>
+		<li>Logging/Debugging is now multi-level and persistent across server restarts.<li>
+	</ul>
+	<br />
+
+	<li>Tag Reading:
+	<ul>
+		<li>Some fixes to WMA tag reading</li>
+		<li>Browse Music Folder can add album covers in new folders</li>
+		<li>Ape tags now reported as the ID3 version if found</li>
+	</ul>
+	<br />
+
+	<li>Plugins:
+	<ul>
+		<li>Pre-Distributed plugins now stored in Slim/Plugin</li>
+		<li>Third party plugins require rewrite to new API</li>
+		<li>Third party plugins only to be installed in Plugins folder</li>
+	</ul>
+	<br />
+
+	<li>CLI API:
+	<ul>
+		<li>Browse Music Folder</li>
+		<li>Browse filesystems from the server's point of view</li>
+		<li>Rescan progress</li>
+		<li>Please see the documentation in docs/cli-api.html for details, in particular about <strong>API changes that may impact your client</strong></li>
+	</ul>
+	<br />
+
+	<li>Bug Fixes:<ul>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=223">#223</a> - add WavPack support</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=1524">#1524</a> - make live search skinnable</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=3351">#3351</a> - Composers included in Artist count when browsing by Genre</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=3548">#3548</a> - Cycle through menu by pressing the Search/Browse buttons</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4104">#4104</a> - link to FAQ under help shouldn't put ?player=[MACADDY] at end of url</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4137">#4137</a> - Sort the list of radios returned by radios query</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4188">#4188</a> - CUE-sheet can't be browsed in player, OK in web interface</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4259">#4259</a> - Fishbone never refreshes playlist</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4293">#4293</a> - Move to using Log::Log4perl to replace --d_* debugging.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4338">#4338</a> - MusicMagic => MusicIP</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4351">#4351</a> - change to idle screensaver when playback stops during Now Playing" screensaver.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4405">#4405</a> - Rhapsody/Upnp browse only works on Default skin</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4408">#4408</a> - MoodLogic errors with MoodLogic disabled</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4409">#4409</a> - All fonts lost</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4466">#4466</a> - Wrong sorting order in "browse songs" list at the player</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4421">#4421</a> - Pressing play when displaying a track title in the playlist plays Track 1</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4485">#4485</a> - Artwork files are not picked up in unicode-named folders</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4498">#4498</a> - Advanced search for compilation album shows all tracks twice</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4507">#4507</a> - Touch skin needs to work in IE</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4513">#4513</a> - SqueezeCenter should ignore the iTunes COMMENTs: ITUNPGAP & ITUNSMPB</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4516">#4516</a> - Enabling Playlists Breaks Search Results</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4579">#4579</a> - Bonjour fails to initialize</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4595">#4595</a> - CLI support for Browse music folder</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4598">#4598</a> - Better CLI scanner access</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4625">#4625</a> - artists cli query does not always return an artist for tracks in compilations</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4629">#4629</a> - For albums with ALBUMARTIST, track artists don't have any albums listed when searching for track artists from the player UI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4678">#4678</a> - Localize DateTime screensaver</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4707">#4707</a> - Forcing transcode to MP3 results in a bit rate of 0</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4730">#4730</a> - Echo from CLI when next song in playlist</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4822">#4822</a> - Create a new playlist via CLI</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4849">#4849</a> - Default time display should not include seconds</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4873">#4873</a> - Error creating INI entry in Logitech.url</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4877">#4877</a> - Shorten files option in SqueezeCenter not needed any more</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4922">#4922</a> - When PlayList is empty, Download brings up a blank web page and gets stuck there</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4927">#4927</a> - ID3v2.4 date tags ignored</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4941">#4941</a> - New music limit not working</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4947">#4947</a> - Search does not search '0'</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4955">#4955</a> - items per page preference off by 1</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5075">#5075</a> - Upgrade flac binary to latest version (1.2.1)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5080">#5080</a> - Live search doesn't display artist with albums</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5093">#5093</a> - Nokia770 skin on Nokia N800 shows a vertical scroll bar and the page footer moves bottom of the page when scrolling</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5112">#5112</a> - Allow multiple plugins to register buttons in same mode</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5159">#5159</a> - Album thumbnail lost when music file mtime changes</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5160">#5160</a> - Debian plugins path needs updating after Slim/Plugin/* reorg</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5165">#5165</a> - Option not to filter genres at album and track level doesn't work</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5193">#5193</a> - Restore CSRF protection. Patch by Peter Watkins</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5197">#5197</a> - I18n: Strange shortcut links in Artist view.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5217">#5217</a> - First file in iTunes library is not scanned into SlimServer</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5218">#5218</a> - iTunes playlists scanned but not visible in interface</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5221">#5221</a> - Set Player block/unblock mode through CLI command</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5255">#5255</a> - CLI muting</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5287">#5287</a> - Artist link from basic search results ignores gallery setting</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5296">#5296</a> - MUSICBRAINZ_SORTNAME - not supported but in code?</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5324">#5324</a> - SqueezeCenter should run with group permissions from /etc/groups</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5432">#5432</a> - Random mix plugin no longer at menu top level</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5443">#5443</a> - Difficult specifying desired sort order (national characters)</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5444">#5444</a> - Random Mix status doesn't update in non-continuous mode</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5607">#5607</a> - Debugging settings not shown after restart</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5610">#5610</a> - ResetDisplay method failed</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5831">#5831</a> - APE tag processing isn't listed in the ID3 tag version</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5838">#5838</a> - returning bad data to illogical request</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5839">#5839</a> - Song order for addalbum makes no sense</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5842">#5842</a> - Can't play all songs from favorites</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5858">#5858</a> - Cookies on stream requests</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5871">#5871</a> - Numeric key selection not correct within Browse New Music</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5902">#5902</a> - Alarm triggers on all players / displays on all players</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5944">#5944</a> - No "Added to playlist" message when an album is picked from the Music Folder browser</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5973">#5973</a> - Slimserver cannot read Genre tag above numeric ID 79 for AIFF files.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6163">#6163</a> - no way for 3rd party plugins to add custom icons</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6167">#6167</a> - Random Mix "recently played songs" value can not be set to zero.</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6294">#6294</a> - Track title is incorrect when album is a whole-CD flac file with cuesheet and track is in a playlist</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6507">#6507</a> - ALBUMARTIST tag causes ARTISTSORT tags to be lost</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=3332">#3332</a> - Audio plays back at 44.1 KHz with 48Khz FLAC's when decompressing at server</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4098">#4098</a> - Wrong time after scanning through a file / scanning short songs jumps to next track</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4391">#4391</a> - Softsqueeze cannot play certain FLAC files</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=4760">#4760</a> - Players not doing FF/RW while synced</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5210">#5210</a> - Now Playing & Time Incorrect On Synced Players with RandomPlay</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5271">#5271</a> - 7.0a1 does not play WAV file of 16 bits</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=5631">#5631</a> - Problem with WMA files read from a UPnP media server</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6508">#6508</a> - Occasional songs freeze with no sound</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6540">#6539</a> - Sync via player UI breaks sometimes</li>
+		<li><a href="http://bugs.slimdevices.com/show_bug.cgi?id=6666">#6666</a> - Synchronisation offset when unpausing if player has volume set to 0</li>		
+	</ul>
+</ul>

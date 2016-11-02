@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<extension>
+	<id>6B19E1A4-3C82-415D-A4C1-5B706B8D2ED1</id>
+        <name>PLUGIN_PODCAST</name>
+        <module>Slim::Plugin::Podcast::Plugin</module>
+        <version>2.0</version>
+        <description>PLUGIN_PODCAST_DESC</description>
+        <creator>Logitech</creator>
+
+	<defaultState>disabled</defaultState>
+        
+	<homepageURL>http://www.mysqueezebox.com/appgallery/Podcasts</homepageURL>
+	<optionsURL>plugins/Podcast/settings/basic.html</optionsURL>
+	<icon>plugins/Podcast/html/images/icon.png</icon>
+	<type>2</type><!-- type=extension -->
+
+        <targetApplication>
+  	        <id>Logitech Media Server</id>
+                <minVersion>7.0a</minVersion>
+                <maxVersion>*</maxVersion>
+        </targetApplication>
+
+</extension>

@@ -1,0 +1,34 @@
+[% PROCESS settings/header.html %]
+
+	<div class="settingSection">
+		<div class="prefHead">[% "SETUP_GROUP_PLUGINS" | string %]</div>
+		<div class="prefDesc"><br/>[% (failsafe ? "SETUP_PLUGINS_SAFEMODE" : "SETUP_GROUP_PLUGINS_DESC") | string %]</div>
+	</div>
+
+	<div class="pluginSection">
+	[% FOREACH plugin = sortedPlugins %]
+
+		[% name     = plugins.$plugin.name %]
+		[% version  = plugins.$plugin.version %]
+		[% enforce  = plugins.$plugin.enforce || plugins.$plugin.errorDesc %]
+		[% settings = failsafe && !enforce ? '' : plugins.$plugin.optionsURL %]
+		[% enabled  = pluginState.$plugin %]
+
+		[% title = BLOCK %]
+			<input name="[% name %]" type="checkbox" [% enforce ? "disabled" : "" %] [% enabled ? "checked=\"1\"" : "" %] class="pluginEnablerCheckbox"> [% name | getstring %]
+			[% IF version %](v[% version %])[% END %]
+		[% END %]
+
+		[% WRAPPER setting desc = plugins.$plugin.description %]
+			[% IF plugins.$plugin.errorDesc %]<strong>[% plugins.$plugin.errorDesc %]</strong>
+			[% ELSE %]
+				[% PROCESS pluginLink %]&nbsp;
+				[% IF plugins.$plugin.opType %]<strong>([% "SETUP_GROUP_PLUGINS_NEEDS_RESTART" | string %])</strong>[% END %]
+			[% END %]
+		[% END %]
+
+	[%- END -%]
+	</div>
+
+[% PROCESS settings/footer.html %]
+	

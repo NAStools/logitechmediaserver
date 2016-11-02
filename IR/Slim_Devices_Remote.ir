@@ -1,0 +1,72 @@
+# This mapping is for the custom remote
+
+# Additionally, some new codes may be defined for use with programmable
+# remotes
+
+##################################################################################
+# Button names to IR code mappings
+##################################################################################
+0						= 76899867
+1						= 7689f00f
+2						= 768908f7
+3						= 76898877
+4						= 768948b7
+5						= 7689c837
+6						= 768928d7
+7						= 7689a857
+8						= 76896897
+9						= 7689e817
+arrow_down				= 7689b04f
+arrow_left				= 7689906f
+arrow_right				= 7689d02f
+arrow_up				= 7689e01f
+voldown					= 768900ff
+volup					= 7689807f
+power					= 768940bf
+rew						= 7689c03f
+pause					= 768920df
+fwd						= 7689a05f
+add						= 7689609f
+play					= 768910ef
+search					= 768958a7
+shuffle					= 7689d827
+repeat					= 768938c7
+sleep					= 7689b847
+now_playing				= 76897887
+size					= 7689f807
+brightness				= 768904fb
+favorites				= 768918e7
+browse					= 7689708f
+power_on				= 76898f70
+power_off				= 76898778
+home					= 768922dd
+
+now_playing_2			= 7689a25d
+search_2				= 7689629d
+favorites_2				= 7689e21d
+
+menu_browse_album		= 76897c83
+menu_browse_artist		= 7689748b
+menu_browse_playlists	= 76897a85
+menu_browse_music		= 7689728d
+
+menu_search_artist		= 768954ab
+menu_search_album		= 76895ca3
+menu_search_song		= 768952ad
+
+digital_input_aes-ebu		= 768906f9
+digital_input_bnc-spdif		= 76898679
+digital_input_rca-spdif		= 768946b9
+digital_input_toslink		= 7689c639
+
+analog_input_line_in		= 76890ef1
+
+muting				= 7689c43b
+
+preset_1			= 76898a75
+preset_2			= 76894ab5
+preset_3			= 7689ca35
+preset_4			= 76892ad5
+preset_5			= 7689aa55
+preset_6			= 76896a95
+

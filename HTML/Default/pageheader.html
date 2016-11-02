@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="/html/ext/resources/css/ext[% useSpecialExt || "-all" %].css?r=[% revision %]" />
+
+		[% PROCESS standardheader.html %]
+
+		[% IF pageHeaderScripts && NOT extJsScripts %]
+			[% pageHeaderScripts %]
+		[% ELSE %]
+			<script type="text/javascript">[% PROCESS html/vars.js %]</script>
+			<script type="text/javascript" src="[% webroot %]html/js[% useSpecialExt %].html?r=[% revision %]"></script>
+			<script type="text/javascript">[% PROCESS html/SqueezeJS/Strings.js %]</script>
+
+			<script type="text/javascript">
+				[% PROCESS jsString id='LOADING' jsId='loading' %]
+				var hideSearchTimer;
+
+				// IE is executing JS very early - add dummy highlighter to prevent crash
+				var Highlighter = {
+					highlight: function(){}
+				};
+
+				Ext.onReady(function() {
+					// overwrite default Ext Button layout
+					SqueezeJS.UI.buttonTemplate = new Ext.Template(
+						'<table border="0" cellpadding="0" cellspacing="0"><tbody><tr>',
+						'<td></td><td><button type="{0}" style="padding:0" class="x-btn-text {2}"></button></td><td></td>',
+						'</tr></tbody></table>'
+					);
+					SqueezeJS.UI.buttonTemplate.compile();	
+
+					SqueezeJS.UI.splitButtonTemplate = new Ext.Template(
+						'<table id="{4}" cellspacing="0" class="x-btn {3}"><tbody class="{1}">',
+						'<tr><td class="x-btn-ml"><i>&#160;</i></td><td class="x-btn-mc"><em class="{2}" unselectable="on"><button type="{0}"></button></em></td><td class="x-btn-mr"><i>&#160;</i></td></tr>',
+						'</tbody></table>'
+					);
+					SqueezeJS.UI.splitButtonTemplate.compile();
+
+					if (SqueezeJS.UI) {
+						Highlighter = new SqueezeJS.UI.Highlight({
+							unHighlight : 'content'
+						});		
+						SqueezeJS.UI.ScrollPanel.init();
+					}
+				});
+			</script>
+
+			[% extJsScripts %]
+		[% END %]
+
+		[% IF debug %]
+		<style>
+			.x-layout-panel-body { background: white; }
+			.x-btn-text, .x-btn button { color: black; }
+			.x-dlg .x-tabs-bottom .x-tabs-body {
+				background: white;
+				color: black;
+			}
+		</style>
+		[% END %]
+	</head>
+	<body [% IF bodyscript && NOT extJsScripts; bodyscript; END %] [% IF page == 'help' %]class="helpPage"[% END %]>
+		<div id="inner_header">
+
+			[%- IF pageicon && !pageicon.search('/'); pageicon = ''; END -%]
+
+			<div class="pagetitle [%- IF pageicon -%]pagetitleWithIcon[% END %]">
+				[%- IF pageicon -%]
+					<img src="[% pageicon | resizeimage(25, 25, 'f', webroot) %]" class="pageicon" width="25" height="25" border="0" alt="[% pagetitle | html %]">
+				[%- END -%]
+				<span>[% pagetitle | html %]&nbsp;</span>
+				[% UNLESS page == 'help' %]
+				<span id="headerSearch">
+					<form method="GET" action="[% webroot %]search.html">
+						<input type="hidden" name="player" value="[% playerid %]">
+						<input type="text" id="headerSearchInput" autocomplete="off" name="query" 
+						id="search" class="x-form-focus searchInput" style="display:none" size="30">&nbsp;<input type="image" 
+						id="headerSearchBtn" src="[% webroot %]html/images/spacer.gif" width="17px" height="17px" alt="[% "SEARCH" | string %]">
+					</form>
+				</span>
+				[%- END -%]
+			</div>
+		</div>
+
+		<div class="inner_content">
+
+			[% IF pageHeaderMenu and not pwd_list;
+				pwd_list = [ pageHeaderMenu ];
+			END;
+			IF pwd_list && pwd_list != "" && pwd_list.length && pwd_list.length > 0;
+				pwd_list = [ pwd_list ];
+			END -%]
+
+			[% IF pwd_list %]
+			<div id="crumblist" class="crumblist">
+				[%- PROCESS crumblist IF pwd_list %]
+			</div>
+			[% END %]
+
+			[% IF pageHeaderInfo %]
+				<div class="pageHeaderInfo">
+					[% pageHeaderInfo %]
+				</div>
+			[% END %]
+
+			<div id="content"[% IF !dontscroll %] class="scrollingPanel"[% END %]>

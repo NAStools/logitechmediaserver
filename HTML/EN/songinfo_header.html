@@ -1,0 +1,137 @@
+<div id="songInfo">
+
+	<div id="COVERART">
+		<span class="songInfoText">
+			[% IF image || plugin_meta.cover || plugin_meta.icon %]
+				[%# Display plugin cover or icon %]
+				[% IF image || plugin_meta.cover %]
+				[% UNLESS image.match('^http'); image = image.replace('^/?', webroot); END %]
+				<a href="[% image || plugin_meta.cover %]" target="cover">
+					<img src="[% image || plugin_meta.cover | resizeimage(150, 150) %]" alt="coverArt">
+				</a>
+				[% ELSIF plugin_meta.icon %]
+				<img src="[% plugin_meta.icon %].png" alt="coverArt" onLoad="resize(this)">
+				[% END %]
+			[% ELSE %]
+				[%# fall back to 0 for cover link if itemobj.id isn't going to give us a valid id %]
+				<a href="/music/[% itemobj.id || 0 %]/cover.jpg" [% UNLESS notarget %]target="cover"[% END %]>
+					<img src="/music/[% itemobj.id || 0 %]/cover_150x150_o" alt="coverArt">
+				</a>
+			[% END %]
+		</span>
+	</div>
+
+	<div id="linkedSongInfoItems">
+		[% IF songInfoPlayLinks; songInfoPlayLinks; END %]
+
+		[%- albumInfo = BLOCK %]
+			[% IF itemobj.album %] 
+				[% IF itemobj.album.id %] 
+					[% item = BLOCK %]<a href="[% webroot %]clixmlbrowser/clicmd=browselibrary+items&amp;mode=albums&amp;linktitle=[% stringALBUM %]%20([% itemobj.album.title || itemobj.album.name | uri %])&amp;album_id=[% itemobj.album.id %]&amp;player=[% playerURI %]/index.html?album_id=[% itemobj.album.id %]&amp;mode=albums&amp;index=0" [% UNLESS notarget %]target="browser"[% END %]>[% itemobj.album.title || itemobj.album.name | html %]</a>[% END %]
+				[% ELSIF itemobj.album.link %] 
+					[% item = BLOCK %]<a href="[% webroot %][% itemobj.album.link %]&amp;player=[% playerURI %]" class="browseItemLink">
+						[% itemobj.album.title || itemobj.album.name | html %]</a>[% END %]
+				[% ELSE %] 
+					[% item = BLOCK %][% itemobj.album.title || itemobj.album.name | html %][% END %]
+				[% END %] 
+				[% PROCESS songInfoItem title = "ALBUM" %]
+			[% END %]
+		[% END %]
+
+		[% IF albumFirst; albumInfo; END %]
+
+		[% IF plugin_meta.title %] 
+			[% item = BLOCK %][% plugin_meta.title | html %][% END %]
+			[% PROCESS songInfoItem title = "TITLE" %]
+		[% END %]
+
+		[% 
+			roles = itemobj.contributorRoles || itemobj.contributors.keys;
+			FOREACH role = roles.sort;
+	
+			IF (itemobj.album.compilation || itemobj.compilation) && role != "ALBUMARTIST"; NEXT; END;
+		 %]
+
+			[% contributors = itemobj.contributors.${role} || itemobj.contributorsOfType(role) || itemobj.album.artistsForRoles(role) %]
+			
+			[% IF contributors %]
+				[% contributorsHTML = [] %]
+	
+				[% FOREACH contributor = contributors %]
+					
+					[% UNLESS notarget; target = "target=\"browser\""; END %]
+	
+					[% 
+					htmlArtist = contributor.name | html;
+					IF contributor.link;
+						contributorHTMLFrag = "<a href=\"$webroot$contributor.link&amp;player=$playerURI\" $target>$htmlArtist</a>";
+					ELSIF contributor.id;
+						contributorHTMLFrag = BLOCK %]<a href="[% webroot %]clixmlbrowser/clicmd=browselibrary+items&amp;mode=albums&amp;linktitle=[% stringARTIST %]%20([% contributor.name | url %])&amp;artist_id=[% contributor.id %]&amp;player=[% playerURI %]/" [% target %]>[% htmlArtist %]</a>[% END;
+					ELSE;
+						contributorHTMLFrag = htmlArtist;
+					END
+					%]
+	
+					[% contributorsHTML.push(contributorHTMLFrag) %]
+	
+				[% END %]
+	
+				[% item = contributorsHTML.join(', ') %]
+	
+				[% title = role | upper; PROCESS songInfoItem %]
+			[% END %]
+	
+		[% END %]
+	
+		[% IF plugin_meta.artist %] 
+			[% item = BLOCK %][% plugin_meta.artist | html %][% END %]
+			[% PROCESS songInfoItem title = "ARTIST" %]
+		[% END %]
+
+		[% IF !albumFirst; albumInfo; END %]
+
+		[% IF itemobj.genres %] [% genresHTML = [] %]
+			[% FOREACH genre = itemobj.genres %][% UNLESS notarget; target = "target=\"browser\""; END %]
+				[% htmlGenre = genre.name | html %]
+				[% IF genre.id %]
+					[% genreHTMLFrag = BLOCK %]<a href="[% webroot %]clixmlbrowser/clicmd=browselibrary+items&amp;mode=artists&amp;linktitle=[% 'GENRE' | string %]%20([% genre.name | uri %])&amp;genre_id=[% genre.id %]&amp;player=[% playerURI %]/" [% target %]>[% htmlGenre %]</a>[% END %]
+				[% ELSIF genre.link %]
+					[% genreHTMLFrag = "<a href=\"${webroot}$genre.link&amp;player=$playerURI\" $target>$htmlGenre</a>" %]
+				[% ELSE %]
+					[% genreHTMLFrag = htmlGenre %]
+				[% END %]
+				[% genresHTML.push(genreHTMLFrag) %]
+			[% END %]
+			[% item = genresHTML.join(', ') %]
+			[% PROCESS songInfoItem title = "GENRE" %]
+		[% END %]
+	
+		[% IF itemobj.year %] 
+			[% IF itemobj.year.id %]
+				[% item = BLOCK %]<a href="[% webroot %]clixmlbrowser/clicmd=browselibrary+items&amp;mode=albums&amp;linktitle=[% stringYEAR %]%20([% itemobj.year.name %])&amp;year=[% itemobj.year.name %]&amp;player=[% playerURI %]/" [% UNLESS notarget %]target="browser"[% END %]>[% itemobj.year.name| html %]</a>[% END %]
+			[% ELSIF itemobj.year.link %]
+				[% item = BLOCK %]<a href="[% webroot %][% itemobj.year.link %]&amp;player=[% playerURI %]" [% UNLESS notarget %]target="browser"[% END %]>[% itemobj.year.name| html %]</a>[% END %]
+			[% ELSE %]
+				[% item = BLOCK %][% itemobj.year.name| html %][% END %]
+			[% END %]
+			[% PROCESS songInfoItem title = "YEAR" %]
+		[% END %]
+
+		[% IF albumDuration %] 
+			[% item = albumDuration; title = "LENGTH"; PROCESS songInfoItem %]
+		[% ELSIF itemobj.albumlength %]
+			[% item = itemobj.albumlength.name; title = "LENGTH"; PROCESS songInfoItem %]
+		[% END %]
+	
+		[% IF itemobj.album.compilation || itemobj.compilation %] 
+			[% item = "YES" | string; title = "COMPILATION"; PROCESS songInfoItem %]
+		[% END %]
+	
+		[% IF itemobj.album.replay_gain.defined %] 
+			[% item = itemobj.album.replay_gain | format('%2.2f') |html; title = "ALBUMREPLAYGAIN"; PROCESS songInfoItem %]
+		[% ELSIF itemobj.albumreplaygain %]
+			[% item = itemobj.albumreplaygain.name |html; title = "ALBUMREPLAYGAIN"; PROCESS songInfoItem %]
+		[% END %]
+	</div>
+
+</div>

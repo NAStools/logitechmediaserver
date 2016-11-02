@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	[% PROCESS standardheader.html %]
+<!--[if IE]>
+<style type="text/css">
+	body {width: 100%;height:100%;}
+	.thumbwrap li, .thumbwrap {
+		display: inline;
+		height: 0;
+		height: auto;
+	}
+	.browsedbControls {
+		padding-right: 8px;
+	}
+	.playlistControls {
+		padding-right: 8px;
+	}
+	
+	div#albumPopup {
+		position: absolute;
+		z-index: 90;
+		top: 10%;
+		left: 15%;
+		width: 70%;
+		height: 75%;
+		background-color: white;
+		color: black;
+		padding: 5px;
+		border: 1px solid grey;
+		overflow: auto;
+	}
+	
+	div#albumBackground {
+		position: absolute;
+		height: 100%;
+	}
+</style>
+<![endif]-->
+	[% IF pageHeaderScripts %]
+		[% pageHeaderScripts %]
+	[% ELSE %]
+		<script TYPE="text/javascript">[% PROCESS html/vars.js %]</script>
+		<script TYPE="text/javascript" src="[% webroot %]html/common.js?r=[% revision %]"></script>
+	[% END %]
+</head>
+<body [% bodyscript %]>
+
+<div id="topGraphicBox">
+	<div id="sdi_logo">
+		<a href="http://www.logitech.com/" target="sdi"><img src="[% webroot %]html/images/slimdevices_logo.gif" alt="Logitech" width="150" height="17"></a>
+	</div>
+	<div id="topGraphicMenu1">
+		<div class="largeAttribute">[% pagetitle | html %][% IF artwork && (levelName == 'album' || levelName == 'age')%] [% "GALLERY" | string %][% END %]</div>
+	</div>
+	<div id="topGraphicMenu2">
+	</div>
+	<div id="topGraphicMenu3">
+		<div id="statusMessage">
+			[% SET pwd_list = pageHeaderMenu IF pageHeaderMenu and not pwd_list -%]
+			[%- PROCESS crumblist IF pwd_list %]
+		</div>
+
+		[% PROCESS galleryselect.html %]
+
+	</div>
+</div>
+	<div id="homeMenu">
+	[% IF pageHeaderInfo %]
+		<div id="pageHeaderInfo">
+			[% pageHeaderInfo %]
+		</div>
+	[% END %]

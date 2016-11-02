@@ -1,0 +1,24 @@
+[% IF !ajaxUpdate %]
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>[% playermodel _ "_MUSIC_PLAYER" | string %]</title>
+<meta http-equiv="refresh" content="[% refresh %]; url=status.html">
+    <link rel="stylesheet" href="[% webroot %]slimserver.css" type="text/css">
+    <link rel="stylesheet" href="[% webroot %]skin.css" type="text/css">
+</head>
+<body bgcolor="#FFFFFF">
+<p><h3>[% playermodel _ "_MUSIC_PLAYER" | string %]</h3></p>
+ <hr>
+[% END %]
+
+<p>
+<b>[% "NO_PLAYER_FOUND" | string %]</b>
+</p>
+<p>[% "NO_PLAYER_DETAILS" | string %]</p>
+
+[% IF !ajaxUpdate %]
+</body>
+</html>	
+[% END %]

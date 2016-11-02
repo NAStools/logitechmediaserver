@@ -1,0 +1,29 @@
+[% PROCESS settings/header.html %]
+
+	[% WRAPPER setting title="PLUGIN_FAVORITES_DONT_BROWSEDB" desc="" %]
+		<select class="stdedit" name="pref_dont_browsedb" id="dont_browsedb">
+			<option value="1">
+				[% 'PLUGIN_FAVORITES_DONT_BROWSEDB_ON' | string %]
+			</option>
+			<option [% IF prefs.pref_dont_browsedb != 1 %]selected="selected" [% END %]value="0">
+				[% 'PLUGIN_FAVORITES_DONT_BROWSEDB_OFF' | string %]
+			</option>
+		</select>
+	[% END %]
+
+	[% WRAPPER setting title="PLUGIN_FAVORITES_PLAYLIST_EDITOR" desc="" %]
+		<div class="prefDesc">[% "PLUGIN_FAVORITES_PLAYLIST_EDITOR_DESC" | string %]</div>
+
+		<div class="prefDesc">[% "ENABLE" | string %]
+			<input name="pref_opmleditor" type="checkbox" [% IF prefs.pref_opmleditor %] checked [% END %]>
+		</div>
+	[% END %]
+
+	[% IF prefs.exists('pref_registerDSTM') %]
+		[% WRAPPER setting title="PLUGIN_FAVORITES_USE_DSTM" desc="" %]
+			<input name="pref_registerDSTM" id="pref_registerDSTM" type="checkbox" [% IF prefs.pref_registerDSTM %] checked [% END %]>
+			<label for="pref_registerDSTM">[% "PLUGIN_FAVORITES_USE_DSTM_DESC" | string %]</label>
+		[% END %]
+	[% END %]
+
+[% PROCESS settings/footer.html %]

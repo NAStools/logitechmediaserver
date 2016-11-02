@@ -1,0 +1,15 @@
+PLUGIN_SOUNDS_MODULE_NAME
+	CS	Zvuky & Efekty
+	DA	Lyde og effekter
+	DE	Sounds & Effekte
+	EN	Sounds & Effects
+	ES	Sonidos y efectos
+	FI	Äänet ja tehosteet
+	FR	Effets sonores
+	IT	Suoni ed effetti
+	NL	Geluiden en effecten
+	NO	Lyder og effekter
+	PL	Dźwięki i efekty
+	RU	Звуки и эффекты
+	SV	Ljud och effekter
+

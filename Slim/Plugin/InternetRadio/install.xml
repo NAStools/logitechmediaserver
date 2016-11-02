@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<extension>
+	<id>BE2325E0-009E-49DB-B032-B6C13799BC4F</id>
+	<name>RADIO</name>
+	<module>Slim::Plugin::InternetRadio::Plugin</module>
+	<version>1.0</version>
+	<description>PLUGIN_INTERNET_RADIO_MODULE_NAME_DESC</description>
+	<creator>Logitech</creator>
+	<defaultState>enabled</defaultState>
+	<enforce>1</enforce>
+	<homepageURL>http://www.mysqueezebox.com/support</homepageURL>
+	<type>2</type><!-- type=extension -->
+	<targetApplication>
+		<id>Logitech Media Server</id>
+		<minVersion>7.3</minVersion>
+		<maxVersion>*</maxVersion>
+	</targetApplication>
+</extension>

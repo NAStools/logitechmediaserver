@@ -1,0 +1,167 @@
+[%- playerid = playerid || player -%]
+[%- BLOCK pluginLink -%]
+	[% IF enabled && settings.length > 0 %]
+		<a href="[% webroot %]settings/[% settings %]?player=[% playerURI %]&amp;playerid=[% playerid | uri %]&amp;noSettingsList=1">[% 'SETTINGS' | string %]</a>
+	[% END %]
+[%- END -%]
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<title>[% "SQUEEZEBOX_SERVER" | string %]</title>
+
+		<link rel="stylesheet" type="text/css" href="/html/ext/resources/css/ext-all.css?r=[% revision %]" />
+		<link rel="stylesheet" type="text/css" href="[% webroot %]slimserver.css?r=[% revision %]" />
+		<link rel="stylesheet" type="text/css" href="[% webroot %]skin.css?r=[% revision %]" />
+
+		<script type="text/javascript">[% PROCESS html/vars.js %]</script>
+		<script type="text/javascript" src="[% webroot %]html/js.html?r=[% revision %]"></script>
+		<script type="text/javascript">[% PROCESS html/SqueezeJS/Strings.js %]</script>
+		<script type="text/javascript" src="[% webroot %]html/Settings.js?r=[% revision %]"></script>
+
+		<script type="text/javascript">
+			[% PROCESS jsString id='SETTINGS' jsId='' %]
+			[% PROCESS jsString id='ADVANCED_SETTINGS' jsId='' %]
+			[% PROCESS jsString id='SETUP_RESET_PLAYER' jsId='reset_player' %]
+			[% PROCESS jsString id='SETUP_RESET_PLAYER_CONFIRM' jsId='reset_player_confirm' %]
+			[% PROCESS jsString id='SETTINGS_CHANGED_CONFIRM' jsId='' %]
+			[% PROCESS jsString id='RESTART_NOW' jsId='' %]
+			[% PROCESS jsString id='RESTART_LATER' jsId='' %]
+
+			// display player list if we're in the player settings
+			[%-
+			pageId = '^' _ page _ '$';
+			pageLink = orderedLinks.grep(pageId);
+			-%]
+
+			Ext.onReady(function(){
+				// overwrite default Ext Button layout
+				SqueezeJS.UI.buttonTemplate = new Ext.Template(
+					'<table border="0" cellpadding="0" cellspacing="0"><tbody><tr>',
+					'<td class="x-btn-ml"></td><td class="x-btn-mc"><button type="{0}" style="padding:0" class="x-btn-text {2}"></button></td><td class="x-btn-mr"></td>',
+					'</tr></tbody></table>'
+				);
+				SqueezeJS.UI.buttonTemplate.compile();	
+
+				SqueezeJS.UI.splitButtonTemplate = new Ext.Template(
+					'<table id="{4}" cellspacing="0" class="x-btn {3}"><tbody class="{1}">',
+					'<tr><td class="x-btn-ml"><i>&#160;</i></td><td class="x-btn-mc"><em class="{2}" unselectable="on"><button type="{0}"></button></em></td><td class="x-btn-mr"><i>&#160;</i></td></tr>',
+					'</tbody></table>'
+				);
+				SqueezeJS.UI.splitButtonTemplate.compile();
+
+				[% IF needsClient;
+					USE Clients;
+					players = Clients.get("id") %]
+
+					Settings.Page.initPlayerList([
+						[% FOREACH playerobj IN players -%]
+							{
+								id: "[% playerobj.id %]",
+								name: "[% playerobj.name %]",
+								model: "[% playerobj.model %]",
+								current: [% playerobj.id == playerid ? "true" : "false" %]
+							}[% loop.last ? '' : ',' %]
+						[% END %]
+					]);
+	
+					// remember the last loaded page - to be used when the player tab is selected next time
+					try {
+						parent.player = '[% playerURI %]';
+						parent.playerid = '[% playerid | uri %]';
+						parent.SqueezeJS.setCookie('Squeezebox-playersettings', '[% playersetup.$page || 'settings/player/basic.html?' %]');
+					}
+					catch(e) {}
+					playerid = '[% playerid | uri %]';  
+	
+				[% END %]
+
+				[% IF pageLink.size > 0 -%]
+					Settings.Page.initSettingsList([
+						[%- FOREACH link IN orderedLinks %]
+							{ 
+								id: "[% link %]",
+								current: [% page == link ? 'true' : 'false' %],
+								url: "[% needsClient ? playersetup.$link : additionalLinks.setup.$link %]",
+								name: "[% link | string %]"
+							}[% loop.last ? '' : ',' %]
+						[% END %]
+					]);
+
+					[% IF !needsClient %]
+						try { parent.SqueezeJS.setCookie('Squeezebox-advancedsettings', '[% additionalLinks.setup.$page %]'); }
+						catch(e) {}
+					[% END %]
+				[%- END -%]
+
+				Settings.Page.init();
+
+				var el;
+				[%- FOREACH pref = validate; IF pref.value %]
+					if (el = Ext.get('[% pref.key %]')) {
+						el.on('blur', function(){ Settings.Page.validatePref('[% pref.key %]', '[% namespace %]'); } );
+						el.addClass('canValidate');
+					}
+				[%- END; END %]
+			});
+		</script>
+
+		[% IF pageHeaderScripts && NOT extJsScripts %]
+			[% pageHeaderScripts %]
+		[% ELSE %]
+			[% extJsScripts %]
+		[% END %]
+
+		<style>
+			html {
+				overflow: hidden;
+				background-color: white;
+			}
+
+		[%- IF debug %]
+			.x-layout-panel-body { background: white; }
+			.x-btn-text, .x-btn button { color: black; }
+			.x-dlg .x-tabs-bottom .x-tabs-body {
+				background: white;
+				color: black;
+			}
+		[%- END %]
+		</style>
+	</head>
+
+	<body class="[% bodyClass || "settings" %]">
+
+		[% IF needsClient || (pageLink.size > 0 && !noSettingsList) %]
+		<div class="buttonbar" id="toolbar">
+			<table>
+				<tr>
+					[%- IF needsClient %]
+						<td><span id="playerSelector"></span></td>
+					[% END %]
+					[%- IF !noSettingsList %]
+						<td><span id="settingsSelector"></span></td>
+					[% END %]
+				<tr>
+			</table>
+		</div>
+		[% END -%]
+
+		<div id="content" class="scrollingPanel">
+
+			[% IF warning %]
+				<div id="statusarea" class="statusarea">
+					[% warning %]
+					&nbsp;
+				</div>
+			[% END %]
+
+			<form name="settingsForm" id="settingsForm" method="post" action="[% webroot %][% path %][% IF playerid %]?playerid=[% playerid | uri %][% END %]">
+
+			<div id="settingsRegion">
+
+				<input type=hidden value="1" name="saveSettings">
+				<input type=hidden value="0" name="useAJAX">
+				<input type=hidden value="[% page %]" name="page">
+				[% IF noSettingsList %]<input type=hidden value="1" name="noSettingsList">[% END %]
+				[% IF playerid %]<input type=hidden value="[% playerid %]" name="playerid">[% END %]
+				[% IF player %]<input type=hidden value="[% player %]" name="player">[% END %]

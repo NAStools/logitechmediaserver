@@ -1,0 +1,134 @@
+[% IF simple %]
+	<style>
+		body {
+			margin: 3px;
+			[% IF os == 'osx' %]background-color: #e6e6e6;[% END %]
+		}
+		html, body, p, div {
+			font-family: sans-serif;
+		}
+		<!--[if IE]>
+		html, body, p, div {
+			font-family: "Microsoft Sans Serif", Verdana, Tahoma, Arial, sans-serif;
+			font-size: 8pt;
+		}
+		<![endif]-->		
+	</style>
+[% ELSE %]
+[% pageHeaderScripts = BLOCK %]
+	<script TYPE="text/javascript">[% PROCESS html/vars.js %]</script>
+	<script TYPE="text/javascript">
+		timestring     = "[% 'TOTAL_TIME' | string %]";
+		progressbarlen = "[% barlen %]";
+		progresstype   = "[% type %]";
+	</script>
+	<script type="text/javascript" src="[% webroot %]html/prototype.js?r=[% revision %]" ></script>
+	<script TYPE="text/javascript" src="[% webroot %]html/global.js?r=[% revision %]"></script>
+	<script TYPE="text/javascript" src="[% webroot %]html/common.js?r=[% revision %]"></script>
+	<script TYPE="text/javascript" src="[% webroot %]html/progress.js?r=[% revision %]"></script>
+[% END %]
+[% bodyscript = 'onload="ajaxProgressRefresh();"' %]
+
+[% extJsScripts = BLOCK %]
+	<script TYPE="text/javascript">
+		[% PROCESS jsString id='TOTAL_TIME' %]
+		progressbarlen = '40';
+		progresstype   = 'importer';
+
+		Ext.onReady(SqueezeJS.UI.ScannerInfoExtended.init, SqueezeJS.UI.ScannerInfoExtended, true);
+	</script>
+[% END %]
+
+[% PROCESS settings/header.html %]
+[% END %]
+[% nosubmit = 1 %]
+
+
+[% WRAPPER setting title="SERVER_STATUS" %]
+	[% FOREACH item IN server.items %]
+		<div>[% item.name %]</div>
+	[% END %]
+[% END %]
+
+
+[% IF library %]
+	[% WRAPPER setting title="INFORMATION_MENU_LIBRARY" %]
+		[% FOREACH item IN library.items %]
+			<div>[% item.name %]</div>
+		[% END %]
+	[% END %]
+[% END %]
+
+[% IF progress AND NOT simple %]
+	[% WRAPPER setting title="SCANNER_PROGRESS" %]
+		[% progress %]
+		[% IF scanning && !abortScan %]
+			<div id="abortscanlink"><br/>
+				<a href="[% webroot %][% path %]?playerid=[% playerid | uri %]&amp;player=[% player | uri %]&amp;abortScan=1">[% "ABORT_SCAN" | string %]</a>[%# stringCOLON %] [%# scanning | string %]
+			</div>
+		[% END %]
+	[% END %]
+[% END %]
+
+
+[% IF players %]
+	[% WRAPPER setting title = "INFORMATION_MENU_PLAYER" %]
+		<div class="prefDesc">[% "SERVER_STATUS_DESC" | string %]</div>
+	[% END %]
+	[% FOREACH client = players.items %]
+		[% WRAPPER setting title = client.name %]
+			[% FOREACH item IN client.web.items; item.key %]
+				[% IF item.values.0 %]
+					<div>[% item.keys.0 | string %][% stringCOLON %] [% item.values.0 %]</div>
+				[% END %]
+			[% END %]
+		[% END %]
+	[% END %]
+[% END %]
+
+
+[% UNLESS simple; WRAPPER setting title = "FOLDERS"; END; END %]
+[% FOREACH item IN folders.web.items %]
+	[% IF item.values.0 %]
+		[% WRAPPER settingSection %]
+			<div class="settingGroup">
+				<div class="prefHead">[% IF simple %]<b>[% END %][% item.keys.0 | string %][% IF simple %]</b>[% END %]</div>
+				<div class="prefs">[% item.values.0 %]</div>
+			</div>
+		[% END %]
+	[% END %]
+[% END %]
+
+[% FOREACH item IN logs.web.items %]
+	[% IF item.values.0 %]
+		[% WRAPPER setting title="SETUP_DEBUG_${item.keys.0}_LOG" desc="SETUP_DEBUG_${item.keys.0}_LOG_DESC" %]
+			<div class="prefDesc">
+				[% UNLESS simple %]<a href="/[% item.keys.0 | lower %].log" target="log">[% END %][% item.values.0 %][% UNLESS simple %]</a>
+				(<a href="/[% item.keys.0 | lower %].log?lines=100" target="log">100</a>,
+				<a href="/[% item.keys.0 | lower %].log?lines=500" target="log">500</a>,
+				<a href="/[% item.keys.0 | lower %].log?lines=1000" target="log">1000</a>
+				[% "LINES" | string %],
+				<a href="/[% item.keys.0 | lower %].log?full=1">[% "EVERYTHING" | string | lower %]</a>,
+				<a href="/[% item.keys.0 | lower %].log?zip=1">[% "SETUP_LOG_ZIPPED" | string %]</a>)[% END %]
+			</div>
+		[% END %]
+	[% END %]
+[% END %]
+
+[% FOREACH item = info %]
+	[% UNLESS item.web.hide %]
+		[% WRAPPER setting title=item.name %]
+			[% IF item.type == 'redirect' && item.web.url %]
+				<a href="[% webroot %][% item.web.url %]?player=[% player | uri %]" [% IF item.web.target %]target="[% item.web.target %]"[% END %]>
+					[% (item.web.value || item.web.url) | html_line_break %]
+				</a>
+			[% ELSE %]
+				[% item.web.value | html_line_break %]
+			[% END %]
+		[% END %]
+	[% END %]
+[% END %]
+
+<div>&nbsp;</div>
+
+[% PROCESS settings/footer.html %]

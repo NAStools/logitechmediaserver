@@ -1,0 +1,23 @@
+[% " " _ stringBY _ " " %]
+[%- FILTER null %]
+[% contributorsHTML = [] %]
+
+[% contributors = item.artistsWithAttributes || itemobj.artistsWithAttributes %]
+
+[% FOREACH contributorTuple IN contributors %]
+	[% IF maxContributors && loop.count > maxContributors;
+		contributorsHTML.push("...");
+		LAST;
+	END %]
+
+	[% target = notarget ? '' : 'target="browser"' %]
+	[% contrib = contributorTuple.name | html %]
+	
+	[% IF artwork || artwork == 0; artparam = "&amp;artwork=$artwork"; END %]
+	[% contributorHTMLFrag = BLOCK %]<a href="[% webroot %]clixmlbrowser/clicmd=browselibrary+items&amp;mode=albums&amp;linktitle=[% stringARTIST %]%20([% contributorTuple.name | uri %])&amp;artist_id=[% contributorTuple.artistId %]&amp;[% artparam %]&amp;player=[% playerURI %]/" [% target %] class="browseItemLink"><span style="display:inline">[% contrib %]</span></a>[% END %]
+
+	[% contributorsHTML.push(contributorHTMLFrag) %]
+
+[% END %]
+[% END -%]
+[% contributorsHTML.join(', ') %]

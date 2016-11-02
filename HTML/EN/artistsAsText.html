@@ -1,0 +1,14 @@
+[% " " _ stringBY _ " " %]
+[%- FILTER null %]
+[% IF item.artists; contributorsText = item.artists; ELSE %]
+[% contributorsText = [ item.artist ] %]
+
+[% contributors = item.artistsWithAttributes || itemobj.artistsWithAttributes %]
+
+[% FOREACH contributorTuple IN contributors %]
+
+	[% contributorsText.push(contributorTuple.name) %]
+
+[% END %]
+[% END; END -%]
+[% contributorsText.join(', ') %]

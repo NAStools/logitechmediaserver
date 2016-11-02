@@ -1,0 +1,370 @@
+[% pagetitle = 'Logitech Media Server Plugins' %]
+[% techinfo = '1' %]
+[% lefttoright = '1' %]
+[% PROCESS helpheader.html %]
+
+ <h4>Introduction</h4>
+<p>This document illustrates the basic framework upon which to build a Plugin or module compatible with the Logitech Media Server software. 
+The server provides a method to load custom modules at startup which are then made available to the user via remote control menus. 
+Each plugin serves as an area within the server remote menu system, available from within the Plugins menu. Plugin files are stored in 
+the &quot;Plugins&quot; folder which is in the same folder as the server software. For simple plugins, a single file in this folder will suffice.
+ For more complex plugins, you can store an entire set of files in a sub-folder, naming the main plugin file: Plugin.pm. The Plugin interface can 
+ provide a very powerful 
+control and has complete access to the functionality of the server. As with the rest of the server, plugin modules are created 
+using the Perl language.</p>
+
+<h4>Perl Module Basics</h4>
+		<p>Here are a couple of basic calls that should be made at the beginning of the Plugin code:</p>
+		<pre>use strict;</pre>
+		<p>This tells Perl to do some useful error checking to help avoid the use of undeclared variables, or ambiguous references to functions. All references must be fully qualified (ie Slim::Buttons::Common::popMode() instead of popMode()).</p>
+		<p><pre>package Plugins::pluginname;</pre></p>
+		<p>Where <code>pluginname</code> is the name of the module (which should be the same as the filename, without the .pm extension.) This defines the 'namespace' for the module. It essentially sets up the module as an entity of its own, within the server environment. This allows you to then refer to the functions and variables within this plugin by the full reference Plugins::pluginname::function.</p>
+		<hr>
+		<h4>Logitech Media Server Plugin Hooks</h4>
+<p>Each level in the server menu hierarchy is considered a &quot;mode&quot; by the server. Each time the server is started, it reads the Plugins directory for modules. Each is added, by name, into a list. Each plugin is given a mode, and a set of functions that are defined within that module. The plugins can each be enabled or disabled at will from the web interface. The plugin module itself must define a mode and functions in a form that the server is expecting. This comes from two functions: sub setMode() and sub getFunctions(). A third subroutine, sub getDisplayName() is required to provide the name that the server should display for the plugin. Simple examples of these three functions are below. We will now build a template based on these main functions.</p>
+<blockquote>
+<p><em>Example 1</em></p>
+<pre>
+  sub setMode &#123;
+     my $client = shift;
+     $client->lines(\&lines);
+  &#125;
+
+  sub getFunctions &#123;
+     return \%functions;
+  &#125;
+
+  sub getDisplayName &#123; return "MY_PLUGIN_STRING_TOKEN")&#125;
+
+  sub strings &#123; return '
+    MY_PLUGIN_STRING_TOKEN
+    &lt;tab&gt; EN &lt;tab&gt; My Plugin English Name
+'&#125;;
+
+			</pre></blockquote>
+<hr>
+
+<h4>Modes</h4>
+<p>If you wish for your plugin to have a player display interface, then you will need to set up what is called a Mode.  The remote buttons are context sensitive, meaning that they can serve different roles when the server is in different modes.  The setMode()
+subroutine defines this mode.  Within this subroutine, there must be a definition for $client->lines, which is the text to be displayed on the
+Slim client while in this plugin mode.  Typically, this is labeled just as above, though it can be any name you wish. The lines subroutine, or other name
+if you have chosen one, returns a hash defining the display to be shown on the player.  This can be updated at any time from any point in the plugin module by using the
+line:</p>
+<blockquote>
+			<pre>
+$client->update();
+</pre></blockquote>
+<p>Also included in the setMode subroutine are any commands or functions that must be run each time the plugin is called.  This may be loading an array for a menu system,
+default settings, or running any number of other subroutines that are needed for the operation of the plugin.
+</p><p>
+You may also want to add extra modes under your plugin.  There is a function call that tells the server
+to add your new mode with its setMode and getFunctions references.  </p>
+<blockquote>
+			<pre>Slim::Buttons::Common::addMode('newmodename', getNewModeFunctions(), \&amp;::PluginName::setNewMode);</pre></blockquote>
+<p>and then you can include the following in your plugin to hook-in to your new mode:</p>
+<blockquote><pre>
+sub setNewMode &#123;
+   my $client = shift;
+   $client->lines(\&newModeLines);
+&#125;
+
+sub getNewModeFunctions &#123;
+   return \%newModeFunctions;
+&#125;</pre>
+</blockquote>
+<hr>
+<h4>Functions</h4>
+<p>The server handles all commands from the remote control for each mode by creating a hash table of functions, each button having a subroutine associated with it.  The subroutine getFunctions() returns a reference to this hash, and can be any label you wish, although typically %functions is used. The call to point to this list is shown above in example 1. The function list, should look something like this example taken from rescan.pm, which is included with the server:</p>
+<blockquote>
+<p><em>Example 2</em></p>
+<pre>
+   my %functions = (
+     'up' => sub  &#123;
+        my $client = shift;
+        $client->bumpUp();
+     &#125;,
+     'down' => sub  &#123;
+        my $client = shift;
+        $client->bumpDown();
+     &#125;,
+     'left' => sub  &#123;
+        my $client = shift;
+        Slim::Buttons::Common::popModeRight($client);
+     &#125;,
+     'right' => sub  &#123;
+        my $client = shift;
+        $client->bumpRight();
+     &#125;,
+     'play' => sub &#123;
+        my $client = shift;
+        my @pargs=('rescan');
+        Slim::Control::Request::executeRequest($client, \@pargs);
+        $client->showBriefly( {
+	    $client->string('PLUGIN_RESCAN_MUSIC_LIBRARY'),
+	    $client->string('PLUGIN_RESCAN_RESCANNING'),
+        &#125);
+     &#125;
+  );
+</pre></blockquote>
+
+<p>Each remote button (eg. 'play') points to a subroutine to be performed each time that button is pressed.  In the case above, pressing play
+sets up local variables, starts a rescan of the entire library, then shows two lines on the display for a short time to tell the user that the
+rescan has been started.  The line "my $client = shift;" is very important here to keep track of the player status, and to pass on in server
+function calls such as: </p>
+<blockquote>
+			<pre>$client->showBriefly();</pre></blockquote>
+		<p>Examples of remote control functions include: 'up','down','play,'add' (REC button),'left','right','numberScroll' and 'stop' The full button to function map is found in the Default.map file, which is in the IR directory under the Logitech Media Server directory.</p>
+
+<hr>
+<h4>Player Menu</h4>
+<p>By default, plugins will appear in the Plugins menu on the player. However, some plugins may be similar to others, and could be better organised into submenus.  The addMenu function allows a 
+plugin to choose its submenu location:</p>
+
+<p>The simple line subroutine, below, is taken from Picks.pm.</p>
+<blockquote>
+<p><em>Example 3</em></p>
+<pre>sub addMenu &#123;
+	return "RADIO";
+&#125;;
+</pre></blockquote>
+This will make the plugin appear in a submenu with the string token RADIO.  This submenu string can then be localized by the server to the chosen language.  Each submenu can, as an option, be added to the top level 
+menus for any player via the player settings.
+
+
+<hr>
+<h4>Lines</h4>
+<p>The lines subroutine returns the text that the Slim Client will display while using your plugin. The setMode() function creates the reference for the lines subroutine, and your lines subroutine name must match that. Each mode may have its own lines subroutine, and each is named after the reference created in each setMode. The input for this function is the current client information, and the return is a hash defining the display. This is defined in detail in <a href="display.html">Display API</a>.
+<p>The lines are sent to the display at any time using the command:</p>
+<blockquote>
+			<pre>
+$client->update();
+</pre></blockquote>
+<p>The simple line subroutine, below, is taken from Rescan.pm.</p>
+<blockquote>
+<p><em>Example 4</em></p>
+<pre>sub lines &#123;
+   my $client = shift;
+   return &#123
+       'line1' => $client->string('PLUGIN_RESCAN_MUSIC_LIBRARY'),
+       'line2' => $client->string('PLUGIN_RESCAN_PRESS_PLAY'),
+   &#125;
+&#125
+</pre></blockquote>
+
+<hr>
+<h4>Strings</h4>
+<p>The plugin API also allows you to add in your own localization. The format of the strings list follows the same format as the strings.txt file used by the server for localization. The function strings() can be used within the plugin to extract a strings for the user's specified language. Defining the strings is done as follows:</p>
+<blockquote>
+<p><em>Example 6</em></p>
+<pre>sub strings &#123; return '
+PLUGIN_STRING_ONE
+&lt;tab&gt; EN &lt;tab&gt; English version of line one
+&lt;tab&gt; FR &lt;tab&gt; Version française de la ligne une
+'&#125;;
+</pre></blockquote>and to use your strings in your module, you make the call to strings in any place where you would use a text string.   For example:
+			<pre>$client->string('MY_STRING');</pre></blockquote>
+where your strings function contains:
+<blockquote><pre>
+sub strings &#123; return '
+MY_STRING
+<i>&lt;tab&gt;</i> EN <i>&lt;tab&gt;</i> Useful text
+'&#125;;
+</pre></blockquote>
+<p><b>One special note, the format of the strings list is very strict. The whitespace must be a tab, not spaces, which is why the tabs are shown above.</b></p>
+<hr>
+<h4>Web Interface</h4>
+<p>Logitech Media Server Plugins can expose their own web interface, accessible through
+the main server's web pages. To do this, include a function called 
+"webPages" which returns a list of two values: a hash reference to handler 
+functions for the plugin's pages, and a string representing the path of
+the plugin's index page.</p>
+
+<p>The handler function hash contains keys that represent regular
+expression values.  These regular expressions match URL paths that
+will be handled by the corresponding page handler. For example, the
+regular expression "index\.(?:htm|xml)" will match the URL paths
+"index.html", "index.htm" or "index.xml".</p>
+
+<p>The index page string represents the URL path for a link that will
+be included in the "Plugins" section of the server index
+page. When exposed through the server's web interface, all plugin
+web pages are prepended with the URL path
+http://&lt;host&gt;/plugins/&lt;pluginname&gt;/. However, neither the regular
+expression keys nor the index URL path need to take this prefix
+into account.</p>
+
+<blockquote>
+<p><em>Example 7</em></p>
+<pre>sub webPages {
+    my %pages = (
+        "index\.(?:htm|xml)" => \&handleIndex,
+	"enable\.(?:htm|xml)" => \&handleEnable,
+    );
+
+    return (\%pages, "index.html");
+}
+</pre>
+</blockquote>
+
+<p>Plugins also have the option of adding links to other sections of
+the server index page. Specifically, links can be added to the
+"browse", "search", "settings", "plugins" and "help" sections. Note
+that not all skins may support every section. Links can be added using
+the Slim::Web::Pages::addLinks() method. The method takes two
+parameters: the category to which links should be added, and a
+reference to a hash that maps link text to a URL path. In this case,
+the URL path must include the "plugins/&lt;pluginname&gt;/" prefix.
+</p>
+
+<blockquote>
+<pre>Slim::Web::Pages::addLinks("search", {
+    $client->string('PLUGIN_MYPLUGIN_SEARCH_LINK') => "plugins/MyPlugin/search.html",
+);
+</pre>
+</blockquote>
+
+<hr>
+<h4>ScreenSavers</h4>
+You can turn any plugin into a custom screensaver by registering your plugin as a screensaver.  The plugin should 
+be used to give the user any settings options or to set the screensaver as active or reset to default.  You can register the screensaver using the following subroutine:
+<pre>
+sub screenSaver {
+	my $client = shift;
+
+	Slim::Buttons::Common::addSaver('SCREENSAVER.saverModeName',
+		getScreensaverFunctions(),
+		\&setScreensaverMode,
+		\&leaveScreensaverMode,
+		$client->string('PLUGIN_SCREENSAVER_NAME'));
+}
+</pre>
+<dl>
+<dt>SCREENSAVER.saverModeName</dt><dd>Change this to provide a unique name for your screensaver.  Using the prefix "SCREENSAVER" will indicate to the server that your mode is of the screensaver class, and match the IR mappings from the [screensaver] section of Default.map</dd>
+<dt>getScreensaverFunctions()</dt><dd>This subroutine, just like getFunctions points to the function has for the screensaver mode.</dd>
+<dt>setScreensaverMode</dt><dd>subroutine just like setMode to initialize anything you need for the screensaver mode.</dd>
+<dt>leaveScreensaverMode</dt><dd>subroutine to execute before the mode exits</dd>
+<dt>$client->string('SCREENSAVER_NAME')</dt><dd>SCREENSAVER_NAME should be change to a unique identifier for your plugin name.  This can be the same as your plugin, or something different.  This allows for future nationalisation for the other languages supported by server.</dd>
+</dl>
+
+<hr>
+<h4>Other Functions</h4>
+<p>There are several other optional plugin functions that allow you to control how you plugin will integrate with the server:</p>
+<dl>
+<dt>initPlugin()</dt><dd>subroutine to handle any operations that your plugin needs to execute on startup, on when the plugin becomes enabled.</dd>
+<dt>shutdownPlugin()</dt><dd>subroutine to handle any operations that need to be performed to shut down the plugin cleanly, or to be run when disabled. This is particularly useful in cases
+
+where external processes need to be informed or resources need to be freed when the plugin is shut down</dd>
+<dt>enabled()</dt><dd>a subroutine to test the conditions required for the plugin to be enabled.  returns a logical true/false indicating whether the plugin can be enabled.</dd>
+<dt>defaultMap()</dt><dd>automatically loaded by the server if this is present, this routine can override the IR button mapping found in IR/Default.map for your plugin mode see <a href="buttons.html">Button Mapping</a> for details on mapping.</dd>
+</dl>
+
+<hr>
+<h4>Summary</h4>
+<p>Using the existing plugins as examples (one appears below) and this document as an explanation of what each section of the plugin can do, you should now be able to start working on a plugin of your own. Remember that this is only a framework to allow you to hook into the server. There are always many other ways to implement the features of a plugin. As long as your provide the lines from the examples above, the server will try to work with your Plugin. The rest can be just about anything you want, including using any of functions and subroutines within the server.  Remember, there's more than one way to do it.</p>
+<p>Happy Coding!
+<hr>
+<h4>NOTE:</h4>
+<p>Plugins made for server version before 5.0 need to be updated using whack.pl, included in the tools directory of the CVS version of server 5.0 and higher. Syntax for this command is:
+<blockquote>
+			<pre>whack.pl myplugin.pm...
+</pre></blockquote>
+<p>This will rewrite myplugin.pm (and any other specified files), leaving a copy of the script in myplugin.pm.old, to use the new module layout.
+<hr>
+<h4>Appendix: Sample Plugin</h4>
+<pre># Rescan.pm by Andrew Hedges (andrew@hedges.me.uk) October 2002
+#
+# This code is derived from code with the following copyright message:
+#
+# Logitech Media Server Copyright 2001-2011 Logitech.
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License,
+# version 2.
+use strict;
+
+###########################################
+### Section 1. Change these as required ###
+###########################################
+
+package Plugins::Rescan;
+
+use Slim::Player::Playlist;
+use Slim::Utils::Strings qw (string);
+
+sub getDisplayName {
+	return 'PLUGIN_RESCAN_MUSIC_LIBRARY'
+};
+
+sub strings {  return '
+PLUGIN_RESCAN_MUSIC_LIBRARY
+	EN	Rescan Music Library
+	
+PLUGIN_RESCAN_RESCANNING
+	EN	Server now rescanning...
+
+PLUGIN_RESCAN_PRESS_PLAY
+	EN	Press PLAY to rescan your music folder
+'};
+
+##################################################
+### Section 2. Your variables and code go here ###
+##################################################
+
+
+sub setMode {
+	my $client = shift;
+	$client-&gt;lines(\&amp;lines);
+}
+
+sub enabled { 
+	my $client = shift;
+	return !Slim::Music::iTunes::useiTunesLibrary();
+}
+
+my %functions = (
+	'up' =&gt; sub { 
+		my $client = shift;
+		$client->bumpUp();
+	},
+	'down' =&gt; sub { 
+	    my $client = shift;
+		$client->bumpDown();
+	},
+	'left' =&gt; sub {
+		my $client = shift;
+		Slim::Buttons::Common::popModeRight($client);
+	},
+	'right' =&gt; sub {
+		my $client = shift;
+		$client->bumpRight();
+	},
+	'play' =&gt; sub {
+		my $client = shift;
+		my @pargs=('rescan');
+		Slim::Control::Request::executeRequest($client, \@pargs);
+		$client->showBriefly( {
+			'line1' => $client->string('PLUGIN_RESCAN_MUSIC_LIBRARY'),
+			'line2' => $client->string('PLUGIN_RESCAN_RESCANNING'),
+		});
+	}
+);
+
+sub lines {
+	my $client = shift;
+	return {
+		'line1' => $client->string('PLUGIN_RESCAN_MUSIC_LIBRARY'),
+		'line2' => $client->string('PLUGIN_RESCAN_PRESS_PLAY'),
+	};
+}
+	
+################################################
+### End of Section 2.                        ###
+################################################
+
+sub getFunctions {
+	return \%functions;
+}
+
+1;
+</pre>
+	
+[% PROCESS helpfooter.html %]

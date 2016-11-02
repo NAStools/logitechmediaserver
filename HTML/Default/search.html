@@ -1,0 +1,128 @@
+[%- pagetitle = 'SEARCHMUSIC' | string %]
+[%- pageicon = icons.SEARCHMUSIC %]
+[% extJsScripts = BLOCK %]
+	<script type="text/javascript">
+		Ext.onReady(function(){
+			var sinput = new Ext.form.TextField({
+				applyTo: 'livesearch',
+				validationDelay: 500,
+				validateOnBlur: false,
+				selectOnFocus: true,
+
+				searches: [
+					[% FOREACH search = searches %]
+					{
+						id: 'result[% loop.index %]',
+						hd: 'header[% loop.index %]',
+						url: '[% search.values.0 %]'
+					}[% loop.last ? '' : ',' %]
+					[% END %]
+				],
+
+				validator: function(value, force){
+					var el;
+
+					if (value.length > 2 || force) {
+						for (var i=0; i<this.searches.length; i++) {
+							if (el = Ext.get(this.searches[i].id)) {
+								// don't wait for an earlier update to finish
+								if (el.getUpdateManager().isUpdating())
+									el.getUpdateManager().abort();
+
+								el.load({
+									url: this.searches[i].url,
+									method: 'GET',
+									params: {
+										q: value,
+										player: player,
+										library_id: '[% library_id %]',
+										ajaxUpdate: 1,
+										ajaxSearch: 1,
+										index: i
+									},
+									callback: function(el, success, response, options) {
+										Highlighter.init();
+										SqueezeJS.UI.ScrollPanel.init();
+
+										// we need to fix the URL, as the returned values are relative to the search path
+										var a = Ext.DomQuery.select("a[class=browseItemLink]", options.thisSearch.id);
+										for (i=0; i<a.length; i++) {
+											a[i].href = a[i].href.replace(/index.html/g, "clixmlbrowser/clicmd=browselibrary+items&linktitle=SEARCH&mode=search/");
+										}
+										var l = Ext.DomQuery.select("div[class*=browsedbListItem]", options.thisSearch.id).length;
+										var t = Ext.get(options.thisSearch.id).child('div[id="total"]');
+										var c = t ? parseInt(t.getAttribute('value')) : 0;
+										var m = '';
+										if (!c) {
+											m = '[%- "NONE" | string %]';
+										} else if (l && c && c > 1 && l < c) {
+											m += l + ' / ' + c + ': <a href="clixmlbrowser/clicmd=browselibrary+items&linktitle=SEARCH&mode=search/X?index='
+												+ options.params.index + '&q=' + options.params.q + '">[%- "MORE" | string %]</a>...';
+										}
+										Ext.get(options.thisSearch.hd).update(m);
+
+									},
+									thisSearch : this.searches[i]
+								});
+							}
+						}
+					}
+
+					return true;
+				},
+
+				// overwrite default filter to ignore key modifiers
+			    filterValidation : function(e){
+			        if(!e.isNavKeyPress() && !e.isSpecialKey()){
+			            this.validationTask.delay(this.validationDelay);
+			        }
+			    }
+			});
+
+			[% IF query %]
+			sinput.validator('[% query | replace("'", " ") %]', true);
+			[% END %]
+
+			new Ext.Button({
+				renderTo: 'searchButton',
+				text: '[% "SEARCH" | string %]',
+				type: 'submit',
+				handler: function(){
+					document.getElementById("searchForm").submit();
+				}
+			});
+
+			Browse.init();
+		});
+	</script>
+[% END %]
+[% pwd_list = BLOCK %]
+	<a href="search.html?player=[% playerURI %]">[% "SEARCH" | string %]</a>
+[% END %]
+[% PROCESS pageheader.html dontscroll=browse_items.size useSpecialExt="-browse" %]
+
+	<div class="searchHeader">
+	<form id="searchForm" name="searchForm" method="GET" action="search.html">
+		<table><tr>
+			<td><input type="text" id="livesearch" name="query" size="30" value="[% query | html %]" autocomplete="off"/></td>
+			<td><span id="searchButton"></span></td>
+			<td id="advSearchLink" class="link"><a href="[% webroot %]advanced_search.html?player=[% playerid %]">[% "ADVANCEDSEARCH" | string %]</a></td>
+		</tr></table>
+		<input type="hidden" value="[% player %]" name="player">
+	</form>
+	</div>
+
+	<div id="browsedbHeader">
+		[% IF searchError %]
+			[% searchError %]
+		[% END %]
+	</div>
+
+	<div id="browsedblist">
+	[% FOREACH search = searches %]
+		<div class="searchResultHeader">[% search.keys.0 %]: <span id="header[% loop.index %]"></span></div>
+		<div id="result[% loop.index %]"></div>
+	[% END %]
+	</div>
+
+[% PROCESS pagefooter.html %]

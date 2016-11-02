@@ -1,0 +1,474 @@
+[%- 
+hasArtwork = 0;
+contentwrapper = 'contentitem';
+container = 'contentcontainer';
+artwork = artwork ? artwork : 0;
+useAllControl = 1;
+
+IF ajaxUpdate && ajaxUpdate >= 1;
+	container = 'dummycontainer';
+END;
+FOREACH item = items;
+	IF item.image && (item.type != 'audio' || playlist_id || item.url.match("^http"));
+		hasArtwork = 1;
+		LAST;
+	END;	
+END;	
+
+IF hasArtwork && !(ajaxUpdate && ajaxUpdate >= 1);
+	IF artwork == 1;
+		IF playlist_id;
+			artwork = 0;
+		ELSE;
+			container = 'gallerycontainer';
+			contentwrapper = 'galleryitem';
+		END;
+	END;
+	
+	titleRight = BLOCK %]
+		<div id="viewSelect"></div>
+	[% END; 
+ELSIF hasArtwork && ajaxSearch;
+	artwork = 2;
+END;
+
+USE Prefs;
+titleFormat = Prefs.preferences('server').get('titleFormat').${Prefs.preferences('server').get('titleFormatWeb')};
+includeArtist = !titleFormat.match('ARTIST');
+includeAlbum  = !titleFormat.match('ALBUM');
+
+IF slideshow;
+	slideshowHelpers = 'class="slideImage" onClick="return false;"';
+END;
+
+useSpecialExt="-browse" %]
+
+[%- extJsScripts = BLOCK -%]
+	<script type="text/javascript">
+		[% PROCESS jsString id='SWITCH_TO_LIST' jsId='switch_to_list' %]
+		[% PROCESS jsString id='SWITCH_TO_EXTENDED_LIST' jsId='switch_to_extended_list' %]
+		[% IF !playlist_id %]
+			[% PROCESS jsString id='SWITCH_TO_GALLERY' jsId='switch_to_gallery' %]
+		[% END %]
+		[% PROCESS jsString id='ALBUM_DISPLAY_OPTIONS' jsId='display_options' %]
+	</script>
+
+	[% IF playlist_id && !noEdit %]
+		[% useSpecialExt="" %]
+		<script type="text/javascript" src="[% webroot %]html/Browse.js?r=[% revision %]"></script>
+		<script type="text/javascript">
+			var orderByList;
+			Ext.onReady(function(){
+				Browse.init(); 
+				Browse.initPlaylistEditing([% playlist_id %], [% start %]);
+			});
+		</script>
+
+	[% ELSE %]
+	
+		[% IF slideshowTest %]
+		<link rel="stylesheet" type="text/css" href="[% webroot %]html/lightbox/lightbox.css?r=[% revision %]" />
+		<script type="text/javascript" src="[% webroot %]html/lightbox/lightbox.js?r=[% revision %]"></script>
+		[% END %]
+
+		<script type="text/javascript">
+			var orderByList;
+			[% IF orderByList %]
+				orderByList = {};
+				[% PROCESS jsString id='SORT_BY' jsId='sort_by' %]
+				[% FOREACH key = orderByList.keys.sort %]
+					orderByList["[% key | string %]"] = '[% orderByList.$key | replace("'", "%27") %]';
+				[% END %]
+			[% END %]
+				
+			Ext.onReady(function(){
+				Browse.init();
+			});
+		</script>
+	[% END %]
+[% END %]
+
+[% IF query %]
+	[%# Add the search query to each link if available %]
+	[% searchquery = 'query=' _ query _ '&amp;' %]
+[% END %]
+[% IF mquery %]
+	[%# Add the search query to each link if available %]
+	[% multiquery = mquery _ '&amp;' %]
+[% END %]
+
+
+[% FILTER null %]
+[% pwd_list = [];
+	FOREACH crumb IN crumb;
+		crumbItem = BLOCK %]
+			<a href="[% path %]?[% multiquery %][% searchquery | uri | replace("'", "%27") %]player=[% playerURI %]&amp;index=[% crumb.index %]&amp;sess=[% sess %]">[% crumb.name | html %]</a>
+		[% END %]
+		[% pwd_list.push(crumbItem) %]
+	[% END %]
+[% END # filter -%]
+
+[% IF NOT ajaxUpdate %][% PROCESS pageheader.html dontscroll = (streaminfo ? 0 : 1) %][% IF !streaminfo %]<div id="mainbody">[% END %][% END %]
+
+[% IF msg %][% WRAPPER contentcontainer %]
+	<div class="message">[% msg %]</div>
+[% END %][% END %]
+
+[% IF streaminfo %]
+	[% IF streaminfo.item.enclosure || streaminfo.item.url; songInfoPlayLinks = BLOCK %]
+	<div id="songInfoPlayLinks">
+		[% WRAPPER playlink %]onclick="Browse.XMLBrowser.playLink('[% multiquery %][% searchquery | uri | replace("'", "%27") %]', '[% streaminfo.index %]', '[% sess %]');"[% END %]
+		[% IF allLinks; WRAPPER insertlink %]onclick="Browse.XMLBrowser.insertLink('[% multiquery %][% searchquery | uri | replace("'", "%27") %]', '[% streaminfo.index %]', '[% sess %]');"[% END; END %]
+		[% WRAPPER addlink %]onclick="Browse.XMLBrowser.addLink('[% multiquery %][% searchquery | uri | replace("'", "%27") %]', '[% streaminfo.index %]', '[% sess %]');"[% END %]
+		[% IF allLinks; WRAPPER removelink %]onclick="Browse.XMLBrowser.removeLink('[% multiquery %][% searchquery | uri | replace("'", "%27") %]', '[% streaminfo.index %]', '[% sess %]');"[% END; END %]
+	</div>
+	[% END; END %]
+
+	[% PROCESS xmlbrowser_details.html %]
+[% END %]
+
+[%- IF items.size -%]
+	[% IF !ajaxSearch %] 
+		<div id="browsedbHeader">
+			[% IF hasPagebar %]
+				<div class="pagerbox">
+					<div class="pagerbox_top"><div></div></div>
+					<div class="pagerbox_content">
+						[% PROCESS pagebar %]
+					</div>
+					<div class="pagerbox_bottom"><div></div></div>
+				</div>
+			[% END %]
+		</div>
+		[% IF items.size < 2; useAllControl = 0; END %]
+	[% ELSE %]
+		[% IF total %]
+			<div id="total" value="[%- total %]"></div>
+			[% IF total > items.size; useAllControl = 0; END %]
+		[% END %]
+	[% END %]
+
+	[%- BLOCK gencontrol -%]
+		[% IF playlist_id %]
+			[% UNLESS useExtJS %]
+				[%- WRAPPER moveuplink noTarget=1 %]
+					[%- PROCESS editcmd cmd='up' %]
+				[% END %]
+	
+				[%- WRAPPER movedownlink noTarget=1 %]
+					[%- PROCESS editcmd cmd='down' %]
+				[% END %]
+			[% END %]
+			
+			[%- WRAPPER editlink noTarget=1 %]
+				[%- PROCESS editcmd cmd='edit' %]
+			[% END %]
+		
+			[%- WRAPPER removelink noTarget=1 %]
+				[%- PROCESS editcmd cmd='delete' %]
+			[% END %]
+		[% END %]
+
+		[% IF item.favorites == 1 %]
+			[% WRAPPER favaddlink noTarget=1 %]
+				[% IF songinfo.favorites %]
+				onclick="SqueezeJS.Utils.toggleFavorite(this, '[% songinfo.favorites_url | uri | replace("'", "%27") %]', '[% crumb.values.-1 | html %]');"
+				[% ELSIF item.simpleAlbumLink && item.favorites_url %]
+				onclick="SqueezeJS.Utils.toggleFavorite(this, '[% item.favorites_url | uri | replace("'", "%27") %]', '[% (item.name _ " " _ stringBY _ " " _ item.artist) | uri | replace("'", "%27") %]');"
+				[% ELSE %]
+				onclick="Browse.XMLBrowser.toggleFavorite(this, '[% (item.index || index _ (start + loop.index)) | uri | replace("'", "%27") %]', '[% pageinfo.startitem %]', '[% sess %]');"
+				[% END %]
+			[% END %]
+		[% ELSIF item.favorites == 2 %]
+			[% WRAPPER favdellink noTarget=1 %]
+				[% IF songinfo.favorites %]
+				onclick="SqueezeJS.Utils.toggleFavorite(this, '[% songinfo.favorites_url | uri | replace("'", "%27") %]', '[% crumb.values.-1 | html %]');"
+				[% ELSE %]
+				onclick="Browse.XMLBrowser.toggleFavorite(this, '[% (item.index || index _ (start + loop.index)) | uri | replace("'", "%27") %]', '[% pageinfo.startitem %]', '[% sess %]');"
+				[% END %]
+			[% END %]
+		[% END %]
+
+		[% IF item.playLink  || item.insertLink || item.addLink || item.removeLink %]
+			[% IF item.playLink; WRAPPER playlink %]onclick="SqueezeJS.Controller.urlRequest('[% webroot %][% item.playLink | replace("'", "%27") %]&player=[% playerURI %]', 1, SqueezeJS.string('connecting_for'));"[% END; END %]
+			[% IF allLinks && item.insertLink; WRAPPER insertlink %]onclick="SqueezeJS.Controller.urlRequest('[% webroot %][% item.insertLink | replace("'", "%27") %]&player=[% playerURI %]', 1);"[% END; END %]
+			[% IF item.addLink; WRAPPER addlink %]onclick="SqueezeJS.Controller.urlRequest('[% webroot %][% item.addLink | replace("'", "%27") %]&player=[% playerURI %]', 1);"[% END; END %]
+			[% IF allLinks && item.removeLink; WRAPPER removelink %]onclick="SqueezeJS.Controller.urlRequest('[% webroot %][% item.removeLink | replace("'", "%27") %]&player=[% playerURI %]', 1);"[% END; END %]
+			[% IF item.mixersLink; WRAPPER morelink %]href="[% webroot %][% item.mixersLink %]?player=[% playerURI %]"[% END; END %]
+		[% ELSIF item.type == 'audio' || item.type == 'playlist' || item.enclosure || item.play %]
+			[% WRAPPER playlink %]onclick="Browse.XMLBrowser.play[% IF item.type == 'playlist' %]All[% END %]Link('[% multiquery %][% searchquery | uri | replace("'", "%27") %]', '[% (item.index || index _ (start + loop.index)) | uri | replace("'", "%27") %]', '[% sess %]');"[% END %]
+			[% IF allLinks; WRAPPER insertlink %]onclick="Browse.XMLBrowser.insertLink('[% multiquery %][% searchquery | uri | replace("'", "%27") %]', '[% (item.index || index _ (start + loop.index)) | uri | replace("'", "%27") %]', '[% sess %]');"[% END; END %]
+			[% WRAPPER addlink %]onclick="Browse.XMLBrowser.add[% IF item.type == 'playlist' %]All[% END %]Link('[% multiquery %][% searchquery | uri | replace("'", "%27") %]', '[% (item.index || index _ (start + loop.index)) | uri | replace("'", "%27") %]', '[% sess %]');"[% END %]
+		[% ELSE %]
+			[% PROCESS dummylink %]
+			[% PROCESS dummylink %]
+		[% END %]
+
+	[% END %]
+
+	[%- BLOCK allcontrol -%]
+		[% IF songinfo.favorites == 1 %]
+			[% WRAPPER favaddlink noTarget=1 %]
+				onclick="SqueezeJS.Utils.toggleFavorite(this, '[% songinfo.favorites_url | uri | replace("'", "%27") %]', '[% crumb.values.-1 | html %]');"
+			[% END %]
+		[% ELSIF songinfo.favorites == 2 %]
+			[% WRAPPER favdellink noTarget=1 %]
+				onclick="SqueezeJS.Utils.toggleFavorite(this, '[% songinfo.favorites_url | uri | replace("'", "%27") %]', '[% crumb.values.-1 | html %]');"
+			[% END %]
+		[% END %]
+		
+		[% WRAPPER playlink %]onclick="Browse.XMLBrowser.playAllLink('[% multiquery %][% searchquery | uri | replace("'", "%27") %]', '[% currentIndex %]', '[% sess %]');"[% END %]
+		[% IF allLinks; WRAPPER insertlink %]onclick="Browse.XMLBrowser.insertLink('[% multiquery %][% searchquery | uri | replace("'", "%27") %]', '[% currentIndex %]', '[% sess %]');"[% END; END %]
+		[% WRAPPER addlink %]onclick="Browse.XMLBrowser.addAllLink('[% multiquery %][% searchquery | uri | replace("'", "%27") %]', '[% currentIndex %]', '[% sess %]');"[% END %]
+		[% IF allLinks; WRAPPER removelink %]onclick="Browse.XMLBrowser.removeLink('[% multiquery %][% searchquery | uri | replace("'", "%27") %]', '[% currentIndex %]', '[% sess %]');"[% END; END %]
+			
+		[% IF songinfo.mixersLink; WRAPPER morelink %]
+			href="[% webroot %][% songinfo.mixersLink %]?player=[% playerURI %]" [% IF browserTarget %]target="[% browserTarget %]"[% END %]
+		[% END; END %]
+	[%- END %]
+
+	[% BLOCK editcmd %]
+			href="[% webroot %]edit_playlist.html?player=[% playerURI %]&amp;[% cmd %]=1&amp;playlist_id=[% playlist_id %]&amp;itempos=[% item.play_index %]"
+	[% END %]
+	
+	[% BLOCK editform %]
+		<form name="edit" action="[% webroot %]edit_playlist.html" style="display: inline; width: 100%;">
+			<input type="hidden" name="player" value=[% playerURI %]>
+			<input type="hidden" name="itempos" value=[% item.play_index %]>				
+			<input type="hidden" name="playlist_id" value=[% playlist_id %]>
+			[%- IF item.remote %]<input style="display: inline; width: 35%;" type="text" class="stdedit" name="form_title" value="[% item.title | html %]">[% END %]
+			<input style="display: inline; width: 35%;" type="text" class="stdedit" name="form_url" value="[% item.url %]">
+			<input type="submit" style="display: inline; width: 10%;" class="stdclick" name="save" value=[% stringSAVE %]>
+			<input type="submit" style="display: inline; width: 10%;" class="stdclick" name="cancel" value=[% "CANCEL" | string %]>
+		</form>
+	[% END %]
+	
+	[% BLOCK iconTmpl; PROCESS itemIcon size=50 class="browseItemDetail"; END %]
+	[% IF hasArtwork && !artwork %]
+		[% iconTmpl = 'iconTmpl' %]
+	[% END %]
+
+	
+	[% IF playlist_id %]
+		<div class="playlistform">
+			<form method="get" action="[% webroot %]edit_playlist.html">
+				<table>
+					<tr>
+						<td>[% "NAME" | string %] <input class="stdedit" name="newname" value="[% IF newname; newname; ELSE; playlistTitle; END %]" size="[% maxInputSize ? maxInputSize : 40 %]"></td>
+						<td><input class="stdclick" name="submit" type=submit value="[% stringSAVE %]" onclick='this.form.renamePlaylist.value=1'></td>
+						<td><input class="stdclick" name="submit" type=submit value="[% stringADD %]" onclick='this.form.addItem.value=1'></td>
+						<td>
+							[% IF playlistTitle %]
+								<input class="stdclick" type="submit" value="[% stringDELETE %]" onclick='this.form.deletePlaylist.value=1'>
+							[% END %]
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							[%- IF warning == 'RENAME_WARNING' %]
+								<input type="checkbox" name="overwrite" id="overwrite"><label for="overwrite"> [% "CONFIRM_OVERWRITE" | string %]</label>
+							[%- END %]
+							[%- IF warning == 'DELETE_WARNING' %]
+								<input type="checkbox" name="confirm" id="confirm"><label for="confirm"> [% "CONFIRM_DELETE" | string %]</label>
+							[%- END %]
+							<input type="hidden" name="playlist_id" value="[% playlist_id %]">
+							<input type="hidden" name="renamePlaylist" value="0">
+							<input type="hidden" name="editPlaylist" value="0">
+							<input type="hidden" name="deletePlaylist" value="0">
+							<input type="hidden" name="addItem" value="0">
+							<input type="hidden" name="player" value="[% player %]">
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	[% END %]
+	
+	[%- IF songinfo;
+		songInfoPlayLinks = BLOCK %]
+		<div id="songInfoPlayLinks">
+			[% IF songinfo.playLink || songinfo.insertLink || songinfo.addLink || songinfo.removeLink; PROCESS gencontrol item = songinfo; ELSIF itemsHaveAudio; PROCESS allcontrol; END %]
+		</div>
+		[% END;	
+		PROCESS songinfo_header.html itemobj = songinfo;
+		image = undef;
+	END %]
+
+
+	[%- WRAPPER $container %]
+		[% IF image %]
+		<div>
+			<a href="[% UNLESS image.match("^(\/|http)") %][% webroot %][% END %][% image %]" target="cover">
+				<img src="[% image | resizeimage(150, 150, '', webroot) %]" alt="coverArt" style="max-width:150px;max-height:150px">
+			</a>
+		</div>
+		[% END %]
+
+		[% IF playlist_id && addItem %]
+			[% PROCESS editform %]
+		[% END %]
+		
+		[% IF itemsHaveAudio && !songinfo && useAllControl %]
+			[% useAllIcon = hasArtwork && artwork == 0 %]
+			[%- WRAPPER contentitem controls = 'allcontrol' lineclass = (useAllIcon ? 'browsedbListItem itemWithCover' : 'browsedbListItem' )%]
+				[% IF useAllIcon %]
+					<span class="browseCover">
+						<img src="[% webroot %]html/images/playall_50x50_f.png" width="50">
+					</span>
+					<div class="browseItemDetail">
+				[% END %]
+				[% "ALL_SONGS" | string %]
+				[% IF useAllIcon %]</div>[% END %]
+			[%- END %]
+		[% END %]
+		
+		[% needBR = (artwork != 2 && !ajaxSearch) ? '<br>' : '' %]
+
+		[%- FOREACH item = items %]
+		
+			[% IF item.ignore; NEXT; END %]
+
+			[% lctype = item.web.group | lower; IF details.${ lctype } || details.contributors.${item.web.group}; NEXT; END %]
+
+			[% IF playlist_id && edit && loop.index == itempos %]
+				[% PROCESS editform %]
+			[% ELSIF item.type == 'redirect' && !(item.web.url || item.weblink || item.link); NEXT %]
+			[% ELSIF item.type == 'search' && !item.weblink;
+				WRAPPER contentitem controls = xmlSearchControls;
+					IF artwork == 1;
+						itemobj.id = loop.count;
+					END;
+					item.name || item.title %]
+					<span class="browsedbControls">
+						<form id="searchForm[% item.index || index _ (start + loop.index) %]" method="GET">
+							<input type="hidden" value="[% player %]" name="player" />
+							<input type="hidden" value="[% sess %]" name="sess" />
+							<input type="hidden" value="[% item.index || index _ (start + loop.index) %]" name="index" />
+		 					<input type="hidden" name="submit" class="stdclick" value="[% "SEARCH" | string %]"/>
+							<input type="text" class="x-form-focus searchInput" name="q" value=""/>
+							<input type="image" src="[% webroot %]html/images/b_search.gif" width="17px" height="17px" alt="[% "SEARCH" | string %]">
+						</form>
+					</span>					
+				[% END %]
+			[% ELSIF item.type == 'textarea' %]
+				<div class="selectorMarker">
+					[% title = (item.web.value || item.name || item.title) %]
+					[% title | html_line_break %]
+				</div>
+			[% ELSE %]
+				[%- WRAPPER $contentwrapper controls = 'gencontrol' addClasses = (item.type=='text' ? 'defaultCursor' : playlist_id ? 'draggableSong' : '') _ (!(hasArtwork && !artwork) && item.icon ? ' smallIcon' : '') anchor = item.anchor %]
+					[% IF artwork == 1;
+						item.size = thumbSize || 100;
+						itemobj.id = loop.count _ (ajaxUpdate ? index : '');
+					END %]
+
+					[% IF iconTmpl %]
+						[% PROCESS iconTmpl url=(item.image || item.icon || 'music/0/cover.jpg') %]
+						[% closeDIV = 1 %]
+					[% END %]
+
+					[% IF item.web.type == 'htmltemplate' %]
+						[% PROCESS $item.web.value %]
+					[% ELSE %]
+						[% IF item.label %]
+							[% item.label | string %]
+							[%- stringCOLON %]
+						[% END %]	
+						[% WRAPPER weblink %]
+							[% title = (item.web.value || item.name || item.title) %]
+							[% title | html_line_break %]
+
+							[% IF includeArtist && item.hasMetadata == 'track' && !item.name2 %]
+							[%  # add the track artist if it's different from the album artist
+								artist = item.trackartist || item.artist;
+								artist = artist | html;
+
+								IF ( 
+									(item.albumartist && artist != item.albumartist)
+									|| artist != item.artist
+									|| itemobj.compilation
+								);
+									"$stringBY $artist";
+								END; 
+							%]
+							[% END %]
+						[% END %]
+						[% IF item.showYear %]
+							[% IF item.remote %]
+								([% item.year %])
+							[% ELSE %]
+								[% needBR %]<a [% PROCESS yearItemHRef %] class="browseItemLink">([% item.year %])</a>
+							[% END %]
+						[% END %]
+						[% IF playlist_id && includeAlbum %]
+							[% needBR || stringFROM %] [% item.album %]
+						[% END %]
+						[% IF item.showArtist || (item.hasMetadata == "album" && item.name2) || (playlist_id && item.name2 && includeArtist) %]
+							[% IF item.artist_id %]
+								[% needBR || stringBY %]
+								[% FOREACH artist IN item.artists %]
+									[% item.artist_id = item.artist_ids.${loop.index} %] 
+									<a [% PROCESS artistItemHRef item.artist = artist %] class="browseItemLink">[% artist | html %]</a>[% UNLESS loop.last; ", "; END %]
+								[% END %]
+							[% ELSE %]
+								[% needBR || stringBY %] [% (item.artist || item.name2) || html %]
+							[% END %]
+						[% END %]
+					[% END %]
+
+					[% IF closeDIV %]
+						</div>
+					[% END %]
+				[%- END %]
+			[%- END %]
+		[%- END %]
+
+	[%- END %]
+[%- END %]
+
+[%- IF hasPagebar || pageinfo.totalitems; infoTab = BLOCK -%]
+	<div>[% "ITEMS" | string %] [% pageinfo.startitem + 1 %] [% "TO" | string %] [% pageinfo.enditem + 1 %] [% "OF" | string %] [% pageinfo.totalitems %]</div>
+[%- END; END -%]
+
+[% IF NOT ajaxUpdate %][% IF !streaminfo %]</div>[% END %][% PROCESS pagefooter.html %][% END %]
+
+[% BLOCK itemIcon %]
+	[% WRAPPER weblink %]
+	<span class="browseCover">
+		<img src="[% url | resizeimage(size, size, 'o', webroot) %]" onLoad="resize(this, [%- size %])">
+	</span>
+	[% END %]
+	<div class="[% class %]">
+[% END %]
+
+[% BLOCK weblink %]
+	[% IF item.simpleAlbumLink %]
+		<a href="[% webroot %]clixmlbrowser/clicmd=browselibrary+items&amp;mode=tracks&amp;linktitle=[% stringALBUM %]%20([% item.album | uri %])&amp;album_id=[% item.id %]&amp;player=[% playerURI %]/" class="browseItemLink">
+	[% ELSIF item.weblink %]
+		<a href="[% item.weblink %]" target="_blank" [% slideshowHelpers %]>
+	[% ELSIF item.link %]
+		<a href="[% webroot %][% item.link %]&amp;player=[% playerURI %]" target="_blank">
+	[% ELSIF item.type == 'redirect' %]
+		[% IF item.web.url %]
+		<a href="[% webroot %][% item.web.url %]&amp;player=[% playerURI %]" class="browseItemLink">
+		[% ELSE; NEXT %]
+		[% END %]
+	[% ELSIF !item.type.match('^text') %]
+		<a href="[% path %]?[% multiquery %][% searchquery | uri | replace("'", "%27") %]index=[% (item.index || index _ (start + loop.index)) | uri | replace("'", "%27") %]&amp;player=[% playerURI %]&amp;sess=[% sess %]" class="browseItemLink">
+	[% ELSIF item.type == "text" && item.image %]
+		<a href="[% UNLESS item.image.match("^(\/|http)") %][% webroot %][% END %][% item.image %]" target="_blank" [% slideshowHelpers %]>
+	[% END %]
+	
+	[% content %]
+	
+	[% IF item.type == 'playlist' || item.weblink || item.link || !item.type.match('^text') %]
+		</a>
+	[% ELSIF item.type == "text" && item.image;
+		details = [];
+		IF item.owner; details.push(item.owner); END;
+		IF item.date; details.push(item.date); END;
+		IF details.size && !content.match("img src"); "(" _ details.join(' - ') _ ")"; END;
+	 %]
+		</a>
+	[% END %]
+[% END %]

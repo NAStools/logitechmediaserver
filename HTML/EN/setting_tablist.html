@@ -1,0 +1,11 @@
+    [% IF playerid %][% links = playersetup %][% ELSE %][% links = additionalLinks.setup %][% END %]
+    [% IF links %]
+      [% IF style == "list" %]<div id="setuptabs"><ul>[% END %]
+      [% FOREACH link = links %]
+        [% IF style == "list" %]
+          <li [% IF page == link.key %] id="currtab"[% END %]>
+        [%- ELSIF loop.index > 0%]<span class="bar">|</span>[% END %]
+          <a href="[% link.value %]player=[% playerURI %][% IF playerid %]&amp;playerid=[% playerid %][% END %]">[% link.key | string %]</a>[% IF style == "list" %]</li>[% END %]
+      [% END %]
+      [% IF style == "list" %]</ul></div>[% END %]
+    [% END %]

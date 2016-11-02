@@ -1,0 +1,336 @@
+/* Hack for IE to prevent horizontal scrollbars with frames */
+* html {
+	overflow-y: scroll;
+}
+
+a {
+	outline: none;
+}
+
+body {
+	background-color: #FFFFFF;
+}
+
+body, input, select {
+	font-family: sans-serif;
+}
+
+.odd {
+}
+
+.even {
+	background-color: #d0d0d0;
+}
+
+.largeAttribute {
+	font-weight: bold;
+	font-style: normal;
+	text-decoration: none;
+	white-space: nowrap;
+	font-size: 17px;
+}
+
+div#homeMenu {
+	position: relative;
+	height: auto;
+	width: auto;
+}
+
+#pageHeaderInfo {
+	margin-left:7px;
+	margin-top: 6px;
+}
+
+#statusMessage {
+	padding-left: 7px;
+	padding-top: 6px;
+	color: #111;
+}
+
+.homeMenuSection div {
+	font-weight: bold;
+}
+
+.settingSection {
+	border-bottom: 1px solid;
+	padding-bottom: 5px;
+}
+
+.settingSection img.playericon {
+	vertical-align: middle;
+}
+
+#innerSettingsBlock {
+	overflow: auto;
+	width: 100%;
+	height: 50%;
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+}
+
+#settingsRegion {
+	overflow: auto;
+	width: 100%;
+	height: 90%;
+}
+
+#settingsForm {
+	margin: 0;
+	border: 0;
+	padding: 0;
+}
+
+#statusarea {
+	border: 1px;
+}
+
+.prefHead {
+	padding-bottom: 8px;
+	padding-top: 3px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.prefDesc,.prefHead {
+	padding-bottom: 10px;
+}
+
+div#playList {
+	border-top: 1px solid;
+	height: auto;
+	width: auto;
+}
+
+div#browsedbList {
+	clear: left;
+	width: auto;
+	height: auto;
+}
+
+.browsedbListItem {
+	position: relative;
+}
+
+.browsedbListItemFullWidth {
+}
+
+.playlistControls {
+	text-align:right;
+}
+
+.browsedbControls {
+	text-align:right;
+}
+
+div#browsedbHeader {
+	margin-left:0px;
+	position: relative;
+}
+
+#viewSelect
+{
+	float: right;
+	padding-right: 8px;
+	padding-top: 6px;
+}
+
+#viewSelect img {
+	vertical-align: middle;
+}
+
+.thumbnail {
+	padding: 0px;
+	text-align: center;
+}
+
+.artworkControls {
+	padding: 0px;
+}
+
+.artworkControls img {
+	margin-left: 5px;
+	padding-top: 6px;
+}
+
+.artworkText {
+	text-align: center;
+}
+
+.artworkImage {
+	cursor: pointer;
+}
+
+.thumbwrap {
+	display: inline-block;
+	margin: 0px;
+	padding-left: 4px;
+	padding-right: 0px;
+	padding-top: 10px;
+}
+
+.thumbwrap li {
+	display: -moz-inline-box;  /* Moz */
+	display: inline-block;  /* Op, Saf, IE \*/
+	vertical-align: top;
+	padding-right: 6px;
+}
+
+.thumbwrap a span {
+	display: block;
+	overflow: hidden;
+}
+
+#songInfo {
+	height: auto;
+}
+
+#songInfo {
+	/* the list of song info items */
+	padding: 0px;
+	list-style: none;
+	margin: 8px;
+}
+
+#songInfo div {
+	padding-top: 5px;
+	clear: left;
+}
+
+.songInfoTitle {
+	float: left;
+	padding: 0px;
+	width: 25%;
+}
+
+.songInfoText {
+	float: left;
+	padding: 0px;
+	width: 72%;
+}
+
+.hitlist_list1 {
+	width: 50%;
+}
+
+.hitlist_list2 {
+	width: 10%;
+	text-align: center;
+}
+
+.hitlist_list3 {
+	width: 10%;
+	text-align: right;
+	white-space: nowrap;
+}
+
+.playingSong {
+}
+
+.playingSongControls {
+}
+
+div#albumPopup {
+	position: fixed;
+	z-index: 90;
+	top: 96px;
+	left: 15%;
+	width: 70%;
+	bottom: 10%;
+	background-color: white;
+	color: black;
+	padding: 5px;
+	border: 1px solid grey;
+	overflow: auto;
+}
+
+div#closeAlbumPopup {
+	position: relative;
+	height: 12px;
+}
+
+#closeAlbumText {
+	float: right;
+	border: 1px solid #888;
+}
+
+div#albumBackground {
+	position: fixed;
+	z-index: 60;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	bottom: 0%;
+	background-color: silver;
+	opacity:.75;
+	filter: alpha(opacity=75);
+	-moz-opacity: 0.75;
+}
+
+.linkbtn {
+	color: black;
+	cursor: pointer;
+}
+
+.descendinfo {
+}
+
+.waitlinkbtn {
+	background-image:url("html/images/b_wait.gif");
+	background-repeat:no-repeat;
+	cursor: pointer;
+	padding: 0px 5px 1px 5px;
+}
+
+.closelinkbtn {
+	background-image:url("html/images/b_ascend.gif");
+	background-repeat:no-repeat;
+	cursor: pointer;
+	padding: 0px 5px 1px 5px;
+}
+
+div.fileselectorautocomplete {
+	position: absolute;
+	width: 250px;
+	height: 100px;
+	overflow: auto;
+	background-color: white;
+	border: 1px solid #888;
+	margin: 0px;
+	padding: 0px;
+}
+
+div.fileselectorautocomplete ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+div.fileselectorautocomplete ul li.selected {
+	background-color: navy;
+	color: white;
+}
+
+div.fileselectorautocomplete ul li {
+	list-style-type: none;
+	display: block;
+	margin: 0;
+	padding: 2px;
+	height: 12px;
+	cursor: pointer;
+	white-space: nowrap
+}
+
+
+/* some styles used in extjs styles - overwrite them for the wizard */
+.x-tree-node-leaf .x-tree-node-alwayscollapsed {
+	background-image:url(/html/ext/resources/images/default/tree/folder.gif);
+}
+
+.x-layout-panel {
+	border: 0px none;
+}
+
+.x-btn {
+	display: inline;
+}
+

@@ -1,0 +1,79 @@
+[%- IF ajaxRequest -%]
+	<pre>
+	[% PROCESS ajaxProgress.txt %]
+	</pre>
+[%- ELSE -%]
+	[% pagetitle = (type || "SCANNER") _ "_PROGRESS" | string %]
+	
+	[% pageHeaderMenu = pagetitle %]
+	
+	[%- IF !abortScan -%]
+
+		[% pageHeaderScripts = BLOCK %]
+		<script TYPE="text/javascript">[% PROCESS html/vars.js %]</script>
+		<script TYPE="text/javascript">
+			timestring     = "[% 'TOTAL_TIME' | string %]";
+			progressbarlen = "[% barlen %]";
+			progresstype   = "[% type %]";
+		</script>
+		<script type="text/javascript" src="[% webroot %]html/prototype.js?r=[% revision %]" ></script>
+		<script TYPE="text/javascript" src="[% webroot %]html/global.js?r=[% revision %]"></script>
+		<script TYPE="text/javascript" src="[% webroot %]html/common.js?r=[% revision %]"></script>
+		<script TYPE="text/javascript" src="[% webroot %]html/progress.js?r=[% revision %]"></script>
+		[% END %]
+
+		[% extJsScripts = BLOCK %]
+		<script TYPE="text/javascript">
+			[% PROCESS jsString id='TOTAL_TIME' %]
+			progressbarlen = "[% barlen %]";
+			progresstype   = "[% type %]";
+
+			Ext.onReady(SqueezeJS.UI.ScannerInfoExtended.init, SqueezeJS.UI.ScannerInfoExtended, true);
+		</script>
+		[% END %]
+
+		[% bodyscript = 'onload="ajaxProgressRefresh();"' %]
+
+	[% END %]
+	
+	[% IF !ajaxUpdate; PROCESS pageheader.html; END %]
+
+	[%- IF abortScan -%]
+		<div>[% "SCAN_ABORTED" | string %]</div>
+	[% END %]
+
+	[% IF desc && type && !ajaxUpdate %]<div id="browsedbHeader"><br/>[% type _ "_PROGRESS_DESC" | string %]<br/>&nbsp;</div>[% END %]
+
+	[% odd = 1 %]
+	[% FOREACH num = [0..50] %]
+
+		<div id="progress[% num %]" style="display:none">
+			<div class="odd">
+				<div class="progressItem">
+					<span id="Name[% num %]"></span>&nbsp;
+					<span id="Count[% num %]">
+						&nbsp;(<span id="Done[% num %]"></span><span 
+							id="XofY[% num %]">&nbsp;[% "OF" | string %]&nbsp;</span><span 
+							id="Total[% num %]"></span>)
+					</span>&nbsp;
+					<span id="Active[% num %]"></span>&nbsp;
+					<span id="Time[% num %]"></span>
+				</div>
+			</div>
+
+			<div class="even">
+				<div class="progressBar">
+					<span id="Bar[% num %]"></span>
+					<br>
+					<div id="Info[% num %]"></div>
+				</div>
+			</div>
+		</div>
+		[% odd = (not odd) %]
+	[% END %]
+
+	[% IF scanning && !ajaxUpdate %]<div><br/><a href="[% webroot %][% path %]?playerid=[% playerid | uri %]&amp;player=[% player | uri %]&amp;abortScan=1">[% "ABORT_SCAN" | string %]</a></div>[% END %]
+	<div id="message">[% IF message %][% message %][% END %][% IF total_time %] [% "TOTAL_TIME" | string %][% total_time %][% END %]</div>
+
+	[% IF !ajaxUpdate; PROCESS pagefooter.html; END %]
+[% END %]

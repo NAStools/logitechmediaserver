@@ -1,0 +1,315 @@
+[%- IF useExtJS; initCall = BLOCK -%]
+function(){
+	Favorites.init([% sess %][% IF levelindex != '' %], '[% levelindex %]'[% END %]);
+}
+[%- END; END -%]
+[% BLOCK editentry %]
+	[% WRAPPER contentitem leftcontrols = 'playcontrols' lineclass = 'browsedbListItemFullWidth' %]
+		[% IF entry.outline %]
+			<form name="edittitle" method="" style="display: inline; width: 100%;">
+				<input type="hidden" name="index" value="[% entry.index %]">
+				<input type="hidden" name="sess" value="[% sess %]">
+				<input type="hidden" name="action" value="editset">
+				<input type="hidden" name="removeoncancel" value="[% removeoncancel %]">
+				<input id="edit_title_[% entry.index %]" style="width: 71%;" type="text" class="stdedit" name="entrytitle" value="[% entry.title %]" [% IF newlevel %] onClick="this.value=''"[% END %]>
+				[% IF useAJAX %]
+					<input type="button" class="stdclick" style="display: inline; width: 10%;" value=[% "SAVE" | string %] onclick="editSave('[% entry.index %]', '[% sess %]'); return false;" />
+					<input type="button" class="stdclick" style="display: inline; width: 10%;" value=[% "PLUGIN_FAVORITES_CANCEL" | string %] onclick="editCancel('[% entry.index %]', '[% sess %]'[% IF removeoncancel %],[% removeoncancel %][% END %]); return false;" />
+				[% ELSE %]
+					<input type="submit" style="display: inline; width: 10%;" class="stdclick" name="editset" value=[% "SAVE" | string %]>
+					<input type="submit" style="display: inline; width: 10%;" class="stdclick" name="cancel" value=[% "PLUGIN_FAVORITES_CANCEL" | string %]>
+				[% END %]
+			</form>
+		[% ELSE %]
+			<form name="edittitleurl" method="">
+			<table width="100%">
+				<tr>
+					<td width="35%">
+						<input type="hidden" name="index" value="[% entry.index %]">
+						<input type="hidden" name="sess" value="[% sess %]">
+						<input type="hidden" name="action" value="editset">
+						<input type="hidden" name="removeoncancel" value="[% removeoncancel %]">
+						<input id="edit_title_[% entry.index %]" size="25" type="text" class="stdedit" name="entrytitle" value="[% entry.title %]" [% IF newentry %] onClick="this.value=''"[% END %]>
+					</td>
+					<td width="35%">
+						<input id="edit_url_[% entry.index %]" size="25" type="text" class="stdedit" name="entryurl" value="[% entry.url %]" [% IF newentry %] onClick="this.value=''"[% END %]>
+					</td>
+					<td>
+					[% IF useAJAX %]
+						<input type="button" class="stdclick" value=[% "SAVE" | string %] onclick="editSave('[% entry.index %]', '[% sess %]'); return false;" />
+						<input type="button" class="stdclick" value=[% "PLUGIN_FAVORITES_CANCEL" | string %] onclick="editCancel('[% entry.index %]', '[% sess %]'[% IF removeoncancel %],[% removeoncancel %][% END %]); return false;" />
+					[% ELSE %]
+						<input type="submit" style="display: inline; width: 45%" class="stdclick" name="editset" value=[% "SAVE" | string %]>
+						<input type="submit" style="display: inline; width: 45%" class="stdclick" name="cancel" value=[% "PLUGIN_FAVORITES_CANCEL" | string %]>
+					[% END %]
+					</td>
+				</tr>
+			</table>
+			</form>
+		[% END %]
+	[% END %]
+[% END %]
+
+[% BLOCK titleedit %]
+<h4><form id="title" name="title" method="get" action="[% webroot %]plugins/Favorites/index.html">
+	[% "TITLE" | string %]
+	<input type="hidden" name="sess" value="[% sess %]">
+	<input type="hidden" name="index" value="[% levelindex %]">
+	<input id="newtitle" type="text" class="stdedit" name="title" style="width: 70%;" value="[% title %]" [% IF newentry %] onClick="this.value=''"[% END %] >
+	<input type="submit" class="stdclick" value="[% 'SAVE' | string %]">
+	[% IF useAJAX %]
+		<input type="button" class="stdclick" style="display: inline; width: 10%;" value="[% 'PLUGIN_FAVORITES_CANCEL' | string %]" onclick="cancelTitle([% entry.index %]); return false;" />
+	[% ELSE %]
+		<input type="submit" class="stdclick" value="[% 'PLUGIN_FAVORITES_CANCEL' | string %]">
+	[% END %]
+</form></h4>
+[% END %]
+
+[% BLOCK favoritescontrol %]
+	[% IF entry.favorites == 1 %]
+		[% WRAPPER favaddlink noTarget=1 %]
+			[%- IF useAJAX || useExtJS -%]href="javascript:void(0);" onClick="ajaxUpdate('index.html', 'action=favadd&amp;index=[% entry.index %]&amp;sess=[% sess %]'[% IF initCall; ', ' _ initCall; END %])"
+			[%- ELSE       -%]href="[% webroot %]plugins/Favorites/index.html?action=favadd&amp;index=[% entry.index %]&amp;sess=[% sess %]"
+			[%- END -%]
+		[% END %]
+	[% ELSIF entry.favorites == 2 %]
+		[% WRAPPER favdellink noTarget=1 %]
+			[%- IF useAJAX || useExtJS -%]href="javascript:void(0);" onClick="ajaxUpdate('index.html', 'action=favdel&amp;index=[% entry.index %]&amp;sess=[% sess %]'[% IF initCall; ', ' _ initCall; END %])"
+			[%- ELSE       -%]href="[% webroot %]plugins/Favorites/index.html?action=favdel&amp;index=[% entry.index %]&amp;sess=[% sess %]"
+			[%- END -%]
+		[% END %]
+	[% END %]
+[% END %]
+
+[% BLOCK editcontrols %]<span id="editcontrols[% entry.index %]" [% IF useAJAX %]style="display: none;"[% END %]>
+	[% PROCESS favoritescontrol %]
+	[% WRAPPER editlink noTarget=1 -%]
+		[%- IF useAJAX -%]href="javascript:void(0);" onClick="edit('[% entry.index %]', '[% sess %]');"
+		[%- ELSE       -%]href="[% webroot %]plugins/Favorites/index.html?action=edit&amp;index=[% entry.index %]&amp;sess=[% sess %]"
+		[%- END -%]
+	[%- END %]
+	[%- IF NOT (useAJAX || useExtJS) %][% WRAPPER moveuplink noTarget=1 -%]
+			href="[% webroot %]plugins/Favorites/index.html?action=moveup&amp;index=[% entry.index %]&amp;sess=[% sess %]"
+		[%- END %]
+		[% WRAPPER movedownlink noTarget=1 -%]
+			href="[% webroot %]plugins/Favorites/index.html?action=movedown&amp;index=[% entry.index %]&amp;sess=[% sess %]"
+	[%- END %][% END %]
+	[% WRAPPER cmdlink cmdtitle = "PLUGIN_FAVORITES_CUT" cmdimage = "b_delete.gif" noTarget=1 -%]
+		[%- IF useAJAX || useExtJS -%]href="javascript:void(0);" onClick="ajaxUpdate('index.html', 'action=delete&amp;index=[% entry.index %]&amp;sess=[% sess %]'[% IF initCall; ', ' _ initCall; END %]);"
+		[%- ELSE                   -%]href="[% webroot %]plugins/Favorites/index.html?action=delete&amp;index=[% entry.index %]&amp;sess=[% sess %]"
+		[%- END -%]
+	[%- END %]</span>
+[% END %]
+
+[% BLOCK playcontrols %]
+	[%- IF entry.audio -%]
+		[% WRAPPER playlink noTarget=1 -%]
+			[%- IF useAJAX || useExtJS -%]href="javascript:void(0);" onClick="ajaxRequest('index.html', 'action=play&amp;index=[% entry.index %]&amp;sess=[% sess %]', refreshStatus);"
+			[%- ELSE       -%]href="[% webroot %]plugins/Favorites/index.html?action=play&amp;index=[% entry.index %]&amp;sess=[% sess %]" onClick="refreshStatus();"
+			[%- END -%]
+		[%- END %]
+		[% WRAPPER addlink noTarget=1 -%]
+			[%- IF useAJAX || useExtJS -%]href="javascript:void(0);" onClick="ajaxRequest('index.html', 'action=add&amp;index=[% entry.index %]&amp;sess=[% sess %]', refreshStatus);"
+			[%- ELSE       -%]href="[% webroot %]plugins/Favorites/index.html?action=add&amp;index=[% entry.index %]&amp;sess=[% sess %]" onClick="refreshStatus();"
+			[%- END -%]
+		[%- END %]
+	[%- ELSE -%]
+		[% PROCESS dummylink %]
+		[% PROCESS dummylink %]
+	[%- END -%]
+[% END %]
+
+[% PROCESS plugins/Favorites/icon.html %]
+[% BLOCK entryblock -%]
+	[%- WRAPPER contentitem leftcontrols = 'playcontrols' rightcontrols = 'editcontrols' itemobj.id = entry.index %]
+		[% WRAPPER entryItem %]
+			<a id="dragitemhref_[% entry.index %]" href="[% webroot %]plugins/Favorites/index.html?index=[% entry.index %]&amp;player=[% playerURI %]&amp;sess=[% sess %]" class="browseItemLink">
+				<span id="dragitemtitle_[% entry.index %]" class = "favoritesText">[% entry.title | html %]</span>
+			</a>
+		[% END %]
+	[% END -%]
+[% END %]
+	
+[% IF action == 'edit' AND useAJAX %]
+
+	[% odd = 1 - (indexOnLevel % 2) %]
+	[% PROCESS editentry entry = entries.$indexOnLevel %]
+
+[% ELSIF action == "editset" AND useAJAX %]
+
+	[% odd = 1 - (indexOnLevel % 2) %]
+	[% PROCESS entryblock entry = entries.$indexOnLevel %]
+
+[% ELSIF action == "edittitle" AND useAJAX %]
+	[% PROCESS titleedit %]
+[% ELSE %]
+	
+[% pagetitle = title | getstring %]
+	
+[% IF useAJAX %][% pageHeaderScripts = BLOCK %]
+	<script TYPE="text/javascript">[% PROCESS html/vars.js %]</script>
+	<script type="text/javascript" src="[% webroot %]html/common.js?r=[% revision %]" ></script>
+	<script type="text/javascript" src="[% webroot %]html/prototype.js?r=[% revision %]" ></script>
+	<script type="text/javascript" src="[% webroot %]html/scriptaculous/scriptaculous.js?load=effects,dragdrop&amp;r=[% revision %]"></script>
+	<script TYPE="text/javascript" src="[% webroot %]html/global.js?r=[% revision %]"></script>
+	<script TYPE="text/javascript" src="[% webroot %]plugins/Favorites/html/favorites.js?r=[% revision %]"></script>
+[% END %][% END %]
+
+[% IF useExtJS; extJsScripts = BLOCK %]
+	<script type="text/javascript" src="[% webroot %]plugins/Favorites/html/Favorites.js?r=[% revision %]"></script>
+
+	<script type="text/javascript">
+		Ext.onReady([% initCall %]);
+	</script>
+[% END; END %]
+
+[% IF NOT ajaxUpdate %]
+	[% PROCESS pageheader.html dontscroll=1 %]<div id="mainbody">
+[% END %]
+
+[%- IF errormsg %]<p>[% errormsg %]</p>[% END -%]
+
+[%- IF NOT autosave %][% IF action == "edittitle" %][% PROCESS titleedit %][% ELSE %]
+<div id='titleheader'><h4><a [% IF useAJAX -%]
+     href="javascript:void(0);" onClick="editTitle('[% index %]', '[% sess %]');"
+   [%- ELSE %]
+     href="index.html?action=edittitle&amp;index=[% index %]&amp;sess=[% sess %]"
+   [%- END %]>[% title %]</a></h4></div>
+[% END %]
+[% END -%]
+
+[% odd = 1 %]
+
+[% WRAPPER contentcontainer %]
+	<ol id="draglist" style="padding: 0px; margin: 0px; border: 0px;">
+	[% FOREACH entry = entries %]
+		<li id="dragitem_[% entry.index %]" class="[% IF entry.edit -%]dontdrag [% END %][% IF !(entry.url || entry.audio) -%]droptarget [% END %] smallIcon"
+			[% IF useAJAX %]onMouseDown="Event.observe('dragitem_[% entry.index %]', 'click', function(event) { checkSortable(event); });"
+			onMouseOver="showElements(['editcontrols[% entry.index %]'], 'inline');"
+			onMouseOut="hideElements(['editcontrols[% entry.index %]'])"[% END %]>
+		[% IF entry.edit -%]
+			[%- PROCESS editentry -%]
+		[%- ELSE -%]
+			[%- PROCESS entryblock -%]
+		[%- END %]
+		</li>
+		[%- odd = (not odd) -%]
+	[%- END %]
+	</ol>
+
+[% IF deleted %]
+	[% BLOCK favoritesdeleteditem %]<span id="favoritesdeletedcontrol" [% IF useAJAX %]style="display: none;"[% END %]>
+		[% WRAPPER removelink noTarget=1 %]
+		[%- IF useAJAX || useExtJS -%]href="javascript:void(0);" onClick="ajaxUpdate('index.html', 'forgetdelete&amp;index=[% levelindex %]&amp;sess=[% sess %]'[% IF initCall; ', ' _ initCall; END %]);"
+		[%- ELSE       -%]href="[% webroot %]plugins/Favorites/index.html?forgetdelete&amp;index=[% levelindex %]&amp;sess=[% sess %]"
+		[%- END -%]
+		[% END %]
+		</span>
+	[% END %]
+
+	[% IF useAJAX %]<span onMouseOver="showElements(['favoritesdeletedcontrol'], 'inline');" onMouseOut="hideElements(['favoritesdeletedcontrol'])">
+	[% END %]
+	[% WRAPPER contentitem rightcontrols = 'favoritesdeleteditem' %]
+		[% PROCESS dummylink %]
+		[% PROCESS dummylink %]
+
+		<a [% IF useAJAX || useExtJS -%]
+		     href="javascript:void(0);" onClick="ajaxUpdate('index.html', 'insert&amp;index=[% levelindex %]&amp;sess=[% sess %]'[% IF initCall; ', ' _ initCall; END %]);" class="browseItemLink"
+		   [%- ELSE %]
+		     href="[% webroot %]plugins/Favorites/index.html?insert&amp;index=[% levelindex %]&amp;sess=[% sess %]"
+		   [%- END %]><b><I>[% "PLUGIN_FAVORITES_PASTE" | string %]</b> [ [% deleted %] ]</I></a>
+		
+	[% END %]
+	[% IF useAJAX %]</span>[% END %]
+	[% odd = (not odd) %]
+[% END %]
+
+[%# clear the last entry info %]
+[% entry = '' %]
+[% IF load %]<div id='loadfile' >
+	[% WRAPPER contentitem leftcontrols = 'playcontrols' lineclass = 'browsedbListItemFullWidth' %]
+	<form id='loadfile' name="loadfile" method="get" action="[% webroot %]plugins/Favorites/index.html" style="display: inline; width: 100%;">
+		<input type="hidden" name="sess" value="[% sess %]">
+		<input type="hidden" name="index" value="[% levelindex %]">
+		<input id="loadfilename" type="text" class="stdedit" name="filename" style="width: 71%;" value="[% 'PLUGIN_FAVORITES_LOADFILE' | string %]" onClick="this.value=''">
+		[% IF useAJAX || useExtJS %]
+			<input type="button" class="stdclick" style="display: inline; width: 10%;" value="[% 'PLUGIN_FAVORITES_LOAD' | string %]" onclick="ajaxUpdate('index.html', 'loadfile&amp;index=[% levelindex %]&amp;sess=[% sess %]&amp;filename=' + escape([% IF useExtJS %]Ext.get('loadfilename').dom[% ELSE %]$('loadfilename')[% END %].value)[% IF initCall; ', ' _ initCall; END %]);" />
+			<input type="button" class="stdclick" style="display: inline; width: 10%;" value="[% 'PLUGIN_FAVORITES_CANCEL' | string %]" onclick="Element.remove('loadfile'); showElements(['defaultform']);" />
+		[% ELSE %]
+			<input type="submit" class="stdclick" name="loadfile" value="[% 'PLUGIN_FAVORITES_LOAD' | string %]">
+			<input type="submit" class="stdclick" value="[% 'PLUGIN_FAVORITES_CANCEL' | string %]">
+		[% END %]
+	</form>
+	[% END %]</div>
+
+[% ELSIF save %]<div id='savefile'>
+	[% WRAPPER contentitem leftcontrols = 'playcontrols' lineclass = 'browsedbListItemFullWidth' %]
+	<form name="savefile" method="get" action="[% webroot %]plugins/Favorites/index.html" style="display: inline; width: 100%;">
+		<input type="hidden" name="sess" value="[% sess %]">
+		<input type="hidden" name="index" value="[% levelindex %]">
+		<input id="savefilename" type="text" class="stdedit" name="filename" style="width: 71%;" value="[% filename ? filename : 'PLUGIN_FAVORITES_SAVEFILE' | getstring %]" [% UNLESS filename %] onClick="this.value=''" [% END %]>
+		[% IF useAJAX || useExtJS %]
+			<input type="button" class="stdclick" style="display: inline" value="[% 'PLUGIN_FAVORITES_SAVE' | string %]" onclick="ajaxUpdate('index.html', 'savefile&amp;index=[% levelindex %]&amp;sess=[% sess %]&amp;filename=' + escape([% IF useExtJS %]Ext.get('savefilename').dom[% ELSE %]$('savefilename')[% END %].value)[% IF initCall; ', ' _ initCall; END %]);" />
+			<input type="button" class="stdclick" style="display: inline" value="[% 'PLUGIN_FAVORITES_CANCEL' | string %]" onclick="Element.remove('savefile'); showElements(['defaultform']);" />
+		[% ELSE %]
+			<input type="submit" class="stdclick" name="savefile" value="[% 'PLUGIN_FAVORITES_SAVE' | string %]">
+			<input type="submit" class="stdclick" value="[% 'PLUGIN_FAVORITES_CANCEL' | string %]">
+		[% END %]
+	</form>
+	[% END %]</div>
+
+[% ELSIF import %]<div id='importfile'>
+	<script type="text/javascript">
+		Ext.onReady(function(){
+			SqueezeJS.UI.FilesystemBrowser.init();
+		});
+	</script>
+
+	[% WRAPPER contentitem leftcontrols = 'playcontrols' lineclass = 'browsedbListItemFullWidth' %]
+	<form name="importfile" method="get" action="[% webroot %]plugins/Favorites/index.html" style="display: inline; width: 100%;">
+		<input type="hidden" name="sess" value="[% sess %]">
+		<input type="hidden" name="index" value="[% levelindex %]">
+		<input id="importfilename" type="text" class="stdedit selectFile selectFile_opml selectFile_m3u selectFile_pls selectFile_asx selectFile_cue selectFile_xml selectFile_wpl" name="filename" style="width: 66%;" value="[% 'PLUGIN_FAVORITES_IMPORTFILE' | string %]" onClick="this.value=''">
+		[% IF useAJAX || useExtJS %]
+			<input type="button" class="stdclick" style="display: inline" value="[% 'PLUGIN_FAVORITES_IMPORT' | string %]" onclick="ajaxUpdate('index.html', 'importfile&amp;index=[% levelindex %]&amp;sess=[% sess %]&amp;filename=' + escape([% IF useExtJS %]Ext.get('importfilename').dom[% ELSE %]$('importfilename')[% END %].value)[% IF initCall; ', ' _ initCall; END %]);" />
+			<input type="button" class="stdclick" style="display: inline" value="[% 'PLUGIN_FAVORITES_CANCEL' | string %]" onclick="Element.remove('importfile'); showElements(['defaultform']);" />
+		[% ELSE %]
+			<input type="submit" class="stdclick" name="importfile" value="[% 'PLUGIN_FAVORITES_IMPORT' | string %]">
+			<input type="submit" class="stdclick" value="[% 'PLUGIN_FAVORITES_CANCEL' | string %]">
+		[% END %]
+	</form>
+	[% END %]</div>
+[% END %]
+
+
+<div id="defaultform" [% IF editmode OR edittitle OR import OR load OR save %] style="display: none;"[% END %]>
+	<form name="buttons" method="get" action="[% webroot %]plugins/Favorites/index.html">
+		<input type="hidden" name="sess" value="[% sess %]">
+		<input type="hidden" name="index" value="[% levelindex %]">
+		[% IF useAJAX || useExtJS %]
+			<input type="button" class="stdclick" style="display: inline;" value="[% favorites ? 'PLUGIN_FAVORITES_NEWFAVORITE' : 'PLUGIN_FAVORITES_NEWENTRY' | string %]" onclick="ajaxUpdate('index.html', 'newentry&amp;index=[% levelindex %]&amp;sess=[% sess %]'[% IF initCall; ', ' _ initCall; END %]);">
+			<input type="button" class="stdclick" style="display: inline;" value="[% 'PLUGIN_FAVORITES_NEWFOLDER' | string %]" onclick="ajaxUpdate('index.html', 'newlevel&amp;index=[% levelindex %]&amp;sess=[% sess %]'[% IF initCall; ', ' _ initCall; END %]);">
+			<input type="button" class="stdclick" style="display: inline;" value="[% "PLUGIN_FAVORITES_IMPORT" | string %]" onclick="ajaxUpdate('index.html', 'import&amp;index=[% levelindex %]&amp;sess=[% sess %]'[% IF initCall; ', ' _ initCall; END %]);">
+		[% ELSE %]
+			<input type="submit" class="stdclick" name="newentry" value="[% favorites ? "PLUGIN_FAVORITES_NEWFAVORITE" : "PLUGIN_FAVORITES_NEWENTRY" | string %]">
+			<input type="submit" class="stdclick" name="newlevel" value="[% 'PLUGIN_FAVORITES_NEWFOLDER' | string %]">
+			<input type="submit" class="stdclick" name="import" value="[% 'PLUGIN_FAVORITES_IMPORT' | string %]">
+		[% END %]
+		[% IF NOT autosave %]
+			[% IF useAJAX || useExtJS %]
+				<input type="button" class="stdclick" style="display: inline;" value="[% 'PLUGIN_FAVORITES_LOAD' | string %]" onclick="ajaxUpdate('index.html', 'load&amp;index=[% levelindex %]&amp;sess=[% sess %]'[% IF initCall; ', ' _ initCall; END %]);">
+				<input type="button" class="stdclick" style="display: inline;" value="[% 'PLUGIN_FAVORITES_SAVE' | string %]" onclick="ajaxUpdate('index.html', 'save&amp;index=[% levelindex %]&amp;sess=[% sess %]'[% IF initCall; ', ' _ initCall; END %]);">
+			[% ELSE %]
+				<input type="submit" class="stdclick" name="load" value="[% 'PLUGIN_FAVORITES_LOAD' | string %]">
+				<input type="submit" class="stdclick" name="save" value="[% 'PLUGIN_FAVORITES_SAVE' | string %]">
+			[% END %]
+		[% END %]
+	</form>
+</div>
+[% END %]
+
+[% IF useAJAX %]<script TYPE="text/javascript">initListSortable('draglist', '[% sess %]'[% IF levelindex %], [% levelindex %][% END %]);</script>[% END %]
+
+[% IF NOT ajaxUpdate %]</div>[% PROCESS pagefooter.html %][% END %]
+
+[% END %]

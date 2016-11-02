@@ -1,0 +1,84 @@
+# String file for DateTime plugin
+
+# $Id: strings.txt 11037 2006-12-24 07:25:38Z mherger $
+
+PLUGIN_SCREENSAVER_DATETIME
+	CS	Datum a čas
+	DA	Dato og klokkeslæt
+	DE	Datum und Zeit
+	EN	Date and Time
+	ES	Fecha y hora
+	FI	Päivämäärä ja aika
+	FR	Date et heure
+	HE	שומר מסך של תאריך ושעה
+	IT	Data e ora
+	NL	Datum en tijd
+	NO	Dato og klokkeslett
+	PL	Data i godzina
+	RU	Дата и время
+	SV	Datum och tid
+
+PLUGIN_SCREENSAVER_DATETIME_DESC
+	CS	Spořič obrazovky s datem a časem
+	DA	Pauseskærm med dato og klokkeslæt
+	DE	Bildschirmschoner: Datum/Zeit
+	EN	Date and Time Screensaver
+	ES	Protector de pantalla de fecha y hora
+	FI	Päivämäärä ja aika -näytönsäästäjä
+	FR	Ecran de veille Date/Heure
+	HE	שומר מסך של תאריך ושעה
+	IT	Screen saver con data e ora
+	NL	Datum en tijd-schermbeveiliger
+	NO	Skjermsparer som viser dato og klokkeslett
+	PL	Wygaszacz ekranu z datą i godziną
+	RU	Экранная заставка "Дата и время"
+	SV	Skärmsläckare med datum och tid
+
+SETUP_GROUP_DATETIME_DESC
+	CS	Tato nastavení ovládají chování spořiče obrazovky s datem a časem
+	DA	Disse indstillinger er bestemmende for hvordan pauseskærmen Dato og klokkeslæt fungerer.
+	DE	Hier können Sie das Format des Bildschirmschoners 'Datum/Zeit' festlegen.
+	EN	These settings control the behavior of the Date and Time Screensaver
+	ES	Estos parámetros controlan el comportamiento del protector de pantalla de fecha y hora
+	FI	Näillä asetuksilla ohjataan päivämäärä ja aika -näytönsäästäjän toimintaa
+	FR	Ces réglages ajustent les paramètres de l'Ecran de veille Date/Heure.
+	HE	הגדרות אלה שולטות בהתנהגות של שומר המסך של תאריך ושעה.
+	IT	Queste impostazioni consentono di controllare il funzionamento dello screen saver con data e ora
+	NL	Deze instellingen bepalen het gedrag van de datum en tijd-schermbeveiliger
+	NO	Disse innstillingene kontrollerer virkemåten til skjermspareren som viser dato og klokkeslett
+	PL	Te ustawienia umożliwiają dostosowanie sposobu działania wygaszacza z datą i godziną
+	RU	Эти настройки управляют экранной заставкой "Дата и время"
+	SV	De här inställningar styr hur skärmsläckaren med datum och tid fungerar
+
+SETUP_GROUP_DATETIME_DEFAULTTIME
+	CS	Výchozí nastavení serveru
+	DA	Server standard
+	DE	Server-Standard
+	EN	Server Default
+	ES	Valor predeterminado de servidor
+	FI	Palvelimen oletusasetus
+	FR	Valeur par défaut du serveur
+	HE	ברירת המחדל של Logitech Media Server
+	IT	Impostazioni predefinite di server
+	NL	Standaardinstellingen van Logitech Media Server
+	NO	Serverstandard
+	PL	Domyślne ustawienie serwera
+	RU	Серверное значение по умолчанию
+	SV	Server-standard
+
+SETUP_GROUP_DATETIME_DEFAULTDATE
+	CS	Výchozí nastavení serveru
+	DA	Server standard
+	DE	Server-Standard
+	EN	Server Default
+	ES	Valor predeterminado de servidor
+	FI	Palvelimen oletusasetus
+	FR	Défaut serveur
+	HE	ברירת המחדל של Logitech Media Server
+	IT	Impostazioni predefinite di server
+	NL	Standaardinstellingen van Logitech Media Server
+	NO	Server-standard
+	PL	Domyślne ustawienie serwera
+	RU	Серверное значение по умолчанию
+	SV	Server-standard
+

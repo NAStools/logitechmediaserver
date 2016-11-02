@@ -1,0 +1,19 @@
+[% IF !ajaxRequest %]
+<html>
+<head>
+<link rel="stylesheet" href="[% webroot %]slimserver.css" type="text/css">
+<link rel="stylesheet" href="[% webroot %]skin.css" type="text/css">
+</head>
+<body>
+<p>
+[% END %]
+<div id="playList">
+	<div class="noPlayerPanel">
+		[% "PLAYER_NEEDS_UPGRADE_DETAILS" | string %]
+	</div>
+</div>
+[% IF !ajaxRequest %]
+</p>
+</body>
+</html>	
+[% END %]

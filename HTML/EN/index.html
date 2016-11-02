@@ -1,0 +1,11 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
+"http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+<head>
+	[% PROCESS standardheader.html %]
+</head>
+	<frameset cols="50%,50%">
+		<frame src="home.html?player=[% playerURI %]" name="browser">
+		<frame src="status.html?player=[% playerURI %]" name="status">
+	</frameset>
+</html>

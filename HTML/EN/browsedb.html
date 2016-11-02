@@ -1,0 +1,91 @@
+[% IF song_count; pageHeaderInfo = BLOCK %]
+	[% album_count %] [% "WITH" | string %] [% song_count %] [% stringBY %] [% artist_count %]
+	[% IF albumDuration %]([% "LENGTH" | string %][% stringCOLON %] [% albumDuration %])[% END %]
+[% END; END %]  
+
+[% pagetitle = browseby | string; noSpacer = 1 %]
+
+[% IF useAJAX %][% pageHeaderScripts = BLOCK %]
+	<script TYPE="text/javascript">[% PROCESS html/vars.js %]</script>
+	<script type="text/javascript" src="[% webroot %]html/common.js?r=[% revision %]" ></script>
+	<script type="text/javascript" src="[% webroot %]html/prototype.js?r=[% revision %]" ></script>
+	<script type="text/javascript" src="[% webroot %]html/scriptaculous/scriptaculous.js?r=[% revision %]"></script>
+	<script TYPE="text/javascript" src="[% webroot %]html/global.js?r=[% revision %]"></script>
+[% END %][% END %]
+
+[% IF NOT ajaxUpdate %][% PROCESS pageheader.html %][% END %]
+
+<div id="browsedbHeader">
+	[% IF artwork != 1 -%]
+		[% IF hasPagebar %][% "ITEMS" | string %] [% pageinfo.startitem + 1 %] [% "TO" | string %] [% pageinfo.enditem + 1 %] [% "OF" | string %] [% pageinfo.totalitems %][% END %]
+	[% END -%]
+	[% IF warn -%]<p>[% PROCESS scanwarning %] [%- END %]
+
+	[% IF hasPagebar -%][% PROCESS pagebar %][%- END %]
+</div>
+
+[%- IF artwork == 1 && (levelName == 'album' || levelName == 'age');
+		container = 'gallerycontainer';
+	ELSE;
+		container = 'contentcontainer';
+	END;
+%]
+
+[%- WRAPPER $container %]
+	[% IF levelName == 'track' && (album.id || age.id) && NOT ajaxUpdate %]
+		[% IF age.id; album = age; END %]
+		<div style="overflow: hidden; width: 99%;">
+		[% 
+			# remove "All Songs" item and display links at the top
+			IF browse_items.size > 1;
+			songInfoPlayLinks = BLOCK;
+				PROCESS songInfoPlayLinks item = browse_items.shift();
+			END;END;
+			
+			contributorRoles = {};
+
+			IF !album.compilation;
+				FOREACH contributor IN album.contributors;
+					FOREACH contributor IN contributor.contributorRoles;
+						contributorRoles.${contributor} = 1;
+					END;
+				END;
+			END;
+
+			PROCESS songinfo_header.html itemobj = {
+				id => coverArt || 0,
+				album => album,
+				contributorRoles => contributorRoles.keys,
+				genres => album.genre,
+				year => album.year
+			};
+		%]</div>
+		
+
+	[% ELSIF coverArt AND tree != 1 -%]
+		<p><a [% coverArtHRef %] [% UNLESS notarget %]target="cover"[% END %]>[% PROCESS coverImg resize='1' %]</a></p>
+	[% END -%]
+	[% FOREACH item = browse_items -%]
+		[%- IF useAJAX %][% itemid = "$item.itemobj.id"_"."_"$loop.index" %][% IF level %][% itemid = "$level"_"."_"$itemid" %][% END %][% END -%]
+		[%- PROCESS browsedbitems_list.html -%]
+		[%- IF useAJAX && NOT (artwork == 1 && (item.levelName == 'album' || item.levelName == 'age')) %]
+			<div id="descendinfo[% itemid %]" class="descendinfo" style="display:none;"><div id="item[% itemid %]" class="descenditem"></div></div>
+		[% END -%]
+	[%- END %]
+[% END -%]
+
+[% IF useAJAX && (artwork == 1 && (item.levelName == 'album' || item.levelName == 'age')) %]
+<div id='albumBackground' style="display:none;" onClick = "javascript:hideAlbumInfo();"><img src = "[% webroot %]html/images/cdspin3.gif" alt="" title="" onClick = "javascript:hideAlbumInfo();" style="position: absolute; top: 45%; left: 45%;"></div>
+<div id='albumPopup' style="display:none;">
+	<div id = 'closeAlbumPopup'><span id="closeAlbumText"><a href="javascript:void(1);" onClick = "javascript:hideAlbumInfo();"><img src = "[% webroot %]html/images/b_delete.gif" alt="[% "CLOSE" | string %]" title ="[% "CLOSE" | string %]"></a></span></div>
+	<div id = 'trackInfo'></div>
+</div>
+[% END %]
+
+
+<div id="browsedbFooter">
+	[% IF pageinfo.totalpages && pageinfo.totalpages > 1 && pageinfo.totalalphapages != 1 %][% PROCESS pagebar %][% END %]
+</div>
+[% IF NOT ajaxUpdate %]
+[% PROCESS pagefooter.html %]
+[% END %]

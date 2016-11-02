@@ -1,0 +1,246 @@
+# String file for Podcast plugin
+
+# $Id: strings.txt 11037 2006-12-24 07:25:38Z mherger $
+
+PLUGIN_PODCAST
+	CS	Podcasty
+	DA	Podcasts
+	DE	Podcasts
+	EN	Podcasts
+	ES	Podcasts
+	FI	Podcast-lähetykset
+	FR	Podcasts
+	HE	פריטי Podcast
+	IT	Podcast
+	NL	Podcasts
+	NO	Podkaster
+	PL	Podcasty
+	RU	Подкасты
+	SV	Poddsändningar
+
+PODCAST_PLAYER
+	CS	Přehrávač pro Podcasty
+	DA	Podcastafspiller
+	DE	Podcast Player
+	EN	Podcast Player
+	ES	Reproductor de podcasts
+	FI	Podcast-soitin
+	FR	Lecteur de podcast
+	IT	Lettore podcast
+	NL	Podcast-speler
+	NO	Podkast-spiller
+	PL	Odtwarzacz podcastów
+	RU	Плеер подкастов
+	SV	Poddsändningsspelare
+
+PLUGIN_PODCAST_DESC
+	CS	Přístup k Podcasts
+	DA	Adgang til podcasts
+	DE	Zugang zu Podcasts
+	EN	Access to Podcasts
+	ES	Acceso a Podcasts
+	FI	Podcastien käyttö
+	FR	Accès aux podcasts
+	IT	Accesso ai podcast
+	NL	Toegang tot Podcasts
+	NO	Tilgang til podkaster
+	PL	Dostęp do podcastów
+	RU	Доступ к подкастам
+	SV	Tillgång till poddsändningar
+
+PODCAST_NOTHING_TO_PLAY
+	CS	Nic k přehrání
+	DA	Der er ikke noget at spille
+	DE	Kein Material vorhanden
+	EN	Nothing to play
+	ES	Nada para reproducir
+	FI	Ei soitettavaa
+	FR	Aucun podcast à lire
+	HE	אין פריטים להפעלה
+	IT	Niente da riprodurre
+	NL	Niets om af te spelen
+	NO	Ingenting å spille av
+	PL	Brak elementów do odtworzenia
+	RU	Нет песен для воспроизведения
+	SV	Det finns inget att spela.
+
+PODCAST_GROUP_DESC
+	CS	Plugin Podcast Browser vám umožňuje prohlížet a poslouchat podcasty.
+	DA	Udvidelsesmodulet til podcasts giver dig mulighed for at se og høre podcasts.
+	DE	Mit dem Podcast-Browser können Sie Podcasts wiedergeben.
+	EN	The Podcast Browser plugin allows you to view and listen to podcasts.
+	ES	El complemento Examinador de podcasts permite ver y escuchar podcasts.
+	FI	Podcast-selainlaajennus mahdollistaa podcast-lähetysten katselun ja kuuntelun.
+	FR	L'extra Podcast vous permet d'afficher et d'écouter des podcasts.
+	HE	יישום ה-Plugin 'דפדפן Podcast' מאפשר לך להציג ולהאזין לפריטי Podcast.
+	IT	Il plugin Podcast Browser consente di visualizzare e ascoltare podcast.
+	NL	Met de Podcast-browserplugin kun je podcasts bekijken en beluisteren.
+	NO	Med plugin-modulen for podkastlesing kan du se og høre på podkaster.
+	PL	Dodatek Przeglądarka podcastów umożliwia wyświetlanie i słuchanie podcastów.
+	RU	Подключаемый модуль "Браузер подкастов" позволяет просматривать и прослушивать подкасты.
+	SV	Med plugin-programmet för poddsändningsläsaren kan du visa och lyssna på poddsändningar.
+
+PODCAST_RESET_BUTTON
+	CS	Resetovat
+	DA	Nulstil
+	DE	Zurücksetzen
+	EN	Reset
+	ES	Restablecer
+	FI	Palauta
+	FR	Réinitialiser
+	HE	איפוס
+	IT	Reimposta
+	NL	Opnieuw instellen
+	NO	Tilbakestill
+	PL	Resetuj
+	RU	Сброс
+	SV	Återställ
+
+PODCAST_RESETTING
+	CS	Obnovuji výchozí podcasty
+	DA	Standardpodcasts bliver valgt igen
+	DE	Standard-Podcasts werden wiederhergestellt
+	EN	Resetting to default podcasts
+	ES	Restableciendo podcasts predeterminados
+	FI	Palautetaan oletus-podcasteihin
+	FR	Réinitialisation des podcasts par défaut
+	HE	איפוס לפריטי ה-Podcast המוגדרים כברירת מחדל
+	IT	Reimpostazione dei podcast predefiniti
+	NL	Standaard-podcasts worden opnieuw ingesteld
+	NO	Tilbakestiller til standardpodkaster
+	PL	Przywracanie podcastów domyślnych
+	RU	Восстановление подкастов по умолчанию
+	SV	Återställer till standardpoddsändningarna
+
+PODCAST_FEEDS_CHANGE
+	CS	Seznam Podcast změněn
+	DA	Podcastlisten er ændret.
+	DE	Die Podcast-Liste wurde geändert.
+	EN	Podcast list changed.
+	ES	La lista de podcasts ha cambiado.
+	FI	Podcast-luetteloa muutettiin.
+	FR	Liste des podcasts modifiée.
+	HE	רשימת פריטי ה-Podcast השתנתה.
+	IT	Elenco Podcast modificato.
+	NL	Podcast-lijst gewijzigd.
+	NO	Podkast-liste endret.
+	PL	Lista podcastów została zmieniona.
+	RU	Список подкастов изменен.
+	SV	Poddsändningslistan har ändrats.
+
+SETUP_PLUGIN_PODCAST_RESET
+	CS	Obnovit výchozí Podcasty
+	DA	Gendan standardpodcasts
+	DE	Standard-Podcasts zurücksetzen
+	EN	Reset default Podcasts
+	ES	Restablecer podcasts predeterminados
+	FI	Palauta oletus-podcastit
+	FR	Rétablir la liste des podcasts par défaut
+	HE	איפוס פריטי Podcast המוגדרים כברירת מחדל
+	IT	Reimposta podcast predefiniti
+	NL	Standaard-podcasts opnieuw instellen
+	NO	Tilbakestill standardpodkaster
+	PL	Przywróć podcasty domyślne
+	RU	Восстановить подкасты по умолчанию
+	SV	Återställ till standardpoddsändningarna
+
+SETUP_PLUGIN_PODCAST_ADD_FEED
+	CS	Přidat nový zdroj:
+	DA	Tilføj et nyt feed:
+	DE	Neuen Feed hinzufügen:
+	EN	Add a new feed:
+	ES	Agregar fuente nueva:
+	FI	Lisää uusi syöte:
+	FR	Ajouter un flux
+	IT	Aggiungi nuovo feed:
+	NL	Nieuw kanaal toevoegen:
+	NO	Legg til en ny feed:
+	PL	Dodaj nowe źródło:
+	RU	Добавить новый веб-канал:
+	SV	Lägg till nytt flöde:
+
+SETUP_PLUGIN_PODCAST_EXISTING_FEEDS
+	CS	Stávající kanály:
+	DA	Eksisterende feeds:
+	DE	Eingetragene Feeds:
+	EN	Existing feeds:
+	ES	Fuentes existentes:
+	FI	Olemassa olevat syötteet:
+	FR	Flux existants:
+	IT	Feed esistenti:
+	NL	Bestaande kanalen:
+	NO	Eksisterende feeder:
+	PL	Istniejące źródła:
+	RU	Существующие веб-каналы:
+	SV	Befintliga flöden:
+
+SETUP_PLUGIN_PODCAST_INVALID_FEED
+	CS	Neplatný zdroj - %s
+	DA	Ugyldigt feed - %s
+	DE	Ungültiger Feed - %s
+	EN	Invalid Feed - %s
+	ES	Fuente no válida - %s
+	FI	Virheellinen syöte - %s
+	FR	Flux incorrect - %s
+	IT	Feed non valido. %s
+	NL	Ongeldig kanaal - %s
+	NO	Ugyldig feed: %s
+	PL	Nieprawidłowe źródło — %s
+	RU	Недействительный веб-канал — %s
+	SV	Ogiltigt flöde – %s
+
+PLUGIN_PODCAST_IMPORT
+	DE	Podcast Liste importieren
+	EN	Import podcasts
+	NL	Importeer podcasts
+	NO	Importer podkaster
+	PL	Importowanie podcastów
+
+PLUGIN_PODCAST_IMPORT_FROM_MYSB
+	DE	Podcasts von mysqueezebox.com importieren
+	EN	Import podcasts from mysqueezebox.com
+	NL	Importeer podcasts van mysqueezebox.com
+	NO	Importer podkaster fra mysqueezebox.com
+	PL	Importuj podcasty z mysqueezebox.com
+
+PLUGIN_PODCAST_IMPORT_FROM_MYSB_FAILED
+	DE	Konnte keine Podcast Liste auf mysqueezebox.com finden. Ev. ist die mysqueezebox.com Integration nicht konfiguriert.
+	EN	Didn't find a podcast list for your mysqueezebox.com account, or account credentials are not set.
+	NL	Geen lijst gevonden met podcasts voor je mysqueezebox.com account, of je account is nog niet ingesteld.
+	NO	Kunne ikke finne en podkastliste for din mysqueezebox.com-konto, eller kontodetaljer er ikke oppgitt.
+	PL	Nie znaleziono listy podcastów na twoim koncie mysqueezebox.com, lub nie podano loginu i hasła użytkownika.
+
+PLUGIN_PODCAST_PLAY_FROM_BEGINNING
+	DE	Vom Anfang an wiedergeben
+	EN	Play from the beginning
+	NL	Speel af vanaf het begin
+	NO	Spill av fra begynnelsen
+	PL	Odtwórz od początku
+
+PLUGIN_PODCAST_PLAY_FROM_POSITION_X
+	DE	Von der letzten Position wiedergeben (%s)
+	EN	Play from last position (%s)
+	NL	Speel af vanaf laatste positie (%s)
+	NO	Spill videre fra siste posisjon (%s)
+	PL	Wznów od ostatniej pozycji (%s)
+
+PLUGIN_PODCAST_SKIP_BACK_SECS
+	DE	Zurückspringen um X Sekunden
+	EN	Jump back seconds
+	NL	Spring seconden terug
+	NO	Hopp sekunder tilbake
+	PL	Przewijanie do tyłu
+
+PLUGIN_PODCAST_SKIP_BACK_DESC
+	DE	Das Kontextmenü bietet in Podcasts die Möglichkeit, schnell zurückzuspringen. Standardmässig sind dies 15 Sekunden. Geben Sie hier an, wie weit Sie zurückspringen wollen.
+	EN	The podcasts context menu offers an option to jump back quickly within the podcast. By default this option skips back by 15 seconds.
+	NL	In het contextmenu van de podcast kun je snel terugspringen in de podcast. Standaard spring je 15 seconden terug.
+	NO	Kontekstmenyen for podkaster tilbyr å kjapt hoppe tilbake i podkasten. Standardspranget er 15 sekunder. Angi hvor langt spranget skal være.
+	PL	Menu kontekstowe podcastu zawiera opcję do szybkiego przewinięcia do tyłu. Domyślnie ta opcja przewija o 15 sekund do tyłu.
+
+PLUGIN_PODCAST_SKIP_BACK
+	DE	%s Sekunden zurück springen
+	EN	Jump back %s seconds
+	NL	Spring %s seconden terug
+	NO	Hopp %s sekunder tilbake
+	PL	Przewiń do tyłu o %s sekund
