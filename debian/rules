@@ -1,0 +1,32 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpkg/architecture.mk
+
+%:
+	dh $@
+
+override_dh_install:
+ifeq ($(DEB_HOST_ARCH),amd64)
+	dh_install \
+	-XMSWin32 \
+	-Xarmhf-linux \
+	-Xdarwin \
+	-Xi386-freebsd \
+	-Xarm-linux \
+	-Xi386-linux \
+	-Xpowerpc-linux \
+	-Xsparc-linux
+endif
+ifeq ($(DEB_HOST_ARCH),armel)
+	dh_install \
+	-XMSWin32 \
+	-Xdarwin \
+	-Xi386-freebsd \
+	-Xx86_64-linux \
+	-Xi386-linux \
+	-Xpowerpc-linux \
+	-Xsparc-linux
+endif
+
+override_dh_strip:
+override_dh_shlibdeps:

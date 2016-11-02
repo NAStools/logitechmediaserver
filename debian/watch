@@ -1,0 +1,3 @@
+version=3
+
+http://downloads.slimdevices.com/LogitechMediaServer_v([\d\.]+)/logitechmediaserver-([\d\.]+).tgz debian uupdate

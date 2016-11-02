@@ -1,0 +1,33 @@
+## Overrides from NAStools
+# Overrides for ReadyNAS packaging
+nastools-logitechmediaserver: non-standard-toplevel-dir
+nastools-logitechmediaserver: file-in-unusual-dir
+nastools-logitechmediaserver: non-etc-file-marked-as-conffile
+
+# Nothing we can do about these, since they're upstream
+nastools-logitechmediaserver: duplicate-font-file
+nastools-logitechmediaserver: embedded-javascript-library
+nastools-logitechmediaserver: extra-license-file
+nastools-logitechmediaserver: hardening-no-fortify-functions
+nastools-logitechmediaserver: hardening-no-relro
+nastools-logitechmediaserver: interpreter-not-absolute
+nastools-logitechmediaserver: script-not-executable
+nastools-logitechmediaserver: wrong-name-for-upstream-changelog
+
+## Original overrides from Logitech's Debian package
+# override some policies
+# we provide tons of binaries for various platforms, thus "arch-independant" etc.
+nastools-logitechmediaserver: arch-dependent-file-in-usr-share
+nastools-logitechmediaserver: arch-independent-package-contains-binary-or-object
+nastools-logitechmediaserver: executable-not-elf-or-script
+
+nastools-logitechmediaserver: binary-or-shlib-defines-rpath
+nastools-logitechmediaserver: unstripped-binary-or-object
+nastools-logitechmediaserver: statically-linked-binary
+nastools-logitechmediaserver: embedded-library
+
+nastools-logitechmediaserver: copyright-file-contains-full-gpl-license
+nastools-logitechmediaserver: copyright-should-refer-to-common-license-file-for-lgpl
+nastools-logitechmediaserver: binary-without-manpage
+
+nastools-logitechmediaserver: wrong-path-for-interpreter

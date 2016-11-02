@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+case "$1" in
+  remove)
+    if getent passwd nastools-logitechmediaserver >/dev/null 2>&1; then
+      USER_ID=$(id -u nastools-logitechmediaserver)
+      rn_nml -d user:$USER_ID
+    fi
+  ;;
+esac
+
+#DEBHELPER#

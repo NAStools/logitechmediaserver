@@ -1,0 +1,13 @@
+<Application resource-id="nastools-logitechmediaserver">
+  <Version></Version>
+  <MinFirmwareVer>6.6.0</MinFirmwareVer>
+  <Name>Logitech Media Server NT</Name>
+  <Author>NAStools</Author>
+  <RequireReboot>0</RequireReboot>
+  <LaunchURL>http://localhost:9000/</LaunchURL>
+  <InfoURL>https://github.com/nastools/logitechmediaserver</InfoURL>
+  <DebianPackage>nastools-logitechmediaserver</DebianPackage>
+  <ServiceName>fvapp-nastools-logitechmediaserver.service</ServiceName>
+  <Description lang="en-us">Streaming Audio Server</Description>
+  <ConfigURL/>
+</Application>

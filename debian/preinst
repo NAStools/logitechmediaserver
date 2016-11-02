@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -e
+
+test $DEBIAN_SCRIPT_DEBUG && set -v -x
+
+case "$1" in
+  upgrade)
+    if [ "$2" = "7.7.5-nt1" ]; then
+      if grep httpport.*9200 /apps/nastools-logitechmediaserver/prefs/server.prefs >/dev/null 2>&1; then
+        systemctl stop fvapp-nastools-logitechmediaserver
+        sed -i_7.7.5-nt1 '/httpport/d' /apps/nastools-logitechmediaserver/prefs/server.prefs
+      fi
+    fi
+  ;;
+esac
+
+#DEBHELPER#

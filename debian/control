@@ -1,0 +1,23 @@
+Source: logitechmediaserver
+Section: sound
+Priority: optional
+Maintainer: NAStools <dev@nas.tools>
+Build-Depends: dpkg-dev (>= 1.16.17),
+               debhelper (>= 9)
+Standards-Version: 3.9.4
+Vcs-Browser: https://github.com/nastools/logitechmediaserver
+Vcs-Git: git://github.com/nastools/logitechmediaserver.git
+Homepage: http://wiki.slimdevices.com/index.php/Logitech_Media_Server
+
+Package: nastools-logitechmediaserver
+Architecture: any
+Depends: readynasos (>= 6.6.0),
+         perl (>= 5.8.8),
+         libgomp1,
+         lame,
+         ffmpeg,
+         ${misc:Depends}
+Description: Streaming Audio Server
+ Logitech Media Server is a cross-platform streaming media server that supports
+ a wide range of formats, including AAC, AIFF, FLAC, Ogg Vorbis, MP3, WAV, and
+ WMA.

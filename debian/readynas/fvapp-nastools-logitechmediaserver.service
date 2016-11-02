@@ -1,0 +1,13 @@
+[Unit]
+Description=Logitech Media Server
+After=network.target
+
+[Service]
+User=nastools-logitechmediaserver
+ExecStart=/apps/nastools-logitechmediaserver/slimserver/slimserver.pl \
+	--prefsdir /apps/nastools-logitechmediaserver/prefs \
+	--cachedir /apps/nastools-logitechmediaserver/cache \
+	--logdir /apps/nastools-logitechmediaserver/log
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e
+
+test $DEBIAN_SCRIPT_DEBUG && set -v -x
+
+case "$1" in
+  configure)
+    if ! getent passwd nastools-logitechmediaserver >/dev/null 2>&1; then
+        rn_nml -a user:nastools-logitechmediaserver:users
+    fi
+    chown -R nastools-logitechmediaserver:users /apps/nastools-logitechmediaserver
+  ;;
+esac
+
+#DEBHELPER#
